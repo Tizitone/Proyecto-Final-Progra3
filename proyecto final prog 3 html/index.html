@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1 id="title">Registro</h1>
+        <div class="formulario">
+            <form class="formulario-solicitud">
+                <div class="input-group">
+                        <i class="fa-solid fa-user"></i>
+                        <label for="nombre">* Nombre titular</label>
+                        <input id="nombre" type="text" placeholder="Nombre o nombre de la entidad" required>
+                </div>
+                <div class="input-group">
+                        <i class="fa-solid fa-user"></i>
+                        <label for="email">* Correo:</label>
+                        <input id="email" type="email" placeholder="Correo" required>
+                </div>
+                <div class="input-group">
+                        <i class="fa-solid fa-user"></i>
+                        <label for="telefono">* Telefono:</label>
+                        <input id ="telefono" type="tel" placeholder="Telefono" required>
+                </div>
+                <div class="input-group vertical">
+                        <i class="fa-solid fa-user"></i>
+                        <label for="descripcion">* Descripcion:</label>
+                        <textarea id="descripcion" name="descripcion" rows="8" cols="35" placeholder="Descripcion..."></textarea>
+                </div>
+                <div class="btn-field">
+                    <button id="submit" type="button" onclick="enviarDatos()">Enviar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
