@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.metalurgica1.metalurgica1.repositorio.solicitudRepository;
+import com.metalurgica1.metalurgica1.repositorio.ISolicitudRepository;
 
 import java.util.List;
 
@@ -14,19 +14,22 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class ControladorSolicitudes {
 
-    @Autowired
-    private solicitudRepository solicitudRepository;
+    private final ISolicitudRepository ISolicitudRepository;
+
+    public ControladorSolicitudes(ISolicitudRepository ISolicitudRepository) {
+        this.ISolicitudRepository = ISolicitudRepository;
+    }
 
     @GetMapping
     public List<Solicitud> listarSolicitudes()
     {
-        return solicitudRepository.findAll();
+        return ISolicitudRepository.findAll();
     }
 
     @PostMapping
     public ResponseEntity<String> crearSolicitud(@RequestBody Solicitud solicitud)
     {
-        solicitudRepository.save(solicitud);
+        ISolicitudRepository.save(solicitud);
         return ResponseEntity.status(HttpStatus.CREATED).body("Solicitud creada con exito");
     }
 }

@@ -2,13 +2,20 @@ package com.metalurgica1.metalurgica1.modelo;
 
 
 import com.metalurgica1.metalurgica1.modelo.enums.EEtiquetaDeAcceso;
-import jakarta.persistence.Entity;
-import jakarta.persistence.PrePersist;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
-public class Administrador extends Empleado{
+public class Administrador extends Persona{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id_administrador;
 
     @PrePersist
     public void asignarEtiqueta(){
@@ -16,4 +23,5 @@ public class Administrador extends Empleado{
             this.setEtiquetaDeAcceso(EEtiquetaDeAcceso.ADMIN);
         }
     }
+    //nota: administrador no es un empleado, por lo que hereda de persona
 }

@@ -1,6 +1,7 @@
 package com.metalurgica1.metalurgica1.modelo;
 
 import com.metalurgica1.metalurgica1.modelo.enums.EEtiquetaDeAcceso;
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Transient;
@@ -10,16 +11,17 @@ import java.util.List;
 
 @Data
 @Entity
-public class Empleado_Gerente extends Empleado{
+@DiscriminatorValue("GERENTE")
+public class Empleado_Gerente extends Empleado_modelo{
 
     @Transient
-    private static List<Registro> listaRegistros;
+    private List<Registro> listaRegistros;
 
     @Transient
-    private static List<Cliente> listaClientes;
+    private List<Cliente> listaClientes;
 
     @Transient
-    private static List<Tarea> listaTareas;
+    private List<Tarea> listaTareas;
 
     public boolean modificarEmpleado(int dni){
         return this.getDni()== dni;
@@ -31,4 +33,6 @@ public class Empleado_Gerente extends Empleado{
             this.setEtiquetaDeAcceso(EEtiquetaDeAcceso.GERENTE);
         }
     }
+
+    // nota a las listas les quite el static, porque jpa no dejaba ejecutar
 }

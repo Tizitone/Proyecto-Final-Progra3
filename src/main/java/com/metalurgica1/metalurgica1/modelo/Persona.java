@@ -8,10 +8,6 @@ import lombok.Data;
 @MappedSuperclass
 public abstract class Persona {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     private String email;
     private String contrasenia;
     private String nombre;
@@ -24,5 +20,5 @@ public abstract class Persona {
     public boolean validarCuenta(String correo, String contrasenia) {
         return this.email.equals(correo) && this.contrasenia.equals(contrasenia);
     }
-
+// nota: persona no tiene un id, los id se definen en las clases que se derivan de esta.
 }

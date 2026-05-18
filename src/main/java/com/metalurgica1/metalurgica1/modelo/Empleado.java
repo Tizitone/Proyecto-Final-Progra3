@@ -5,9 +5,11 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
+@DiscriminatorValue("EMPLEADO")
 public class Empleado extends Empleado_modelo {
 
     @ManyToMany
@@ -16,11 +18,7 @@ public class Empleado extends Empleado_modelo {
             joinColumns = @JoinColumn(name = "empleado_id"),
             inverseJoinColumns = @JoinColumn(name = "tarea_id")
     )
-    private ArrayList<Tarea> historial = new ArrayList<>();
-
-    public boolean modificarEmpleado(int dni){
-        return this.getId()==dni;
-    }
+    private List<Tarea> historial = new ArrayList<>();
 
     @PrePersist
     public void asignarEtiqueta(){
