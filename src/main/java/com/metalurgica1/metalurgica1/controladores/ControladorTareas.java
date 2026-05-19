@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/tareas")
+@CrossOrigin(origins = "*")
 public class ControladorTareas {
 
     private final ITareaRepository ITareaRepository;
@@ -25,10 +26,10 @@ public class ControladorTareas {
         return ITareaRepository.findAll();
     }
     @PostMapping
-    public ResponseEntity<Tarea> crearTarea(Tarea tarea)
+    public String crearTarea(@RequestBody Tarea tarea)
     {
         ITareaRepository.save(tarea);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return "Tarea creada correctamente";
     }
     @PutMapping("/{id}")
     public String modificarTarea(@PathVariable Long id,@RequestBody Tarea tarea)

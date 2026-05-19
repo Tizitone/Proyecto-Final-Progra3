@@ -2,9 +2,13 @@ package com.metalurgica1.metalurgica1.modelo;
 
 import com.metalurgica1.metalurgica1.modelo.enums.EEtiquetaDeAcceso;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @MappedSuperclass
 public abstract class Persona {
 

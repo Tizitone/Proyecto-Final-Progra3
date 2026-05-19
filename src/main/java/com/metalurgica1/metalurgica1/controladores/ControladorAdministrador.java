@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/administradores")
+@CrossOrigin(origins = "*")
 public class ControladorAdministrador {
 
     private final IAdministradorRepository iAdministradorRepository;
@@ -27,13 +28,13 @@ public class ControladorAdministrador {
         return iAdministradorRepository.findAll();
     }
     @PostMapping
-    public ResponseEntity<Tarea> crearTarea(@RequestBody Administrador administrador)
+    public ResponseEntity<Tarea> crearAdministrador(@RequestBody Administrador administrador)
     {
         iAdministradorRepository.save(administrador);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
     @PutMapping("/{id}")
-    public String modificarTarea(@PathVariable Long id,@RequestBody Administrador administrador)
+    public String crearAdministrador(@PathVariable Long id,@RequestBody Administrador administrador)
     {
         administrador.setId_administrador(id);
         iAdministradorRepository.save(administrador);

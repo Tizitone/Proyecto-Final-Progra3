@@ -1,12 +1,17 @@
 package com.metalurgica1.metalurgica1.modelo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.metalurgica1.metalurgica1.modelo.enums.ECategorias;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -21,10 +26,16 @@ public class Tarea {
     @Enumerated(EnumType.STRING)
     private ECategorias categorias;
 
-    private LocalDateTime fechaDeRegistro;
-    private LocalDateTime fechaDeEntrega;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private LocalDateTime fechaDeRegistro = LocalDateTime.now();
+    @JsonProperty("fecha_de_entrega")
+    private LocalDate fechaDeEntrega ;
 
+    @Column(columnDefinition = "TEXT")
+    @JsonProperty("descripcion_material")
     private String descripcionMaterial;
+    @Column(columnDefinition = "TEXT")
+    @JsonProperty("descripcion_general")
     private String descripcionGeneral;
 
 }

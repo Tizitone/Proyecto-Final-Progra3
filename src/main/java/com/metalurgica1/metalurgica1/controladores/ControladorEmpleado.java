@@ -1,6 +1,7 @@
 package com.metalurgica1.metalurgica1.controladores;
 
 import com.metalurgica1.metalurgica1.modelo.Empleado;
+import com.metalurgica1.metalurgica1.modelo.Solicitud;
 import com.metalurgica1.metalurgica1.modelo.Tarea;
 import com.metalurgica1.metalurgica1.repositorio.IEmpleadoRepository;
 import org.springframework.http.HttpStatus;

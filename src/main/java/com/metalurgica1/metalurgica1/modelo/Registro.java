@@ -20,7 +20,6 @@ public class Registro {
 
     private String titulo;
 
-
     @ManyToOne
     @JoinColumn(name = "tarea_id") // Nombre de la columna en la tabla SQL
     private Tarea tarea;
