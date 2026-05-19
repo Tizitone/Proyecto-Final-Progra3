@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html Lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="1500 px, initial-scale=1.0" />
+        <title>CRUD metalurgico</title>
+
+        <link rel="stylesheet" href="style.css">
+        <script src="script.js" defer></script>
+    </head>
+
+    <body>
+
+        <h1>CRUD Metalurgico</h1>
+        
+        <p class="introduccion"><br>Nuestra mision es ayudar a nuestros clientes a organizar y publicitar sus productos de metalurgia.<br>por favor, notifique de cualquier error en el sistema.<br><br></p>
+        
+        <div class="inicio" id="inicio">
+            <select name="Lista" id="opciones" size="2">
+                <option value="crear">Crear</option>
+                <option value="buscar">Buscar</option>
+                <option value="ver">Ver</option>
+            </select>
+
+            <br><br>
+        </div>
+
+        <div class="caja escondido" id="crear">
+            <h1>Formularios de creación</h1>
+            
+            <div class="titulo-selector">
+                <label for="listaBlock">Formularios:  </label>
+                <br><br>
+                <select name="listaBlock" id="listaBlock" size="2">
+                    <option value="personas">Personas</option>
+                    <option value="tareas">Tareas</option>
+                    <option value="registros">Registro</option>
+                </select>
+            </div>
+            
+            <div class="persona escondido" id="bloquePersona">
+                <h2>Formulario: Personas</h2>           
+                    
+                <label for="acceso">Acceso: </label>
+                <select id="acceso" required>
+                    <option value="empty">Seleccionar</option>
+                    <option value="empleado">Empleado</option>
+                    <option value="gerente">Gerente</option>
+                    <option value="administrador">Administrador</option>
+                    <option value="cliente">Cliente</option>
+                </select>
+
+                <div class="empleado escondido" id="bloqueEmpleado">
+                    <h4>usted esta por crear un empleado</h4>
+                    <form id="formEmpleado">
+                        <input type="hidden" id="idEmpleado">
+
+                        <label for="emailEmpleado">Email: </label>
+                        <input type="text" id="emailEmpleado" required />
+                        
+                        <br> <br>
+                        
+                        <label for="contraseniaEmpleado">Contraseña: </label>
+                        <input type="text" id="contraseniaEmpleado" required />
+                        
+                        <br> <br>
+                        
+                        <label for="nombreEmpleado">Nombre: </label>
+                        <input type="text" id="nombreEmpleado" required />
+
+                        <br> <br>
+                        
+                        <label for="telefonoEmpleado">Telefono: </label>
+                        <input type="text" id="telefonoEmpleado" required />
+                        <br><br>
+
+                        <label for="dniEmpleado">DNI: </label>
+                        <input type="text" id="dniEmpleado" required />
+                        <br><br>
+
+                        <button type="submit" form="formEmpleado">Guardar</button>
+                        <button type="button" onclick="cancelarEdicionEmpleado()">Cancelar edición</button>
+                    </form>
+
+                    <br> <br>
+                    <p class="mensaje" id="empleadoMensaje"></p>
+                    <br> <br>
+                </div>
+
+                <div class="administrador escondido" id="bloqueAdministrador">
+                    <h4>usted esta por crear un administrador</h4>
+                        <form id="formAdmin">
+                        <input type="hidden" id="idAdmin">
+
+                        <label for="emailAdmin">Email: </label>
+                        <input type="text" id="emailAdmin" required />
+                        
+                        <br> <br>
+                        
+                        <label for="contraseniaAdmin">Contraseña: </label>
+                        <input type="text" id="contraseniaAdmin" required />
+                        
+                        <br> <br>
+                        
+                        <label for="nombreAdmin">Nombre: </label>
+                        <input type="text" id="nombreAdmin" required />
+
+                        <br> <br>
+                        
+                        <label for="telefonoAdmin">Telefono: </label>
+                        <input type="text" id="telefonoAdmin" required />
+                        <br><br>
+
+                        <label for="dniAdmin">DNI: </label>
+                        <input type="text" id="dniAdmin" required />
+                        <br><br>
+
+                        <button type="submit" form="formAdmin">Guardar</button>
+                        <button type="button" onclick="cancelarEdicionAdmin()">Cancelar edición</button>
+                    </form>
+
+                    <br> <br>
+                    <p class="mensaje" id="adminMensaje"></p>
+                    <br> <br>
+                </div>
+
+                <div class="gerente escondido" id="bloqueGerente">
+                    <h4>usted esta por crear un gerente</h4>
+                        <form id="formGerente">
+                        <input type="hidden" id="idGerente">
+
+                        <label for="emailGerente">Email: </label>
+                        <input type="text" id="emailGerente" required />
+                        
+                        <br> <br>
+                        
+                        <label for="contraseniaGerente">Contraseña: </label>
+                        <input type="text" id="contraseniaGerente" required />
+                        
+                        <br> <br>
+                        
+                        <label for="nombreGerente">Nombre: </label>
+                        <input type="text" id="nombreGerente" required />
+
+                        <br> <br>
+                        
+                        <label for="telefonoGerente">Telefono: </label>
+                        <input type="text" id="telefonoGerente" required />
+                        <br><br>
+
+                        <label for="dniGerente">DNI: </label>
+                        <input type="text" id="dniGerente" required />
+                        <br><br>
+
+                        <button type="submit" form="formGerente">Guardar</button>
+                        <button type="button" onclick="cancelarEdicionGerente()">Cancelar edición</button>
+                    </form>
+
+                    <br> <br>
+                    <p class="mensaje" id="gerenteMensaje"></p>
+                    <br> <br>
+                </div>
+
+                <div class="cliente escondido" id="bloqueCliente">
+                    <h4>usted esta por crear un cliente</h4>
+                        <form id="formCliente">
+                        <input type="hidden" id="idCliente">
+
+                        <label for="emailCliente">Email: </label>
+                        <input type="text" id="emailCliente" required />
+                        
+                        <br> <br>
+                        
+                        <label for="contraseniaCliente">Contraseña: </label>
+                        <input type="text" id="contraseniaCliente" required />
+                        
+                        <br> <br>
+                        
+                        <label for="nombreCliente">Nombre: </label>
+                        <input type="text" id="nombreCliente" required />
+
+                        <br> <br>
+                        
+                        <label for="telefonoCliente">Telefono: </label>
+                        <input type="text" id="telefonoCliente" required />
+                        <br><br>
+
+                        <label for="dniCliente">DNI: </label>
+                        <input type="text" id="dniCliente" required />
+                        <br><br>
+
+                        <button type="submit" form="formCliente">Guardar</button>
+                        <button type="button" onclick="cancelarEdicionCliente()">Cancelar edición</button>
+                    </form>
+
+                    <br> <br>
+                    <p class="mensaje" id="clienteMensaje"></p>
+                    <br> <br>
+                </div>
+            </div>
+
+
+            <div class="tarea escondido" id="bloqueTarea">
+                <h2>Formulario: Tareas</h2>
+
+                <form id="formTarea">
+                    <input type="hidden" id="idTarea">
+                    
+                    <label for="categoria">Categoria: </label>
+                    <select id="categoria" required>
+                        <option value="ligero">Ligero</option>
+                        <option value="mediano">Mediano</option>
+                        <option value="pesado">Pesado</option>
+                    </select>
+
+                    <br><br>
+
+                    <input type="hidden" id="FechaRegistro">
+                    
+                    <label for="FechaEntrega">Ingrese la fecha de entrega</label>
+                    <input type="date" 
+                        id="FechaEntrega" 
+                        name="FechaEntrega" 
+                        value="2026-05-12"
+                        min="2026-01-01"
+                        max="2035-12-31" 
+                    />
+
+                    <br> <br>
+
+                    <label for="descripcionMaterial">Ingrese una descripcion del material.</label>
+                    <textarea name="descripcionMaterial" id="descripcionMaterial" rows="10" cols="50"></textarea>
+
+                    <br><br>
+
+                    <label for="descripcionTarea">Ingrese una descripcion de las tareas a realizar.</label>
+                    <textarea name="descripcionTarea" id="descripcionTarea" rows="10" cols="50"></textarea>
+
+                    <br><br>
+
+                    <div class="botones-form">
+                        <button type="submit">Guardar</button>
+                        <button type="button" onclick="cancelarEdicion()">Cancelar edición</button>
+                    </div>
+                </form>
+            </div> 
+
+            <div class="registro escondido" id="bloqueRegistro">
+                <h2>Formulario: Registros</h2>
+
+                <div class="botones-form">
+                    <button type="submit">Guardar</button>
+                    <button type="button" onclick="cancelarEdicion()">Cancelar edición</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="caja escondido" id="buscar">
+            <h1>Busqueda de registros</h1>
+        </div>
+
+        <div class="caja escondido" id="ver">
+            <h1>Vista de Tablas</h1>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Email</th>
+                        <th>Contraseña</th>
+                        <th>Nombre</th>
+                        <th>Telefono</th>
+                        <th>Acceso</th>
+                        <th>DNI</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaPersonas"></tbody>
+            </table>
+
+            <br><br>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Categoria</th>
+                        <th>FechaRegistro</th>
+                        <th>FechaEntrega</th>
+                        <th>DescripcionMaterial</th>
+                        <th>DescripcionTarea</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaTarea"></tbody>
+            </table>
+
+            <br><br>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Titulo</th>
+                        <th>TareaID</th>
+                        <th>ClienteID</th>
+                        <th>Contacto</th>
+                        <th>Estado</th>
+                        <th>Monto</th>
+                        <th>Participantes</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaRegistro"></tbody>
+            </table>
+        </div>
+    </body>
+</html>

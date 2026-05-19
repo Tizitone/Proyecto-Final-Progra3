@@ -1,0 +1,117 @@
+::backdrop {
+    background-image: conic-gradient(red, yellow, green);
+    background-color: #903cff;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    max-width: 900px;
+    margin: 30 auto;
+    /* background-image: url("200.jpg"); */
+    background-color: #bebebe;
+}
+
+h1 {
+    font-family: 'Arial Black', Arial, sans-serif;
+    font-weight: bolder;
+    font-size: 35px;
+    text-align: center;
+    padding-left: 20px;
+    padding-top: 10px;
+    padding-bottom: 30px;
+}
+
+p {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: small;
+    margin: 10px auto;
+}
+
+select {
+    scrollbar-width: none;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+}
+
+.inicio{
+    text-align: center;
+    width: auto;
+    height: auto;
+    white-space: normal;
+}
+
+option{
+    display: inline-block;
+    width: 80px;
+    margin: 5px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: center;
+    cursor: pointer;
+}
+
+.titulo-selector {
+    background-color: rgb(167, 173, 231);
+    font-size: 40px;
+    margin: 120px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 30px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.introduccion {
+    background-color: rgb(54, 54, 54);
+    font-size: 18px;
+    text-align: left;
+    color: white;
+    border-radius: 10px;
+    padding-left: 30px;
+}
+
+.caja {
+    width: 100%;
+    background-color: rgb(224, 255, 253);
+    padding: 20px;
+    margin-bottom: 20px;    
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.persona {
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 20px;    
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.tarea {
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 20px;    
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.registro {
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 20px;    
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.oculto {
+    display: none;
+}
+
+.escondido{
+    display: none;
+}
+
