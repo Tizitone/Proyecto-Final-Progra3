@@ -1,4 +1,4 @@
 package com.metalurgica1.metalurgica1.dto;
 
-public class ClienteDTO {
+public record ClienteDTO() {
 }

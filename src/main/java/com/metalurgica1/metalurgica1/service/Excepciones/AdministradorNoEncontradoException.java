@@ -1,4 +1,4 @@
-package com.metalurgica1.metalurgica1.servicios.Excepciones;
+package com.metalurgica1.metalurgica1.service.Excepciones;
 
 public class AdministradorNoEncontradoException extends Exception {
     public AdministradorNoEncontradoException(String message) {

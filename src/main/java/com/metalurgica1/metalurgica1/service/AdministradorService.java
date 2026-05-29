@@ -1,10 +1,10 @@
-package com.metalurgica1.metalurgica1.servicios;
+package com.metalurgica1.metalurgica1.service;
 
 import com.metalurgica1.metalurgica1.dto.AdministradorDTO;
 import com.metalurgica1.metalurgica1.dto.CrearAdministradorDTO;
 import com.metalurgica1.metalurgica1.modelo.Administrador;
 import com.metalurgica1.metalurgica1.repositorio.IAdministradorRepository;
-import com.metalurgica1.metalurgica1.servicios.Excepciones.AdministradorNoEncontradoException;
+import com.metalurgica1.metalurgica1.service.Excepciones.AdministradorNoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
