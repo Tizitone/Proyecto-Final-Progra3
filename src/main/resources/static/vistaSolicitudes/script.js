@@ -2,6 +2,7 @@ console.log("Script de tabla de solicitudes cargado correctamente");
 
 function cargarSolicitudes() {
     const tbody = document.querySelector('#tablaSolicitudes tbody');
+    tbody.innerHTML='';
 
     fetch('http://localhost:8080/api/solicitudes', {
         method: 'GET',
@@ -12,6 +13,10 @@ function cargarSolicitudes() {
         .then(response => {
             if (!response.ok) {
                 throw new Error('Error al obtener las solicitudes');
+            }
+            else
+            {
+                
             }
             return response.json();
         })

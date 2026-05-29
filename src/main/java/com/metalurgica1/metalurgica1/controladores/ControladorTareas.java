@@ -1,7 +1,9 @@
 package com.metalurgica1.metalurgica1.controladores;
 
-import com.metalurgica1.metalurgica1.DTO.TareaDTO;
+import com.metalurgica1.metalurgica1.dto.CrearTareaDTO;
+import com.metalurgica1.metalurgica1.dto.TareaDTO;
 import com.metalurgica1.metalurgica1.modelo.Tarea;
+import com.metalurgica1.metalurgica1.service.Excepciones.TareaNoEncontradaExeption;
 import com.metalurgica1.metalurgica1.service.TareaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,28 +24,40 @@ public class ControladorTareas {
 
 
     @GetMapping
-    public List<Tarea> listarTareas()
+    public List<TareaDTO> listarTareas()
     {
         return tareaService.listarTareas();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Tarea> buscarTarea(@PathVariable Long id){
-        return ResponseEntity.ok(tareaService.buscarPorId(id));
+    public ResponseEntity<TareaDTO> buscarTarea(@PathVariable Long id){
+        try
+        {
+            TareaDTO t = tareaService.buscarPorId(id);
+            return ResponseEntity.ok(t);
+        } catch (TareaNoEncontradaExeption e) {
+            e.printStackTrace();
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping
-    public String crearTarea(@RequestBody TareaDTO dto)
+    public ResponseEntity<CrearTareaDTO> crearTarea(@RequestBody CrearTareaDTO dto)
     {
-        ResponseEntity.status(HttpStatus.CREATED).body(tareaService.crearTarea(dto));
-        return "Tarea creada correctamente";
+        CrearTareaDTO c = tareaService.crearTarea(dto);
+        return ResponseEntity.ok(c);
     }
 
     @PutMapping("/{id}")
-    public String modificarTarea(@PathVariable Long id,@RequestBody TareaDTO dto)
+    public ResponseEntity<CrearTareaDTO> modificarTarea(@PathVariable Long id,@RequestBody CrearTareaDTO dto)
     {
-        ResponseEntity.ok(tareaService.modificarTarea(id, dto));
-        return "Tarea actualizada correctamente";
+        try {
+            CrearTareaDTO t = tareaService.modificarTarea(id, dto);
+            return ResponseEntity.ok(t);
+        } catch (TareaNoEncontradaExeption e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 
     @DeleteMapping("/{id}")

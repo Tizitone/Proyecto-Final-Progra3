@@ -1,11 +1,10 @@
-package com.metalurgica1.metalurgica1.DTO;
+package com.metalurgica1.metalurgica1.dto;
 
 import lombok.Data;
 
 import java.util.List;
 
 public record RegistroDTO(
-        Long id,
         String titulo,
         Long tareaId,
         Long clienteId,

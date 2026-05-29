@@ -1,6 +1,6 @@
 package com.metalurgica1.metalurgica1.controladores;
 
-import com.metalurgica1.metalurgica1.DTO.RegistroDTO;
+import com.metalurgica1.metalurgica1.dto.RegistroDTO;
 import com.metalurgica1.metalurgica1.modelo.Registro;
 import com.metalurgica1.metalurgica1.service.RegistroService;
 import org.springframework.http.HttpStatus;

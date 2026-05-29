@@ -1,4 +1,4 @@
-package com.metalurgica1.metalurgica1.DTO;
+package com.metalurgica1.metalurgica1.dto;
 
 import com.metalurgica1.metalurgica1.modelo.enums.ECategorias;
 import lombok.Data;
@@ -8,9 +8,9 @@ import java.time.LocalDateTime;
 
 
 public record TareaDTO(
-     Long id,
      ECategorias categorias,
      LocalDate fechaDeEntrega,
+     LocalDateTime fechaDeRegistro,
      String descripcionMaterial,
      String descripcionGeneral){
 }

@@ -1,14 +1,17 @@
 package com.metalurgica1.metalurgica1.service;
 
-import com.metalurgica1.metalurgica1.DTO.TareaDTO;
+import com.metalurgica1.metalurgica1.dto.CrearTareaDTO;
+import com.metalurgica1.metalurgica1.dto.TareaDTO;
 import com.metalurgica1.metalurgica1.modelo.Tarea;
 import com.metalurgica1.metalurgica1.repositorio.ITareaRepository;
+import com.metalurgica1.metalurgica1.service.Excepciones.TareaNoEncontradaExeption;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TareaService {
@@ -19,32 +22,63 @@ public class TareaService {
         this.iTareaRepository = iTareaRepository;
     }
 
-    public List<Tarea> listarTareas(){
-        return iTareaRepository.findAll();
+    public List<TareaDTO> listarTareas(){
+        return iTareaRepository
+                .findAll()
+                .stream()
+                .map(t -> new TareaDTO(t.getCategorias(),
+                        t.getFechaDeEntrega(),
+                        t.getFechaDeRegistro(),
+                        t.getDescripcionMaterial(),
+                        t.getDescripcionGeneral()))
+                .collect(Collectors.toList());
+    }
+    private Tarea buscarTarea(Long id) throws TareaNoEncontradaExeption {
+        Tarea t = iTareaRepository.findById(id)
+                .orElseThrow(()-> new TareaNoEncontradaExeption(id));
+        return t;
     }
 
-    public Tarea buscarPorId(Long id){
-        return iTareaRepository.findById(id)
-                .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Tarea no encontrada"));
+    public TareaDTO buscarPorId(Long id) throws TareaNoEncontradaExeption {
+        Tarea t = buscarTarea(id);
+        return new TareaDTO(t.getCategorias(),
+                t.getFechaDeEntrega(),
+                t.getFechaDeRegistro(),
+                t.getDescripcionMaterial(),
+                t.getDescripcionGeneral());
     }
 
-    public Tarea crearTarea(TareaDTO dto){
+    public CrearTareaDTO crearTarea(CrearTareaDTO dto){
         Tarea tarea = new Tarea();
         tarea.setCategorias(dto.categorias());
         tarea.setFechaDeRegistro(LocalDateTime.now());
         tarea.setFechaDeEntrega(dto.fechaDeEntrega());
         tarea.setDescripcionMaterial(dto.descripcionMaterial());
         tarea.setDescripcionGeneral(dto.descripcionGeneral());
-        return iTareaRepository.save(tarea);
+
+        Tarea nuevaTarea = iTareaRepository.save(tarea);
+
+        return new CrearTareaDTO(
+                nuevaTarea.getCategorias(),
+                nuevaTarea.getFechaDeEntrega(),
+                nuevaTarea.getDescripcionMaterial(),
+                nuevaTarea.getDescripcionGeneral());
     }
 
-    public Tarea modificarTarea(Long id, TareaDTO dto){
-        Tarea tarea = buscarPorId(id);
+    public CrearTareaDTO modificarTarea(Long id, CrearTareaDTO dto) throws TareaNoEncontradaExeption {
+        Tarea tarea = buscarTarea(id);
         tarea.setCategorias(dto.categorias());
         tarea.setFechaDeEntrega(dto.fechaDeEntrega());
         tarea.setDescripcionMaterial(dto.descripcionMaterial());
         tarea.setDescripcionGeneral(dto.descripcionGeneral());
-        return iTareaRepository.save(tarea);
+
+        Tarea nuevaTarea = iTareaRepository.save(tarea);
+
+        return new CrearTareaDTO(
+                nuevaTarea.getCategorias(),
+                nuevaTarea.getFechaDeEntrega(),
+                nuevaTarea.getDescripcionMaterial(),
+                nuevaTarea.getDescripcionGeneral());
     }
 
     public void eliminarTarea(Long id){
