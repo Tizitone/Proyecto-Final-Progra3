@@ -1,17 +1,26 @@
 package com.metalurgica1.metalurgica1.service;
 
+import com.metalurgica1.metalurgica1.dto.CrearEmpleadoDTO;
+import com.metalurgica1.metalurgica1.dto.EmpleadoDTO;
 import com.metalurgica1.metalurgica1.dto.RegistroDTO;
+import com.metalurgica1.metalurgica1.modelo.Cliente;
 import com.metalurgica1.metalurgica1.modelo.Empleado;
 import com.metalurgica1.metalurgica1.modelo.Registro;
+import com.metalurgica1.metalurgica1.modelo.Tarea;
 import com.metalurgica1.metalurgica1.repositorio.IClienteRepository;
 import com.metalurgica1.metalurgica1.repositorio.IEmpleadoRepository;
 import com.metalurgica1.metalurgica1.repositorio.IRegistroRepository;
 import com.metalurgica1.metalurgica1.repositorio.ITareaRepository;
+import com.metalurgica1.metalurgica1.service.Excepciones.ClienteNoEncontradoException;
+import com.metalurgica1.metalurgica1.service.Excepciones.RegistroNoEncontradoException;
+import com.metalurgica1.metalurgica1.service.Excepciones.TareaNoEncontradaExeption;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class RegistroService {
@@ -27,54 +36,103 @@ public class RegistroService {
         this.iEmpleadoRepository = iEmpleadoRepository;
     }
 
-    public List<Registro> listarRegistros(){
-        return iRegistroRepository.findAll();
+    public List<RegistroDTO> listarRegistros(){
+        return iRegistroRepository.
+                findAll()
+                .stream()
+                .map(r -> new RegistroDTO(
+                        r.getId(),
+                        r.getTitulo(),
+                        r.getTarea().getId(),
+                        r.getCliente().getIdCliente(),
+                        r.getParticipantes()))
+                .collect(Collectors.toList());
+    }
+    public List<EmpleadoDTO> listarEmpleadosEnRegistro(Long id) throws RegistroNoEncontradoException {
+        Registro r = iRegistroRepository.findById(id)
+                .orElseThrow(()-> new RegistroNoEncontradoException(id));
+        List<EmpleadoDTO> participantes = new ArrayList<>();
+
+        for(Empleado e : r.getParticipantes())
+        {
+            participantes.add(new EmpleadoDTO(e.getLegajo(),e.getEmail(),e.getNombre(),e.getTelefono(),e.getDni()));
+        }
+        return participantes;
     }
 
-    public Registro buscarPorId(Long id){
-        return iRegistroRepository.findById(id)
-                .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Registro no encontrado"));
+    public RegistroDTO buscarRegistroPorId(Long id) throws RegistroNoEncontradoException {
+        Registro r = iRegistroRepository.findById(id)
+                .orElseThrow(()-> new RegistroNoEncontradoException(id));
+
+        return new RegistroDTO(
+                r.getId(),
+                r.getTitulo(),
+                r.getTarea().getId(),
+                r.getCliente().getIdCliente(),
+                r.getParticipantes());
     }
 
-    public Registro crearRegistro(RegistroDTO dto){
+    public RegistroDTO crearRegistro(RegistroDTO dto) throws TareaNoEncontradaExeption, ClienteNoEncontradoException {
         Registro registro = new Registro();
 
+        Tarea t = iTareaRepository.findById(dto.tareaId())
+                .orElseThrow(()-> new TareaNoEncontradaExeption(dto.tareaId()));
+
+        Cliente c = iClienteRepository.findById(dto.clienteId())
+                .orElseThrow(()-> new ClienteNoEncontradoException(dto.clienteId()));
+
         registro.setTitulo(dto.titulo());
 
-        registro.setTarea(iTareaRepository.findById(dto.tareaId())
-                .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Tarea no encontrada")));
+        registro.setTarea(t);
 
-        registro.setCliente(iClienteRepository.findById(dto.clienteId())
-                .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente no encontrado")));
+        registro.setCliente(c);
 
         if(dto.participantesId() != null && !dto.participantesId().isEmpty()) {
-            List<Empleado> participantes = dto.participantesId().stream()
-                    .map(empId -> iEmpleadoRepository.findById(empId)
-                            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Empleado no encontrado")))
-                    .toList();
+            List<Empleado> participantes = dto.participantesId();
+
             registro.setParticipantes(participantes);
         }
 
-        return iRegistroRepository.save(registro);
+        Registro nuevoRegistro = iRegistroRepository.save(registro);
+
+        return new RegistroDTO(
+                nuevoRegistro.getId(),
+                nuevoRegistro.getTitulo(),
+                nuevoRegistro.getTarea().getId(),
+                nuevoRegistro.getCliente().getIdCliente(),
+                nuevoRegistro.getParticipantes());
     }
 
-    public Registro modificarRegistro(Long id, RegistroDTO dto) {
+    public RegistroDTO modificarRegistro(Long id, RegistroDTO dto) throws RegistroNoEncontradoException, TareaNoEncontradaExeption, ClienteNoEncontradoException {
         Registro registro = iRegistroRepository.findById(id)
-                .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Registro no encontrado"));
+                .orElseThrow(()-> new RegistroNoEncontradoException(id));
+
+        Tarea t = iTareaRepository.findById(dto.tareaId())
+                .orElseThrow(()-> new TareaNoEncontradaExeption(dto.tareaId()));
+
+        Cliente c = iClienteRepository.findById(dto.clienteId())
+                .orElseThrow(()-> new ClienteNoEncontradoException(dto.clienteId()));
+
         registro.setTitulo(dto.titulo());
-        registro.setTarea(iTareaRepository.findById(dto.tareaId())
-                .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Tarea no encontrada")));
-        registro.setCliente(iClienteRepository.findById(dto.clienteId())
-                .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente no encontrado")));
+
+        registro.setTarea(t);
+
+        registro.setCliente(c);
+
         if(dto.participantesId() != null && !dto.participantesId().isEmpty()) {
-            List<Empleado> participantes = dto.participantesId().stream()
-                    .map(empId -> iEmpleadoRepository.findById(empId)
-                            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Empleado no encontrado")))
-                    .toList();
+            List<Empleado> participantes = dto.participantesId();
+
             registro.setParticipantes(participantes);
         }
 
-        return iRegistroRepository.save(registro);
+        Registro nuevoRegistro = iRegistroRepository.save(registro);
+
+        return new RegistroDTO(
+                nuevoRegistro.getId(),
+                nuevoRegistro.getTitulo(),
+                nuevoRegistro.getTarea().getId(),
+                nuevoRegistro.getCliente().getIdCliente(),
+                nuevoRegistro.getParticipantes());
     }
 
     public void eliminarRegistro(Long id){
