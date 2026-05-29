@@ -1,9 +1,14 @@
 package com.metalurgica1.metalurgica1.controladores;
 
+import com.metalurgica1.metalurgica1.dto.AdministradorDTO;
+import com.metalurgica1.metalurgica1.dto.CrearAdministradorDTO;
 import com.metalurgica1.metalurgica1.modelo.Administrador;
 import com.metalurgica1.metalurgica1.modelo.Tarea;
 import com.metalurgica1.metalurgica1.repositorio.IAdministradorRepository;
 import com.metalurgica1.metalurgica1.repositorio.ITareaRepository;
+import com.metalurgica1.metalurgica1.servicios.AdministradorService;
+import com.metalurgica1.metalurgica1.servicios.Excepciones.AdministradorNoEncontradoException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,29 +20,49 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class ControladorAdministrador {
 
-    private final IAdministradorRepository iAdministradorRepository;
+    @Autowired
+    private AdministradorService administradorService;
 
-
-    public ControladorAdministrador(IAdministradorRepository iAdministradorRepository) {
-        this.iAdministradorRepository = iAdministradorRepository;
+    public ControladorAdministrador(AdministradorService administradorService) {
+        this.administradorService = administradorService;
     }
 
     @GetMapping
-    public List<Administrador> listarAdministradores()
+    public List<AdministradorDTO> listarAdministradores()
     {
-        return iAdministradorRepository.findAll();
+        return administradorService.listarAdministradores();
     }
-    @PostMapping
-    public ResponseEntity<Tarea> crearAdministrador(@RequestBody Administrador administrador)
+
+    @GetMapping("/{id}")
+    public ResponseEntity<AdministradorDTO> buscarAdmin(@PathVariable Long id)
     {
-        iAdministradorRepository.save(administrador);
+
+        try {
+            AdministradorDTO a = administradorService.buscarAdministrador(id);
+            return ResponseEntity.ok(a);
+        } catch (AdministradorNoEncontradoException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+    }
+
+    @PostMapping
+    public ResponseEntity<CrearAdministradorDTO> crearAdministrador(@RequestBody CrearAdministradorDTO administrador)
+    {
+        administradorService.crearAdministrador(administrador);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
     @PutMapping("/{id}")
-    public String crearAdministrador(@PathVariable Long id,@RequestBody Administrador administrador)
+    public ResponseEntity<AdministradorDTO> modificarAdministrador(@PathVariable Long id,@RequestBody AdministradorDTO dto)
     {
-        administrador.setId_administrador(id);
-        iAdministradorRepository.save(administrador);
-        return "Tarea actualizada correctamente";
+        try
+        {
+            administradorService.modificarAdministrador(id,dto);
+            return ResponseEntity.ok(dto);
+        } catch (AdministradorNoEncontradoException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(dto,HttpStatus.NOT_FOUND);
+        }
     }
 }

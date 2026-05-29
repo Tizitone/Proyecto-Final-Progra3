@@ -16,7 +16,7 @@ public abstract class Persona {
     private String contrasenia;
     private String nombre;
     private String telefono;
-    private int dni;
+    private Long dni;
 
     @Enumerated(EnumType.STRING)
     private EEtiquetaDeAcceso etiquetaDeAcceso;
