@@ -1,7 +1,6 @@
 package com.metalurgica1.metalurgica1.controladores;
 
 import com.metalurgica1.metalurgica1.modelo.Solicitud;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,11 +11,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/solicitudes")
 @CrossOrigin(origins = "*")
-public class ControladorSolicitudes {
+public class ControladorSolicitud {
 
     private final ISolicitudRepository ISolicitudRepository;
 
-    public ControladorSolicitudes(ISolicitudRepository ISolicitudRepository) {
+    public ControladorSolicitud(ISolicitudRepository ISolicitudRepository) {
         this.ISolicitudRepository = ISolicitudRepository;
     }
 

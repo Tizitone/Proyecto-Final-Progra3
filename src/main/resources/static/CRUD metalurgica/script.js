@@ -77,7 +77,7 @@ const personaBlock = document.getElementById('bloquePersona');
 const tareaBlock = document.getElementById('bloqueTarea');
 const registroBlock = document.getElementById('bloqueRegistro');
 
-formTypeSelect.addEventListener('change', function() {
+blockTypeSelect.addEventListener('change', function() {
     switch (this.value) {
         case 'personas':
             personaBlock.classList.remove('escondido');
