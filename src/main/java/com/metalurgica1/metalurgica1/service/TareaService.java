@@ -3,12 +3,14 @@ package com.metalurgica1.metalurgica1.service;
 import com.metalurgica1.metalurgica1.dto.CrearTareaDTO;
 import com.metalurgica1.metalurgica1.dto.TareaDTO;
 import com.metalurgica1.metalurgica1.modelo.Tarea;
+import com.metalurgica1.metalurgica1.modelo.enums.ECategorias;
 import com.metalurgica1.metalurgica1.repositorio.ITareaRepository;
 import com.metalurgica1.metalurgica1.service.Excepciones.TareaNoEncontradaExeption;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -46,6 +48,21 @@ public class TareaService {
                 t.getFechaDeRegistro(),
                 t.getDescripcionMaterial(),
                 t.getDescripcionGeneral());
+    }
+
+    public List<Tarea> buscarPorTexto(String texto){
+        return iTareaRepository.findByDescripcionGeneralContainingIgnoreCaseOrDescripcionMaterialContainingIgnoreCase(
+                texto,
+                texto
+        );
+    }
+
+    public List<Tarea> buscarPorCategoria(ECategorias categorias){
+        return iTareaRepository.findByCategorias(categorias);
+    }
+
+    public List<Tarea> buscarPorFecha(LocalDate fecha){
+        return iTareaRepository.findByFechaDeEntrega(fecha);
     }
 
     public CrearTareaDTO crearTarea(CrearTareaDTO dto){

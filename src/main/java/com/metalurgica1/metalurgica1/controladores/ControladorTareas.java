@@ -3,12 +3,15 @@ package com.metalurgica1.metalurgica1.controladores;
 import com.metalurgica1.metalurgica1.dto.CrearTareaDTO;
 import com.metalurgica1.metalurgica1.dto.TareaDTO;
 import com.metalurgica1.metalurgica1.modelo.Tarea;
+import com.metalurgica1.metalurgica1.modelo.enums.ECategorias;
 import com.metalurgica1.metalurgica1.service.Excepciones.TareaNoEncontradaExeption;
 import com.metalurgica1.metalurgica1.service.TareaService;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -39,6 +42,22 @@ public class ControladorTareas {
             e.printStackTrace();
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("/buscar")
+    public ResponseEntity<List<Tarea>> buscarTareas(@RequestParam String texto){
+        return ResponseEntity.ok(tareaService.buscarPorTexto(texto));
+    }
+
+    @GetMapping("/buscar/categoria")
+    public ResponseEntity<List<Tarea>> buscarPorCategoria(@RequestParam ECategorias categoria){
+        return ResponseEntity.ok(tareaService.buscarPorCategoria(categoria));
+    }
+
+    @GetMapping("/buscar/fecha")
+    public ResponseEntity<List<Tarea>> buscarPorFecha(@RequestParam @DateTimeFormat
+            (iso = DateTimeFormat.ISO.DATE) LocalDate fecha){
+        return ResponseEntity.ok(tareaService.buscarPorFecha(fecha));
     }
 
     @PostMapping
