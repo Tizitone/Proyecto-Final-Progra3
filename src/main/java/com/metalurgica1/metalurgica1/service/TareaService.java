@@ -1,4 +1,4 @@
-package com.metalurgica1.metalurgica1.servicio;
+package com.metalurgica1.metalurgica1.service;
 
 import com.metalurgica1.metalurgica1.DTO.TareaDTO;
 import com.metalurgica1.metalurgica1.modelo.Tarea;
@@ -11,11 +11,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-public class TareaServicio {
+public class TareaService {
     private final ITareaRepository iTareaRepository;
 
 
-    public TareaServicio(ITareaRepository iTareaRepository) {
+    public TareaService(ITareaRepository iTareaRepository) {
         this.iTareaRepository = iTareaRepository;
     }
 

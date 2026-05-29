@@ -1,4 +1,4 @@
-package com.metalurgica1.metalurgica1.servicio;
+package com.metalurgica1.metalurgica1.service;
 
 import com.metalurgica1.metalurgica1.DTO.RegistroDTO;
 import com.metalurgica1.metalurgica1.modelo.Empleado;
@@ -14,13 +14,13 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @Service
-public class RegistroServicio {
+public class RegistroService {
     private final IRegistroRepository iRegistroRepository;
     private final IClienteRepository iClienteRepository;
     private final ITareaRepository iTareaRepository;
     private final IEmpleadoRepository iEmpleadoRepository;
 
-    public RegistroServicio(IRegistroRepository iRegistroRepository, IClienteRepository iClienteRepository, ITareaRepository iTareaRepository, IEmpleadoRepository iEmpleadoRepository) {
+    public RegistroService(IRegistroRepository iRegistroRepository, IClienteRepository iClienteRepository, ITareaRepository iTareaRepository, IEmpleadoRepository iEmpleadoRepository) {
         this.iRegistroRepository = iRegistroRepository;
         this.iClienteRepository = iClienteRepository;
         this.iTareaRepository = iTareaRepository;
