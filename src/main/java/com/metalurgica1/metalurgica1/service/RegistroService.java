@@ -39,16 +39,16 @@ public class RegistroService {
     public Registro crearRegistro(RegistroDTO dto){
         Registro registro = new Registro();
 
-        registro.setTitulo(dto.getTitulo());
+        registro.setTitulo(dto.titulo());
 
-        registro.setTarea(iTareaRepository.findById(dto.getTareaId())
+        registro.setTarea(iTareaRepository.findById(dto.tareaId())
                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Tarea no encontrada")));
 
-        registro.setCliente(iClienteRepository.findById(dto.getClienteId())
+        registro.setCliente(iClienteRepository.findById(dto.clienteId())
                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente no encontrado")));
 
-        if(dto.getParticipantesId() != null && !dto.getParticipantesId().isEmpty()) {
-            List<Empleado> participantes = dto.getParticipantesId().stream()
+        if(dto.participantesId() != null && !dto.participantesId().isEmpty()) {
+            List<Empleado> participantes = dto.participantesId().stream()
                     .map(empId -> iEmpleadoRepository.findById(empId)
                             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Empleado no encontrado")))
                     .toList();
@@ -61,13 +61,13 @@ public class RegistroService {
     public Registro modificarRegistro(Long id, RegistroDTO dto) {
         Registro registro = iRegistroRepository.findById(id)
                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Registro no encontrado"));
-        registro.setTitulo(dto.getTitulo());
-        registro.setTarea(iTareaRepository.findById(dto.getTareaId())
+        registro.setTitulo(dto.titulo());
+        registro.setTarea(iTareaRepository.findById(dto.tareaId())
                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Tarea no encontrada")));
-        registro.setCliente(iClienteRepository.findById(dto.getClienteId())
+        registro.setCliente(iClienteRepository.findById(dto.clienteId())
                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente no encontrado")));
-        if(dto.getParticipantesId() != null && !dto.getParticipantesId().isEmpty()) {
-            List<Empleado> participantes = dto.getParticipantesId().stream()
+        if(dto.participantesId() != null && !dto.participantesId().isEmpty()) {
+            List<Empleado> participantes = dto.participantesId().stream()
                     .map(empId -> iEmpleadoRepository.findById(empId)
                             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Empleado no encontrado")))
                     .toList();

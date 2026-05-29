@@ -30,20 +30,20 @@ public class TareaService {
 
     public Tarea crearTarea(TareaDTO dto){
         Tarea tarea = new Tarea();
-        tarea.setCategorias(dto.getCategorias());
+        tarea.setCategorias(dto.categorias());
         tarea.setFechaDeRegistro(LocalDateTime.now());
-        tarea.setFechaDeEntrega(dto.getFechaDeEntrega());
-        tarea.setDescripcionMaterial(dto.getDescripcionMaterial());
-        tarea.setDescripcionGeneral(dto.getDescripcionGeneral());
+        tarea.setFechaDeEntrega(dto.fechaDeEntrega());
+        tarea.setDescripcionMaterial(dto.descripcionMaterial());
+        tarea.setDescripcionGeneral(dto.descripcionGeneral());
         return iTareaRepository.save(tarea);
     }
 
     public Tarea modificarTarea(Long id, TareaDTO dto){
         Tarea tarea = buscarPorId(id);
-        tarea.setCategorias(dto.getCategorias());
-        tarea.setFechaDeEntrega(dto.getFechaDeEntrega());
-        tarea.setDescripcionMaterial(dto.getDescripcionMaterial());
-        tarea.setDescripcionGeneral(dto.getDescripcionGeneral());
+        tarea.setCategorias(dto.categorias());
+        tarea.setFechaDeEntrega(dto.fechaDeEntrega());
+        tarea.setDescripcionMaterial(dto.descripcionMaterial());
+        tarea.setDescripcionGeneral(dto.descripcionGeneral());
         return iTareaRepository.save(tarea);
     }
 

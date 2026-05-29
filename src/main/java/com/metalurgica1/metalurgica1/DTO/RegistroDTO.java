@@ -4,11 +4,10 @@ import lombok.Data;
 
 import java.util.List;
 
-@Data
-public class RegistroDTO {
-    private Long id;
-    private String titulo;
-    private Long tareaId;
-    private Long clienteId;
-    private List<Long> participantesId;
+public record RegistroDTO(
+        Long id,
+        String titulo,
+        Long tareaId,
+        Long clienteId,
+        List<Long> participantesId){
 }
