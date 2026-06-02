@@ -11,12 +11,15 @@
     <h1>Solicitudes Recibidas</h1>
     <div class = "opciones">
         <div>
-            <button class="btn-refresh" onclick="cargarSolicitudes()">Actualizar</button>
+            
         </div>
         <div class = "buscar_input">
             <form id="formBuscar">
                 <input id=buscarSolicitud type="text" placeholder="buscar solicitud">
-                <button class="btn-refresh" type="submit"> Buscar</button>
+                <div class="form_opciones">
+                    <button class="btn-refresh" type="reset">cancelar</button>
+                    <button class="btn-refresh" type="submit"> Buscar</button>
+                </div>
             </form>
         </div>
     </div>
@@ -30,6 +33,7 @@
             <th>Email</th>
             <th>Teléfono</th>
             <th>Descripción</th>
+            <th> </th>
         </tr>
         </thead>
         <tbody>

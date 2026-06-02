@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -29,7 +30,10 @@ public class ControladorSolicitud {
     }
 
     @GetMapping("/buscar")
-    public ResponseEntity<List<SolicitudDTO>> listarSolicitud(@RequestParam(name = "texto", required = false) String desc) {
+    public ResponseEntity<List<SolicitudDTO>> listarSolicitud(@RequestParam(name = "desc", required = false) String desc) {
+        if (desc == null || desc.trim().isEmpty()) {
+            return ResponseEntity.ok(new ArrayList<>());
+        }
             List<SolicitudDTO> solicitud = solicitudService.buscarSolicitudPorDescripcion(desc);
             return ResponseEntity.ok(solicitud);
     }

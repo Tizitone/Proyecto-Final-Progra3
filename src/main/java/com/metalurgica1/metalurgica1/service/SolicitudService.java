@@ -34,8 +34,7 @@ public class SolicitudService {
         if (descripcion == null || descripcion.trim().isEmpty()) {
             return new ArrayList<>();
         }
-        String textoBusqueda = descripcion.trim();
-        List<Solicitud> s = iSolicitudRepository.findByDescripcionPorPalabras(textoBusqueda);
+        List<Solicitud> s = iSolicitudRepository.findByDescripcionContainingIgnoreCase(descripcion);
         return s.stream().map(p-> new SolicitudDTO(p.getId(), p.getNombre(),p.getEmail(),p.getTelefono(),p.getDescripcion())).collect(Collectors.toList());
     }
 
