@@ -6,6 +6,7 @@ import com.metalurgica1.metalurgica1.modelo.Tarea;
 import com.metalurgica1.metalurgica1.modelo.enums.ECategorias;
 import com.metalurgica1.metalurgica1.repositorio.ITareaRepository;
 import com.metalurgica1.metalurgica1.service.Excepciones.TareaNoEncontradaExeption;
+import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -22,6 +23,12 @@ public class TareaService {
 
     public TareaService(ITareaRepository iTareaRepository) {
         this.iTareaRepository = iTareaRepository;
+    }
+
+    private TareaDTO convertirADTO(Tarea t){
+        return new TareaDTO(t.getCategorias(),t.getFechaDeEntrega(),
+                t.getFechaDeRegistro(),t.getDescripcionMaterial(),
+                t.getDescripcionGeneral());
     }
 
     public List<TareaDTO> listarTareas(){
@@ -49,19 +56,27 @@ public class TareaService {
                 t.getDescripcionGeneral());
     }
 
-    public List<Tarea> buscarPorTexto(String texto){
+    public List<TareaDTO> buscarPorTexto(String texto){
         return iTareaRepository.findByDescripcionGeneralContainingIgnoreCaseOrDescripcionMaterialContainingIgnoreCase(
                 texto,
-                texto
-        );
+                texto)
+                .stream()
+                .map(this::convertirADTO)
+                .collect(Collectors.toList());
     }
 
-    public List<Tarea> buscarPorCategoria(ECategorias categorias){
-        return iTareaRepository.findByCategorias(categorias);
+    public List<TareaDTO> buscarPorCategoria(ECategorias categorias){
+        return iTareaRepository.findByCategorias(categorias)
+                .stream()
+                .map(this::convertirADTO)
+                .collect(Collectors.toList());
     }
 
-    public List<Tarea> buscarPorFecha(LocalDate fecha){
-        return iTareaRepository.findByFechaDeEntrega(fecha);
+    public List<TareaDTO> buscarPorFecha(LocalDate fecha){
+        return iTareaRepository.findByFechaDeEntrega(fecha)
+                .stream()
+                .map(this::convertirADTO)
+                .collect(Collectors.toList());
     }
 
     public CrearTareaDTO crearTarea(CrearTareaDTO dto){

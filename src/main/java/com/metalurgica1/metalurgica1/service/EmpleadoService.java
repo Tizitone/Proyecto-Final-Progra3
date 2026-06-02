@@ -11,10 +11,10 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
-
 public class EmpleadoService {
 
     private final IEmpleadoRepository iEmpleadoRepository;
@@ -37,24 +37,31 @@ public class EmpleadoService {
         return convertirADTOResponse(empleado);
     }
 
-    public Empleado buscarEmpleadoPorEmail(String email){
-        return iEmpleadoRepository.findByEmail(email);
+    public EmpleadoDTO buscarEmpleadoPorEmail(String email){
+        Empleado empleado = iEmpleadoRepository.findByEmail(email);
+        return convertirADTOResponse(empleado);
     }
 
-    public List<Empleado> buscarEmpleadoPorNombre(String nombre){
-        return iEmpleadoRepository.findByNombre(nombre);
+    public List<EmpleadoDTO> buscarEmpleadoPorNombre(String nombre){
+        return iEmpleadoRepository.findByNombre(nombre)
+                .stream()
+                .map(this::convertirADTOResponse)
+                .collect(Collectors.toList());
     }
 
-    public Empleado buscarEmpleadoPorTelefono(String telefono){
-        return iEmpleadoRepository.findByTelefono(telefono);
+    public EmpleadoDTO buscarEmpleadoPorTelefono(String telefono){
+        Empleado empleado = iEmpleadoRepository.findByTelefono(telefono);
+        return convertirADTOResponse(empleado);
     }
 
-    public Empleado buscarEmpleadoPorDni(Long dni){
-        return iEmpleadoRepository.findByDni(dni);
+    public EmpleadoDTO buscarEmpleadoPorDni(Long dni){
+        Empleado empleado = iEmpleadoRepository.findByDni(dni);
+        return convertirADTOResponse(empleado);
     }
 
-    public Empleado buscarEmpleadoPorLegajo(Long legajo){
-        return iEmpleadoRepository.findByLegajo(legajo);
+    public EmpleadoDTO buscarEmpleadoPorLegajo(Long legajo){
+        Empleado empleado = iEmpleadoRepository.findByLegajo(legajo);
+        return convertirADTOResponse(empleado);
     }
 
     public CrearEmpleadoDTO crearEmpleado(CrearEmpleadoDTO dto) {

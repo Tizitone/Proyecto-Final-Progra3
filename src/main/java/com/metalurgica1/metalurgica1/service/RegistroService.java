@@ -32,6 +32,11 @@ public class RegistroService {
         this.iTareaRepository = iTareaRepository;
     }
 
+    private RegistroDTO convertirADTO(Registro r){
+        return new RegistroDTO(r.getId(),r.getTitulo(),r.getTarea().getId(),
+                r.getCliente().getIdCliente(),r.getParticipantes());
+    }
+
     public List<RegistroDTO> listarRegistros(){
         return iRegistroRepository.
                 findAll()
@@ -68,8 +73,11 @@ public class RegistroService {
                 r.getParticipantes());
     }
 
-    public List<Registro> buscarRegistroPorTitulo(String titulo){
-        return iRegistroRepository.findByTitulo(titulo);
+    public List<RegistroDTO> buscarRegistroPorTitulo(String titulo){
+        return iRegistroRepository.findByTitulo(titulo)
+                .stream()
+                .map(this::convertirADTO)
+                .collect(Collectors.toList());
     }
 
     public RegistroDTO crearRegistro(RegistroDTO dto) throws TareaNoEncontradaExeption, ClienteNoEncontradoException {

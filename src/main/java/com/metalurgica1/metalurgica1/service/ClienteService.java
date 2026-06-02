@@ -10,6 +10,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -36,20 +37,26 @@ public class ClienteService {
         return convertirADTOResponse(cliente);
     }
 
-    public Cliente buscarClientePorEmail(String email){
-        return iClienteRepository.findByEmail(email);
+    public ClienteDTO buscarClientePorEmail(String email){
+        Cliente cliente = iClienteRepository.findByEmail(email);
+        return convertirADTOResponse(cliente);
     }
 
-    public List<Cliente> buscarClientePorNombre(String nombre){
-        return iClienteRepository.findByNombre(nombre);
+    public List<ClienteDTO> buscarClientePorNombre(String nombre){
+        return iClienteRepository.findByNombre(nombre)
+                .stream()
+                .map(this::convertirADTOResponse)
+                .collect(Collectors.toList());
     }
 
-    public Cliente buscarClientePorTelefono(String telefono){
-        return iClienteRepository.findByTelefono(telefono);
+    public ClienteDTO buscarClientePorTelefono(String telefono){
+        Cliente cliente = iClienteRepository.findByTelefono(telefono);
+        return convertirADTOResponse(cliente);
     }
 
-    public Cliente buscarClientePorDni(Long dni){
-        return iClienteRepository.findByDni(dni);
+    public ClienteDTO buscarClientePorDni(Long dni){
+        Cliente cliente = iClienteRepository.findByDni(dni);
+        return convertirADTOResponse(cliente);
     }
 
     public CrearClienteDTO crearCliente(CrearClienteDTO dto) {
