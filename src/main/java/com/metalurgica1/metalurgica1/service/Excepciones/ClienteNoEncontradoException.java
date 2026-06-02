@@ -1,6 +1,6 @@
 package com.metalurgica1.metalurgica1.service.Excepciones;
 
-public class ClienteNoEncontradoException extends Exception {
+public class ClienteNoEncontradoException extends RuntimeException {
     public ClienteNoEncontradoException(String message) {
         super(message);
     }

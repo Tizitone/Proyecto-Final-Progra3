@@ -1,12 +1,11 @@
 package com.metalurgica1.metalurgica1.controladores;
 
-import com.metalurgica1.metalurgica1.modelo.Empleado;
-import com.metalurgica1.metalurgica1.modelo.Solicitud;
-import com.metalurgica1.metalurgica1.modelo.Tarea;
-import com.metalurgica1.metalurgica1.repositorio.IEmpleadoRepository;
+import com.metalurgica1.metalurgica1.service.EmpleadoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.metalurgica1.metalurgica1.DTO.EmpleadoDTO;
+import com.metalurgica1.metalurgica1.DTO.CrearEmpleadoDTO;
 
 import java.util.List;
 
@@ -14,28 +13,43 @@ import java.util.List;
 @RequestMapping("/api/empleados")
 public class ControladorEmpleado {
 
-    private final IEmpleadoRepository iEmpleadoRepository;
+    private final EmpleadoService empleadoService;
 
-    public ControladorEmpleado(IEmpleadoRepository iEmpleadoRepository) {
-        this.iEmpleadoRepository = iEmpleadoRepository;
+    public ControladorEmpleado(EmpleadoService empleadoService) {
+        this.empleadoService = empleadoService;
     }
 
     @GetMapping
-    public List<Empleado> empleados()
+    public ResponseEntity<List<EmpleadoDTO>> listarTodosEmpleados()
     {
-        return iEmpleadoRepository.findAll();
+        List<EmpleadoDTO> empleados = empleadoService.listarTodosEmpleados();
+        return ResponseEntity.ok(empleados);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<EmpleadoDTO> listarEmpleado(Long id)
+    {
+        EmpleadoDTO empleado = empleadoService.listarEmpleado(id);
+        return ResponseEntity.ok(empleado);
+    }
+
     @PostMapping
-    public ResponseEntity<String> crearEmpleado(@RequestBody Empleado empleado)
+    public ResponseEntity<CrearEmpleadoDTO> crearEmpleado(@RequestBody CrearEmpleadoDTO empleado)
     {
-        iEmpleadoRepository.save(empleado);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Solicitud creada con exito");
+        CrearEmpleadoDTO response = empleadoService.crearEmpleado(empleado);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+
     @PutMapping("/{id}")
-    public String modificarEmpleado(@PathVariable Long legajo, @RequestBody Empleado empleado)
+    public ResponseEntity<CrearEmpleadoDTO> modificarEmpleado(@PathVariable Long id, @RequestBody CrearEmpleadoDTO empleado)
     {
-        empleado.setLegajo(legajo);
-        iEmpleadoRepository.save(empleado);
-        return "Empleado modificado con exito";
+        CrearEmpleadoDTO empleadoActualizado = empleadoService.modificarEmpleado(id, empleado);
+        return ResponseEntity.ok(empleadoActualizado);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<CrearEmpleadoDTO> eliminarEmpleado(@PathVariable Long id){
+        empleadoService.eliminarEmpleado(id);
+        return ResponseEntity.noContent().build();
     }
 }

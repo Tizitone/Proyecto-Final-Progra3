@@ -1,10 +1,10 @@
-package com.metalurgica1.metalurgica1.dto;
+package com.metalurgica1.metalurgica1.DTO;
 
 public record EmpleadoDTO(
-        Long legajo,
         String email,
         String nombre,
         String telefono,
-        Long dni
+        Long dni,
+        Long legajo
 ) {
 }
