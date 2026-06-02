@@ -23,7 +23,7 @@ public class Empleado_Gerente extends Empleado_modelo{
     @Transient
     private List<Tarea> listaTareas;
 
-    public boolean modificarEmpleado(int dni){
+    public boolean modificarEmpleado(Long dni){
         return this.getDni()== dni;
     }
 

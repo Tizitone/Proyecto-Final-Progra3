@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/empleados")
+@CrossOrigin(origins = "http://localhost:8080")
 public class ControladorEmpleado {
 
     private final IEmpleadoRepository iEmpleadoRepository;
@@ -25,6 +26,7 @@ public class ControladorEmpleado {
     {
         return iEmpleadoRepository.findAll();
     }
+
     @PostMapping
     public ResponseEntity<String> crearEmpleado(@RequestBody Empleado empleado)
     {

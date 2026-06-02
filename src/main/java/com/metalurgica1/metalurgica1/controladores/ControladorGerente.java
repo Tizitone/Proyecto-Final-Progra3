@@ -15,6 +15,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/gerentes")
+@CrossOrigin(origins = "http://localhost:8080")
     public class ControladorGerente {
 
         private final IGerenteRepository iGerenteRepository;

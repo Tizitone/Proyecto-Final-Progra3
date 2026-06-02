@@ -110,40 +110,7 @@ const empleadoNombreInput = document.getElementById("nombreEmpleado");
 const empleadoTelefonoInput = document.getElementById("telefonoEmpleado");
 const empleadoDniInput = document.getElementById("dniEmpleado");
 const tablaPersona = document.getElementById("tablaPersonas");
-const empleadoMensaje = document.getElementById("mensaje");
-
-    
-async function cargarEmpleado() {
-    try {
-        const respuesta = await fetch(EmpleadoapiUrl);
-        const empleados = await respuesta.json();
-
-        tablaPersona.innerHTML = "";
-
-        empleados.array.forEach(empleado => {
-            const filaEmpleado = `
-            <tr>
-                <td>${empleado.idEmpleadoInput}</td>
-                <td>${empleado.email}</td>
-                <td>${empleado.contrasenia}</td>
-                <td>${empleado.nombre}</td>
-                <td>${empleado.telefono}</td>
-                <td>${empleado.acceso}</td>
-                <td>${empleado.dni}</td>
-                <td>
-                    <div class="acciones">
-                        <button onclick='editarMascota(${JSON.stringify(empleado)})'>Editar Empleado</button>
-                        <button onclick='eliminarMascota(${empleado.idEmpleadoInput})'>Eliminar Emplado</button>
-                    </div>
-                </td>
-            </tr>
-            `;
-            tablaPersona.innerHTML += filaEmpleado;
-        });
-    } catch(error) {
-        empleadoMensaje.textContent = "Error al cargar Empleados";
-    }
-}
+const empleadoMensaje = document.getElementById("empleadoMensaje");
 
 formEmpleado.addEventListener("submit", async function (e) {
     e.preventDefault();
@@ -158,13 +125,75 @@ formEmpleado.addEventListener("submit", async function (e) {
     };
 
     try {
+        await fetch(EmpleadoapiUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(empleado)
+        });
+
+        empleadoMensaje.textContent = "Empleado agregado correctamente.";
+
+    } catch(error) {
+        empleadoMensaje.textContent = "Error al guardar / modificar empleado.";
+    }
+});
+
+    async function cargarEmpleado() {
+        const respuesta = await fetch(EmpleadoapiUrl)
+        .then(Response => {
+            if(!Response.ok) {
+                throw new Error('Error al obtener empleados.');
+            }
+            return Response.json();
+        })
+        .then(empleados => {
+            if(empleados.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td>
+                            no existen empleados aún.
+                        </td>
+                    </tr>`;
+                return;
+            }
+
+            empleados.forEach(empleado => {
+                const filaEmpleado = `
+            <tr>
+                <td>${empleado.idEmpleadoInput}</td>
+                <td>${empleado.email}</td>
+                <td>${empleado.contrasenia}</td>
+                <td>${empleado.nombre}</td>
+                <td>${empleado.telefono}</td>
+                <td>${empleado.acceso}</td>
+                <td>${empleado.dni}</td>
+            </tr>
+            `;
+            tbody.appendChild(filaEmpleado)
+            });
+        })
+        .catch(error => {
+            console.error(error);
+            tbody.innerHTML = `
+                <tr>
+                    <td>
+                        Error al conectar con el servidor.
+                    </td>
+                </tr>`;
+        });
+    }
+
+    /*
+    try {
         if (idEmpleadoInput.value = "") {
             await fetch(EmpleadoapiUrl, {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
                 },
-                body: JSON.stringify(empleado)
+                body: JSON.stringify(empleado),
             });
 
             empleadoMensaje.textContent = "Empleado agregado correctamente.";
@@ -186,7 +215,8 @@ formEmpleado.addEventListener("submit", async function (e) {
     }catch(error){
         empleadoMensaje.textContent = "Error al guardar / modificar empleado.";
     }
-});
+        */
+
 
 function cancelarEdicionEmpleado() {
     formEmpleado.reset();
