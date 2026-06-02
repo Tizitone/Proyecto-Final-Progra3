@@ -27,7 +27,6 @@ public class ControladorTareas {
         this.tareaService = tareaService;
     }
 
-
     @GetMapping
     public List<TareaDTO> listarTareas()
     {
@@ -63,15 +62,13 @@ public class ControladorTareas {
     }
 
     @PostMapping
-    public ResponseEntity<CrearTareaDTO> crearTarea(@RequestBody CrearTareaDTO dto)
-    {
+    public ResponseEntity<CrearTareaDTO> crearTarea(@RequestBody CrearTareaDTO dto) {
         CrearTareaDTO c = tareaService.crearTarea(dto);
         return ResponseEntity.ok(c);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CrearTareaDTO> modificarTarea(@PathVariable Long id,@RequestBody CrearTareaDTO dto)
-    {
+    public ResponseEntity<CrearTareaDTO> modificarTarea(@PathVariable Long id,@RequestBody CrearTareaDTO dto) {
         try {
             CrearTareaDTO t = tareaService.modificarTarea(id, dto);
             return ResponseEntity.ok(t);

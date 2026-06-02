@@ -20,7 +20,6 @@ import java.util.stream.Collectors;
 public class TareaService {
     private final ITareaRepository iTareaRepository;
 
-
     public TareaService(ITareaRepository iTareaRepository) {
         this.iTareaRepository = iTareaRepository;
     }
@@ -42,6 +41,7 @@ public class TareaService {
                         t.getDescripcionGeneral()))
                 .collect(Collectors.toList());
     }
+
     private Tarea buscarTarea(Long id) throws TareaNoEncontradaExeption {
         return iTareaRepository.findById(id)
                 .orElseThrow(()-> new TareaNoEncontradaExeption(id));

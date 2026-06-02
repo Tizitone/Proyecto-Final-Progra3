@@ -47,8 +47,7 @@ public class ControladorRegistro {
     }
 
     @PostMapping
-    public ResponseEntity<RegistroDTO> crearRegistro(@RequestBody RegistroDTO dto)
-    {
+    public ResponseEntity<RegistroDTO> crearRegistro(@RequestBody RegistroDTO dto) {
         try {
             RegistroDTO registro = registroService.crearRegistro(dto);
             return ResponseEntity.ok(registro);
@@ -57,9 +56,9 @@ public class ControladorRegistro {
             return ResponseEntity.notFound().build();
         }
     }
+
     @PutMapping("/{id}")
-    public ResponseEntity<RegistroDTO> modificarRegistros(@PathVariable Long id, @RequestBody RegistroDTO dto)
-    {
+    public ResponseEntity<RegistroDTO> modificarRegistros(@PathVariable Long id, @RequestBody RegistroDTO dto) {
         try {
             RegistroDTO registroModificado = registroService.modificarRegistro(id, dto);
             return ResponseEntity.ok(registroModificado);

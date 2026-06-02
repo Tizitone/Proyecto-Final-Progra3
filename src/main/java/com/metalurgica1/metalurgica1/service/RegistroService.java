@@ -49,6 +49,7 @@ public class RegistroService {
                         r.getParticipantes()))
                 .collect(Collectors.toList());
     }
+
     public List<EmpleadoDTO> listarEmpleadosEnRegistro(Long id) throws RegistroNoEncontradoException {
         Registro r = iRegistroRepository.findById(id)
                 .orElseThrow(()-> new RegistroNoEncontradoException(id));

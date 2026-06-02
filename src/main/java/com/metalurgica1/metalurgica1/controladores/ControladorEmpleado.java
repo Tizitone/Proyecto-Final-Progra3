@@ -25,15 +25,13 @@ public class ControladorEmpleado {
     }
 
     @GetMapping
-    public ResponseEntity<List<EmpleadoDTO>> listarTodosEmpleados()
-    {
+    public ResponseEntity<List<EmpleadoDTO>> listarTodosEmpleados() {
         List<EmpleadoDTO> empleados = empleadoService.listarTodosEmpleados();
         return ResponseEntity.ok(empleados);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<EmpleadoDTO> buscarEmpleado(Long id)
-    {
+    public ResponseEntity<EmpleadoDTO> buscarEmpleado(Long id) {
         try {
             EmpleadoDTO empleado = empleadoService.listarEmpleado(id);
             return ResponseEntity.ok(empleado);
@@ -70,15 +68,13 @@ public class ControladorEmpleado {
     }
 
     @PostMapping
-    public ResponseEntity<CrearEmpleadoDTO> crearEmpleado(@RequestBody CrearEmpleadoDTO empleado)
-    {
+    public ResponseEntity<CrearEmpleadoDTO> crearEmpleado(@RequestBody CrearEmpleadoDTO empleado) {
         CrearEmpleadoDTO response = empleadoService.crearEmpleado(empleado);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CrearEmpleadoDTO> modificarEmpleado(@PathVariable Long id, @RequestBody CrearEmpleadoDTO empleado)
-    {
+    public ResponseEntity<CrearEmpleadoDTO> modificarEmpleado(@PathVariable Long id, @RequestBody CrearEmpleadoDTO empleado) {
         try {
             CrearEmpleadoDTO empleadoActualizado = empleadoService.modificarEmpleado(id, empleado);
             return ResponseEntity.ok(empleadoActualizado);

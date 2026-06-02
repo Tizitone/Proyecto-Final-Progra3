@@ -32,8 +32,7 @@ public class ControladorAdministrador {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AdministradorDTO> buscarAdmin(@PathVariable Long id)
-    {
+    public ResponseEntity<AdministradorDTO> buscarAdmin(@PathVariable Long id) {
 
         try {
             AdministradorDTO a = administradorService.buscarAdministrador(id);
@@ -46,14 +45,13 @@ public class ControladorAdministrador {
     }
 
     @PostMapping
-    public ResponseEntity<CrearAdministradorDTO> crearAdministrador(@RequestBody CrearAdministradorDTO administrador)
-    {
+    public ResponseEntity<CrearAdministradorDTO> crearAdministrador(@RequestBody CrearAdministradorDTO administrador) {
         CrearAdministradorDTO administradorDTO = administradorService.crearAdministrador(administrador);
         return new ResponseEntity<>(administradorDTO,HttpStatus.CREATED);
     }
+
     @PutMapping("/{id}")
-    public ResponseEntity<AdministradorDTO> modificarAdministrador(@PathVariable Long id,@RequestBody AdministradorDTO dto)
-    {
+    public ResponseEntity<AdministradorDTO> modificarAdministrador(@PathVariable Long id,@RequestBody AdministradorDTO dto) {
         try
         {
             AdministradorDTO administradorDTO = administradorService.modificarAdministrador(id,dto);

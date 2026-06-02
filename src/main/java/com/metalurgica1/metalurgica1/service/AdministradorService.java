@@ -21,20 +21,19 @@ public class AdministradorService {
         this.iAdministradorRepository = iAdministradorRepository;
     }
 
-    public List<AdministradorDTO> listarAdministradores()
-    {
+    public List<AdministradorDTO> listarAdministradores() {
         return iAdministradorRepository.
                 findAll().
                 stream().
                 map(p-> new AdministradorDTO(p.getEmail(),p.getNombre(),p.getTelefono(),p.getDni())).collect(Collectors.toList());
     }
+
     public AdministradorDTO buscarAdministrador(Long id) throws AdministradorNoEncontradoException {
         Administrador a = iAdministradorRepository.findById(id).orElseThrow(()-> new AdministradorNoEncontradoException("El administrador con la id:"+id+" no se encontro para modificar"));
         return new AdministradorDTO(a.getEmail(),a.getNombre(),a.getTelefono(),a.getDni());
     }
 
-    public CrearAdministradorDTO crearAdministrador(CrearAdministradorDTO dto)
-    {
+    public CrearAdministradorDTO crearAdministrador(CrearAdministradorDTO dto) {
         Administrador a = new Administrador();
         a.setNombre(dto.nombre());
         a.setEmail(dto.email());
@@ -51,6 +50,7 @@ public class AdministradorService {
                 nuevoAdministrador.getTelefono(),
                 nuevoAdministrador.getDni());
     }
+
     public AdministradorDTO modificarAdministrador(Long id, AdministradorDTO dto) throws AdministradorNoEncontradoException {
         Administrador a = iAdministradorRepository.findById(id).orElseThrow(()-> new AdministradorNoEncontradoException("El administrador con la id:"+id+" no se encontro para modificar"));
         a.setNombre(dto.nombre());

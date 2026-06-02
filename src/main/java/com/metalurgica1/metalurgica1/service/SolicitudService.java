@@ -39,8 +39,7 @@ public class SolicitudService {
         return s.stream().map(p-> new SolicitudDTO(p.getId(), p.getNombre(),p.getEmail(),p.getTelefono(),p.getDescripcion())).collect(Collectors.toList());
     }
 
-    public SolicitudDTO crearSolicitud(SolicitudDTO dto)
-    {
+    public SolicitudDTO crearSolicitud(SolicitudDTO dto) {
         Solicitud s = new Solicitud();
         s.setNombre(dto.nombre());
         s.setEmail(dto.email());
@@ -63,7 +62,6 @@ public class SolicitudService {
 
         return convertirADTO(nuevaSolicitud);
     }
-
 
     public void eliminarSolicitud(Long id) throws SolicitudNoEncontradaException {
         Solicitud s = iSolicitudRepository.findById(id).orElseThrow(()->new SolicitudNoEncontradaException("eliminar solicitud"));
