@@ -46,18 +46,18 @@ public class ControladorTareas {
         }
     }
 
-    @GetMapping("/buscar/{texto}")
-    public ResponseEntity<List<Tarea>> buscarTareas(@RequestParam String texto){
+    @GetMapping("/buscar")
+    public ResponseEntity<List<TareaDTO>> buscarTareas(@RequestParam String texto){
         return ResponseEntity.ok(tareaService.buscarPorTexto(texto));
     }
 
-    @GetMapping("/buscar/{categoria}")
-    public ResponseEntity<List<Tarea>> buscarPorCategoria(@RequestParam ECategorias categoria){
+    @GetMapping("/buscar")
+    public ResponseEntity<List<TareaDTO>> buscarPorCategoria(@RequestParam ECategorias categoria){
         return ResponseEntity.ok(tareaService.buscarPorCategoria(categoria));
     }
 
     @GetMapping("/buscar/fecha")
-    public ResponseEntity<List<Tarea>> buscarPorFecha(@RequestParam @DateTimeFormat
+    public ResponseEntity<List<TareaDTO>> buscarPorFecha(@RequestParam @DateTimeFormat
             (iso = DateTimeFormat.ISO.DATE) LocalDate fecha){
         return ResponseEntity.ok(tareaService.buscarPorFecha(fecha));
     }

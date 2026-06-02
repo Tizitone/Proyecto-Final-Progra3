@@ -44,28 +44,28 @@ public class ControladorEmpleado {
     }
 
 
-    @GetMapping("/buscar/{email}")
-    public ResponseEntity<Empleado> buscarPorEmail(@RequestParam String email){
+    @GetMapping("/buscar/email")
+    public ResponseEntity<EmpleadoDTO> buscarPorEmail(@RequestParam String email){
         return ResponseEntity.ok(empleadoService.buscarEmpleadoPorEmail(email));
     }
 
-    @GetMapping("/buscar/{nombre}")
-    public ResponseEntity<List<Empleado>> buscarPorNombre(@RequestParam String nombre){
+    @GetMapping("/buscar/nombre")
+    public ResponseEntity<List<EmpleadoDTO>> buscarPorNombre(@RequestParam String nombre){
         return ResponseEntity.ok(empleadoService.buscarEmpleadoPorNombre(nombre));
     }
 
-    @GetMapping("/buscar/{telefono}")
-    public ResponseEntity<Empleado> buscarPorTelefono(@RequestParam String telefono){
+    @GetMapping("/buscar/telefono")
+    public ResponseEntity<EmpleadoDTO> buscarPorTelefono(@RequestParam String telefono){
         return ResponseEntity.ok(empleadoService.buscarEmpleadoPorTelefono(telefono));
     }
 
-    @GetMapping("/buscar/{dni}")
-    public ResponseEntity<Empleado> buscarPorDni(@RequestParam Long dni){
+    @GetMapping("/buscar/dni")
+    public ResponseEntity<EmpleadoDTO> buscarPorDni(@RequestParam Long dni){
         return ResponseEntity.ok(empleadoService.buscarEmpleadoPorDni(dni));
     }
 
-    @GetMapping("/buscar/{legajo}")
-    public ResponseEntity<Empleado> buscarPorLegajo(@RequestParam Long legajo){
+    @GetMapping("/buscar/legajo")
+    public ResponseEntity<EmpleadoDTO> buscarPorLegajo(@RequestParam Long legajo){
         return ResponseEntity.ok(empleadoService.buscarEmpleadoPorLegajo(legajo));
     }
 

@@ -41,23 +41,23 @@ public class ControladorCliente {
         }
     }
 
-    @GetMapping("/buscar/{email}")
-    public ResponseEntity<Cliente> buscarPorEmail(@RequestParam String email){
+    @GetMapping("/buscar/email")
+    public ResponseEntity<ClienteDTO> buscarPorEmail(@RequestParam String email){
         return ResponseEntity.ok(clienteService.buscarClientePorEmail(email));
     }
 
-    @GetMapping("/buscar/{nombre}")
-    public ResponseEntity<List<Cliente>> buscarPorNombre(@RequestParam String nombre){
+    @GetMapping("/buscar/nombre")
+    public ResponseEntity<List<ClienteDTO>> buscarPorNombre(@RequestParam String nombre){
         return ResponseEntity.ok(clienteService.buscarClientePorNombre(nombre));
     }
 
-    @GetMapping("/buscar/{telefono}")
-    public ResponseEntity<Cliente> buscarPorTelefono(@RequestParam String telefono){
+    @GetMapping("/buscar/telefono")
+    public ResponseEntity<ClienteDTO> buscarPorTelefono(@RequestParam String telefono){
         return ResponseEntity.ok(clienteService.buscarClientePorTelefono(telefono));
     }
 
-    @GetMapping("/buscar/{dni}")
-    public ResponseEntity<Cliente> buscarPorDni(@RequestParam Long dni){
+    @GetMapping("/buscar/dni")
+    public ResponseEntity<ClienteDTO> buscarPorDni(@RequestParam Long dni){
         return ResponseEntity.ok(clienteService.buscarClientePorDni(dni));
     }
 
