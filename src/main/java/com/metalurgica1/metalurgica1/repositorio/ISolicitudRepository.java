@@ -10,6 +10,6 @@ import java.util.List;
 
 public interface ISolicitudRepository extends JpaRepository<Solicitud,Long>{
 
-    @Query(value = "SELECT * FROM solicitud WHERE MATCH(descripcion) AGAINST(:palabras IN BOOLEAN MODE)", nativeQuery = true)
+    @Query(value = "SELECT * FROM solicitudes WHERE descripcion LIKE CONCAT('%', :palabras, '%')", nativeQuery = true)
     List<Solicitud> findByDescripcionPorPalabras(@Param("palabras") String palabras);
 }

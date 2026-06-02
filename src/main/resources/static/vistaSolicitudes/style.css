@@ -30,6 +30,21 @@ th, td {
     text-align: left;
     border-bottom: 1px solid #ddd;
 }
+.buscar_input{
+    display: flex;
+    flex-direction: column;
+}
+
+.buscar_input button{
+    display: flex;
+    align-self:self-start;
+    flex-direction: column;
+}
+.opciones{
+    display: flex;
+    flex-direction: row;
+    gap: 1%;
+}
 
 th {
     background-color: #2c3e50;

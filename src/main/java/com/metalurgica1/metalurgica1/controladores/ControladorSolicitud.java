@@ -29,7 +29,7 @@ public class ControladorSolicitud {
     }
 
     @GetMapping("/buscar")
-    public ResponseEntity<List<SolicitudDTO>> listarSolicitud(@RequestParam String desc) {
+    public ResponseEntity<List<SolicitudDTO>> listarSolicitud(@RequestParam(name = "texto", required = false) String desc) {
             List<SolicitudDTO> solicitud = solicitudService.buscarSolicitudPorDescripcion(desc);
             return ResponseEntity.ok(solicitud);
     }

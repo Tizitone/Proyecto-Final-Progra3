@@ -9,11 +9,18 @@
 <body>
 <div class="container">
     <h1>Solicitudes Recibidas</h1>
-    <button class="btn-refresh" onclick="cargarSolicitudes()"> Actualizar Tabla</button>
-    <div>
-        <input id=buscarSolicitud type="text" placeholder="buscar solicitud">
-        <button class="btn-refresh" onclick="BuscarSolicitudes()"> Buscar</button>
+    <div class = "opciones">
+        <div>
+            <button class="btn-refresh" onclick="cargarSolicitudes()">Actualizar</button>
+        </div>
+        <div class = "buscar_input">
+            <form id="formBuscar">
+                <input id=buscarSolicitud type="text" placeholder="buscar solicitud">
+                <button class="btn-refresh" type="submit"> Buscar</button>
+            </form>
+        </div>
     </div>
+    
     
     <table id="tablaSolicitudes">
         <thead>

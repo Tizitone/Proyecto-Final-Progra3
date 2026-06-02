@@ -7,6 +7,7 @@ import com.metalurgica1.metalurgica1.service.Excepciones.SolicitudNoEncontradaEx
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,8 +30,13 @@ public class SolicitudService {
     }
 
     public List<SolicitudDTO> buscarSolicitudPorDescripcion(String descripcion){
-        List<Solicitud> s = iSolicitudRepository.findByDescripcionPorPalabras(descripcion);
-        return s.stream().map(p-> new SolicitudDTO(p.getNombre(),p.getEmail(),p.getTelefono(),p.getDescripcion())).collect(Collectors.toList());
+
+        if (descripcion == null || descripcion.trim().isEmpty()) {
+            return new ArrayList<>();
+        }
+        String textoBusqueda = descripcion.trim();
+        List<Solicitud> s = iSolicitudRepository.findByDescripcionPorPalabras(textoBusqueda);
+        return s.stream().map(p-> new SolicitudDTO(p.getId(), p.getNombre(),p.getEmail(),p.getTelefono(),p.getDescripcion())).collect(Collectors.toList());
     }
 
     public SolicitudDTO crearSolicitud(SolicitudDTO dto)
@@ -68,6 +74,7 @@ public class SolicitudService {
     private SolicitudDTO convertirADTO(Solicitud solicitud){
 
         return new SolicitudDTO(
+                solicitud.getId(),
                 solicitud.getNombre(),
                 solicitud.getEmail(),
                 solicitud.getTelefono(),

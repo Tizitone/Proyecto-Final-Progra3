@@ -1,5 +1,12 @@
 console.log("Script de tabla de solicitudes cargado correctamente");
 
+document.getElementById('formBuscar').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const criterio = document.getElementById('buscarSolicitud').value.trim(); 
+    
+    BuscarSolicitudes(criterio);
+});
+
 function cargarSolicitudes() {
     const tbody = document.querySelector('#tablaSolicitudes tbody');
     tbody.innerHTML='';
@@ -52,4 +59,62 @@ function cargarSolicitudes() {
                     </td>
                 </tr>`;
         });
+}
+function BuscarSolicitudes(criterio) {
+    const tbody = document.querySelector('#tablaSolicitudes tbody');
+    tbody.innerHTML = `<tr><td colspan="5" style="text-align: center;">Buscando...</td></tr>`;
+
+    const url = new URL('http://localhost:8080/api/solicitudes/buscar');
+    if (criterio) {
+        url.searchParams.append('desc', criterio);
+    }
+
+    fetch(url.href, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error al obtener las solicitudes');
+            }
+            else
+            {
+                
+            }
+            return response.json();
+        })
+        .then(solicitudes => {
+            if (solicitudes.length === 0) {
+               tbody.innerHTML = `
+                <tr>
+                    <td colspan="5" style="text-align: center;">
+                        No se encontraron solicitudes según el criterio de búsqueda.
+                    </td>
+                </tr>`;
+                return;
+            }
+
+            solicitudes.forEach(s => {
+                const fila = document.createElement('tr');
+                fila.innerHTML = `
+                    <td>${s.id}</td>
+                    <td>${s.nombre || '-'}</td>
+                    <td>${s.email || '-'}</td>
+                    <td>${s.telefono || '-'}</td>
+                    <td>${s.descripcion || '-'}</td>
+                `;
+                tbody.appendChild(fila);
+            });
+        })
+        .catch(error => {
+    console.error(error);
+    tbody.innerHTML = `
+        <tr>
+            <td colspan="5" style="text-align: center;"> <!-- <--- Aniadido colspan y centrado -->
+                Error al conectar con el servidor.
+            </td>
+        </tr>`;
+    });
 }
