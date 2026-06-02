@@ -1,6 +1,8 @@
 package com.metalurgica1.metalurgica1.controladores;
 
 import com.metalurgica1.metalurgica1.service.EmpleadoService;
+import com.metalurgica1.metalurgica1.service.Excepciones.EmpleadoNoEncontradoException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +11,7 @@ import com.metalurgica1.metalurgica1.DTO.CrearEmpleadoDTO;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/empleados")
 public class ControladorEmpleado {
@@ -27,12 +30,16 @@ public class ControladorEmpleado {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<EmpleadoDTO> listarEmpleado(Long id)
+    public ResponseEntity<EmpleadoDTO> buscarEmpleado(Long id)
     {
-        EmpleadoDTO empleado = empleadoService.listarEmpleado(id);
-        return ResponseEntity.ok(empleado);
+        try {
+            EmpleadoDTO empleado = empleadoService.listarEmpleado(id);
+            return ResponseEntity.ok(empleado);
+        } catch (EmpleadoNoEncontradoException e) {
+            log.error("",e);
+            return ResponseEntity.notFound().build();
+        }
     }
-
     @PostMapping
     public ResponseEntity<CrearEmpleadoDTO> crearEmpleado(@RequestBody CrearEmpleadoDTO empleado)
     {
@@ -43,13 +50,26 @@ public class ControladorEmpleado {
     @PutMapping("/{id}")
     public ResponseEntity<CrearEmpleadoDTO> modificarEmpleado(@PathVariable Long id, @RequestBody CrearEmpleadoDTO empleado)
     {
-        CrearEmpleadoDTO empleadoActualizado = empleadoService.modificarEmpleado(id, empleado);
-        return ResponseEntity.ok(empleadoActualizado);
+        try {
+            CrearEmpleadoDTO empleadoActualizado = empleadoService.modificarEmpleado(id, empleado);
+            return ResponseEntity.ok(empleadoActualizado);
+        } catch (EmpleadoNoEncontradoException e) {
+            log.error("",e);
+            return ResponseEntity.notFound().build();
+        }
+
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<CrearEmpleadoDTO> eliminarEmpleado(@PathVariable Long id){
-        empleadoService.eliminarEmpleado(id);
-        return ResponseEntity.noContent().build();
+        try {
+            empleadoService.eliminarEmpleado(id);
+            return ResponseEntity.noContent().build();
+        } catch (EmpleadoNoEncontradoException e) {
+            log.error("",e);
+            return ResponseEntity.notFound().build();
+        }
+
+
     }
 }

@@ -1,11 +1,12 @@
 package com.metalurgica1.metalurgica1.controladores;
 
-import com.metalurgica1.metalurgica1.dto.CrearTareaDTO;
-import com.metalurgica1.metalurgica1.dto.TareaDTO;
+import com.metalurgica1.metalurgica1.DTO.CrearTareaDTO;
+import com.metalurgica1.metalurgica1.DTO.TareaDTO;
 import com.metalurgica1.metalurgica1.modelo.Tarea;
 import com.metalurgica1.metalurgica1.modelo.enums.ECategorias;
 import com.metalurgica1.metalurgica1.service.Excepciones.TareaNoEncontradaExeption;
 import com.metalurgica1.metalurgica1.service.TareaService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/tareas")
 @CrossOrigin(origins = "*")
@@ -39,7 +41,7 @@ public class ControladorTareas {
             TareaDTO t = tareaService.buscarPorId(id);
             return ResponseEntity.ok(t);
         } catch (TareaNoEncontradaExeption e) {
-            e.printStackTrace();
+            log.error("",e);
             return ResponseEntity.notFound().build();
         }
     }
@@ -74,7 +76,7 @@ public class ControladorTareas {
             CrearTareaDTO t = tareaService.modificarTarea(id, dto);
             return ResponseEntity.ok(t);
         } catch (TareaNoEncontradaExeption e) {
-            e.printStackTrace();
+            log.error("",e);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }

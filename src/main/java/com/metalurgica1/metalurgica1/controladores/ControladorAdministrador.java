@@ -1,9 +1,10 @@
 package com.metalurgica1.metalurgica1.controladores;
 
-import com.metalurgica1.metalurgica1.dto.AdministradorDTO;
-import com.metalurgica1.metalurgica1.dto.CrearAdministradorDTO;
+import com.metalurgica1.metalurgica1.DTO.AdministradorDTO;
+import com.metalurgica1.metalurgica1.DTO.CrearAdministradorDTO;
 import com.metalurgica1.metalurgica1.service.AdministradorService;
 import com.metalurgica1.metalurgica1.service.Excepciones.AdministradorNoEncontradoException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/administradores")
 @CrossOrigin(origins = "*")
@@ -37,7 +39,7 @@ public class ControladorAdministrador {
             AdministradorDTO a = administradorService.buscarAdministrador(id);
             return ResponseEntity.ok(a);
         } catch (AdministradorNoEncontradoException e) {
-            e.printStackTrace();
+            log.error("",e);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
 
@@ -46,19 +48,19 @@ public class ControladorAdministrador {
     @PostMapping
     public ResponseEntity<CrearAdministradorDTO> crearAdministrador(@RequestBody CrearAdministradorDTO administrador)
     {
-        administradorService.crearAdministrador(administrador);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        CrearAdministradorDTO administradorDTO = administradorService.crearAdministrador(administrador);
+        return new ResponseEntity<>(administradorDTO,HttpStatus.CREATED);
     }
     @PutMapping("/{id}")
     public ResponseEntity<AdministradorDTO> modificarAdministrador(@PathVariable Long id,@RequestBody AdministradorDTO dto)
     {
         try
         {
-            administradorService.modificarAdministrador(id,dto);
-            return ResponseEntity.ok(dto);
+            AdministradorDTO administradorDTO = administradorService.modificarAdministrador(id,dto);
+            return ResponseEntity.ok(administradorDTO);
         } catch (AdministradorNoEncontradoException e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(dto,HttpStatus.NOT_FOUND);
+            log.error("",e);
+            return ResponseEntity.notFound().build();
         }
     }
 }

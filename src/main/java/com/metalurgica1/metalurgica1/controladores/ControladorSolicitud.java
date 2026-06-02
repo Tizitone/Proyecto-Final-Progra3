@@ -1,13 +1,16 @@
 package com.metalurgica1.metalurgica1.controladores;
 
 import com.metalurgica1.metalurgica1.DTO.SolicitudDTO;
+import com.metalurgica1.metalurgica1.service.Excepciones.SolicitudNoEncontradaException;
 import com.metalurgica1.metalurgica1.service.SolicitudService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/solicitudes")
 @CrossOrigin(origins = "*")
@@ -25,10 +28,15 @@ public class ControladorSolicitud {
         return ResponseEntity.ok(solicitudes);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<SolicitudDTO> listarSolicitud(@PathVariable Long id) {
-        SolicitudDTO solicitud = solicitudService.listarSolicitud(id);
-        return ResponseEntity.ok(solicitud);
+    @GetMapping("/buscar")
+    public ResponseEntity<SolicitudDTO> listarSolicitud(@RequestParam String desc) {
+        try {
+            SolicitudDTO solicitud = solicitudService.buscarSolicitudPorDescripcion(desc);
+            return ResponseEntity.ok(solicitud);
+        } catch (SolicitudNoEncontradaException e) {
+            log.error("",e);
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping
@@ -39,13 +47,25 @@ public class ControladorSolicitud {
 
     @PutMapping("/{id}")
     public ResponseEntity<SolicitudDTO> modificarSolicitud(@PathVariable Long id, @RequestBody SolicitudDTO solicitud){
-        SolicitudDTO solicitudActualizada = solicitudService.modificarSolicitud(id, solicitud);
-        return ResponseEntity.ok(solicitudActualizada);
+        try {
+            SolicitudDTO solicitudActualizada = solicitudService.modificarSolicitud(id, solicitud);
+            return ResponseEntity.ok(solicitudActualizada);
+        } catch (SolicitudNoEncontradaException e) {
+            log.error("",e);
+            return ResponseEntity.notFound().build();
+        }
+
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity<SolicitudDTO> eliminarSolicitud(@PathVariable Long id){
-        solicitudService.eliminarSolicitud(id);
-        return ResponseEntity.noContent().build();
+        try
+        {
+            solicitudService.eliminarSolicitud(id);
+            return ResponseEntity.noContent().build();
+        } catch (SolicitudNoEncontradaException e) {
+            log.error("",e);
+            return ResponseEntity.notFound().build();
+        }
     }
 }

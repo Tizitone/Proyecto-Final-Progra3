@@ -2,6 +2,8 @@ package com.metalurgica1.metalurgica1.controladores;
 
 import com.metalurgica1.metalurgica1.DTO.CrearClienteDTO;
 import com.metalurgica1.metalurgica1.service.ClienteService;
+import com.metalurgica1.metalurgica1.service.Excepciones.ClienteNoEncontradoException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +11,7 @@ import com.metalurgica1.metalurgica1.DTO.ClienteDTO;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/clientes")
 
@@ -27,9 +30,14 @@ public class ControladorCliente {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ClienteDTO> listarCliente(@PathVariable Long id){
-        ClienteDTO cliente = clienteService.listarCliente(id);
-        return ResponseEntity.ok(cliente);
+    public ResponseEntity<ClienteDTO> buscarCliente(@PathVariable Long id){
+        try {
+            ClienteDTO cliente = clienteService.buscarCliente(id);
+            return ResponseEntity.ok(cliente);
+        } catch (ClienteNoEncontradoException e) {
+            log.error("",e);
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping
@@ -40,13 +48,24 @@ public class ControladorCliente {
 
     @PutMapping("/{id}")
     public ResponseEntity<CrearClienteDTO> modificarCliente(@PathVariable Long id, @RequestBody CrearClienteDTO cliente){
-        CrearClienteDTO clienteActualizado = clienteService.modificarCliente(id, cliente);
-        return ResponseEntity.ok(clienteActualizado);
+        try {
+            CrearClienteDTO clienteActualizado = clienteService.modificarCliente(id, cliente);
+            return ResponseEntity.ok(clienteActualizado);
+        } catch (ClienteNoEncontradoException e) {
+            log.error("",e);
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<ClienteDTO> eliminarCliente(@PathVariable Long id){
-        clienteService.eliminarCliente(id);
-        return ResponseEntity.noContent().build();
+        try
+        {
+            clienteService.eliminarCliente(id);
+            return ResponseEntity.noContent().build();
+        } catch (ClienteNoEncontradoException e) {
+            log.error("",e);
+            return ResponseEntity.notFound().build();
+        }
     }
 }

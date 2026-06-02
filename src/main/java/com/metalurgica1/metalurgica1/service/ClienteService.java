@@ -29,7 +29,7 @@ public class ClienteService {
                 .toList();
     }
 
-    public ClienteDTO listarCliente(Long id){
+    public ClienteDTO buscarCliente(Long id) throws ClienteNoEncontradoException {
         Cliente cliente = iClienteRepository.findById(id)
                 .orElseThrow(() -> new ClienteNoEncontradoException("Cliente no encontrado."));
 
@@ -50,7 +50,7 @@ public class ClienteService {
         return convertirADTORequest(cliente);
     }
 
-    public CrearClienteDTO modificarCliente(Long id, CrearClienteDTO dto) {
+    public CrearClienteDTO modificarCliente(Long id, CrearClienteDTO dto) throws ClienteNoEncontradoException {
         Cliente cliente = iClienteRepository.findById(id)
                 .orElseThrow(() -> new ClienteNoEncontradoException("Cliente no encontrado."));
 
@@ -65,11 +65,9 @@ public class ClienteService {
         return convertirADTORequest(clienteActualizado);
     }
 
-    public void eliminarCliente(Long id){
-        if(!iClienteRepository.existsById(id))
-            throw new ClienteNoEncontradoException("Cliente no encontrado.");
-
-        iClienteRepository.deleteById(id);
+    public void eliminarCliente(Long id) throws ClienteNoEncontradoException {
+        Cliente c = iClienteRepository.findById(id).orElseThrow(()-> new ClienteNoEncontradoException("no se pudo eliminar cliente"));
+        iClienteRepository.delete(c);
     }
 
     private ClienteDTO convertirADTOResponse(Cliente cliente) {

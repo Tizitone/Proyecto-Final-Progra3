@@ -10,7 +10,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "solicitudes")
+@Table(name = "solicitudes" ,indexes=
+        {
+                @Index(name = "index_descripcion" ,columnList = "descripcion USING FULL_TEXT")
+        })
 public class Solicitud {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

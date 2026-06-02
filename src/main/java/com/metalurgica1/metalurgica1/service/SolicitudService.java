@@ -27,50 +27,46 @@ public class SolicitudService {
                 .toList();
     }
 
-    public SolicitudDTO listarSolicitud(Long id){
-        Solicitud solicitud = iSolicitudRepository.findById(id)
-                .orElseThrow(() -> new SolicitudNoEncontradaException("Solicitud no encontrada."));
-
-                return convertirADTO(solicitud);
+    public SolicitudDTO buscarSolicitudPorDescripcion(String descripcion) throws SolicitudNoEncontradaException {
+        Solicitud s = iSolicitudRepository.findByDescripcion(descripcion).orElseThrow(()-> new SolicitudNoEncontradaException("buscar solicitud por descripcion"));
+        return convertirADTO(s);
     }
 
-    public SolicitudDTO crearSolicitud(SolicitudDTO dto){
-        Solicitud solicitud = new Solicitud();
-        solicitud.setNombre(dto.nombre());
-        solicitud.setEmail(dto.email());
-        solicitud.setTelefono(dto.telefono());
-        solicitud.setDescripcion(dto.descripcion());
+    public SolicitudDTO crearSolicitud(SolicitudDTO dto)
+    {
+        Solicitud s = new Solicitud();
+        s.setNombre(dto.nombre());
+        s.setEmail(dto.email());
+        s.setTelefono(dto.telefono());
+        s.setDescripcion(dto.descripcion());
 
-        solicitud = iSolicitudRepository.save(solicitud);
+        Solicitud nuevaSolicitud = iSolicitudRepository.save(s);
 
-        return convertirADTO(solicitud);
+        return convertirADTO(nuevaSolicitud);
     }
 
-    public SolicitudDTO modificarSolicitud(Long id, SolicitudDTO dto){
-        Solicitud solicitud = iSolicitudRepository.findById(id)
-                .orElseThrow(() -> new SolicitudNoEncontradaException("Solicitud no encontrada."));
+    public SolicitudDTO modificarSolicitud(Long id, SolicitudDTO dto) throws SolicitudNoEncontradaException {
+        Solicitud s = iSolicitudRepository.findById(id).orElseThrow(()->new SolicitudNoEncontradaException("modificar solicitud"));
+        s.setNombre(dto.nombre());
+        s.setEmail(dto.email());
+        s.setTelefono(dto.telefono());
+        s.setDescripcion(dto.descripcion());
 
-        solicitud.setNombre(dto.nombre());
-        solicitud.setEmail(dto.email());
-        solicitud.setTelefono(dto.telefono());
-        solicitud.setDescripcion(dto.descripcion());
+        Solicitud nuevaSolicitud = iSolicitudRepository.save(s);
 
-        Solicitud solicitudActualizada = iSolicitudRepository.save(solicitud);
-
-        return convertirADTO(solicitudActualizada);
+        return convertirADTO(nuevaSolicitud);
     }
 
-    public void eliminarSolicitud(Long id){
-        if(!iSolicitudRepository.existsById(id))
-            throw new SolicitudNoEncontradaException("Solicitud no encontrada.");
 
-        iSolicitudRepository.deleteById(id);
+    public void eliminarSolicitud(Long id) throws SolicitudNoEncontradaException {
+        Solicitud s = iSolicitudRepository.findById(id).orElseThrow(()->new SolicitudNoEncontradaException("eliminar solicitud"));
+
+        iSolicitudRepository.delete(s);
     }
 
     private SolicitudDTO convertirADTO(Solicitud solicitud){
 
         return new SolicitudDTO(
-                solicitud.getId(),
                 solicitud.getNombre(),
                 solicitud.getEmail(),
                 solicitud.getTelefono(),

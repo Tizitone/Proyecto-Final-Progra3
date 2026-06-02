@@ -1,18 +1,17 @@
 package com.metalurgica1.metalurgica1.controladores;
 
-import com.metalurgica1.metalurgica1.dto.RegistroDTO;
-import com.metalurgica1.metalurgica1.modelo.Registro;
+import com.metalurgica1.metalurgica1.DTO.RegistroDTO;
 import com.metalurgica1.metalurgica1.service.Excepciones.ClienteNoEncontradoException;
 import com.metalurgica1.metalurgica1.service.Excepciones.RegistroNoEncontradoException;
 import com.metalurgica1.metalurgica1.service.Excepciones.TareaNoEncontradaExeption;
 import com.metalurgica1.metalurgica1.service.RegistroService;
-import org.springframework.http.HttpStatus;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/registros")
 @CrossOrigin(origins = "*")
@@ -36,7 +35,7 @@ public class ControladorRegistro {
             RegistroDTO registro = registroService.buscarRegistroPorId(id);
             return ResponseEntity.ok(registro);
         } catch (RegistroNoEncontradoException e) {
-            e.printStackTrace();
+            log.error("",e);
             return ResponseEntity.notFound().build();
         }
     }
@@ -48,7 +47,7 @@ public class ControladorRegistro {
             RegistroDTO registro = registroService.crearRegistro(dto);
             return ResponseEntity.ok(registro);
         } catch (TareaNoEncontradaExeption | ClienteNoEncontradoException e) {
-            e.printStackTrace();
+            log.error("",e);
             return ResponseEntity.notFound().build();
         }
     }
@@ -59,7 +58,7 @@ public class ControladorRegistro {
             RegistroDTO registroModificado = registroService.modificarRegistro(id, dto);
             return ResponseEntity.ok(registroModificado);
         } catch (TareaNoEncontradaExeption | ClienteNoEncontradoException | RegistroNoEncontradoException e) {
-            e.printStackTrace();
+            log.error("",e);
             return ResponseEntity.notFound().build();
         }
     }

@@ -29,7 +29,7 @@ public class EmpleadoService {
                 .toList();
     }
 
-    public EmpleadoDTO listarEmpleado(Long id){
+    public EmpleadoDTO listarEmpleado(Long id) throws EmpleadoNoEncontradoException {
         Empleado empleado = iEmpleadoRepository.findById(id)
                 .orElseThrow(() -> new EmpleadoNoEncontradoException("Empleado no encontrado."));
 
@@ -50,7 +50,7 @@ public class EmpleadoService {
         return convertirADTORequest(empleado);
     }
 
-    public CrearEmpleadoDTO modificarEmpleado(Long id, CrearEmpleadoDTO dto) {
+    public CrearEmpleadoDTO modificarEmpleado(Long id, CrearEmpleadoDTO dto) throws EmpleadoNoEncontradoException {
         Empleado empleado = iEmpleadoRepository.findById(id)
                 .orElseThrow(() -> new EmpleadoNoEncontradoException("Empleado no encontrado."));
 
@@ -65,11 +65,10 @@ public class EmpleadoService {
         return convertirADTORequest(empleadoActualizado);
     }
 
-    public void eliminarEmpleado(Long id){
-        if(!iEmpleadoRepository.existsById(id))
-            throw new EmpleadoNoEncontradoException("Empleado no encontrado.");
+    public void eliminarEmpleado(Long id) throws EmpleadoNoEncontradoException {
+        Empleado e = iEmpleadoRepository.findById(id).orElseThrow(()-> new EmpleadoNoEncontradoException("Empleado no encontrado para eliminar"));
 
-        iEmpleadoRepository.deleteById(id);
+        iEmpleadoRepository.delete(e);
     }
 
     private EmpleadoDTO convertirADTOResponse(Empleado empleado) {

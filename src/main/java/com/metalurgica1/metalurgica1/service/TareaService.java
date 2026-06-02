@@ -1,7 +1,7 @@
 package com.metalurgica1.metalurgica1.service;
 
-import com.metalurgica1.metalurgica1.dto.CrearTareaDTO;
-import com.metalurgica1.metalurgica1.dto.TareaDTO;
+import com.metalurgica1.metalurgica1.DTO.CrearTareaDTO;
+import com.metalurgica1.metalurgica1.DTO.TareaDTO;
 import com.metalurgica1.metalurgica1.modelo.Tarea;
 import com.metalurgica1.metalurgica1.modelo.enums.ECategorias;
 import com.metalurgica1.metalurgica1.repositorio.ITareaRepository;
@@ -36,9 +36,8 @@ public class TareaService {
                 .collect(Collectors.toList());
     }
     private Tarea buscarTarea(Long id) throws TareaNoEncontradaExeption {
-        Tarea t = iTareaRepository.findById(id)
+        return iTareaRepository.findById(id)
                 .orElseThrow(()-> new TareaNoEncontradaExeption(id));
-        return t;
     }
 
     public TareaDTO buscarPorId(Long id) throws TareaNoEncontradaExeption {

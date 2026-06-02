@@ -1,14 +1,12 @@
 package com.metalurgica1.metalurgica1.service;
 
-import com.metalurgica1.metalurgica1.dto.CrearEmpleadoDTO;
-import com.metalurgica1.metalurgica1.dto.EmpleadoDTO;
-import com.metalurgica1.metalurgica1.dto.RegistroDTO;
+import com.metalurgica1.metalurgica1.DTO.EmpleadoDTO;
+import com.metalurgica1.metalurgica1.DTO.RegistroDTO;
 import com.metalurgica1.metalurgica1.modelo.Cliente;
 import com.metalurgica1.metalurgica1.modelo.Empleado;
 import com.metalurgica1.metalurgica1.modelo.Registro;
 import com.metalurgica1.metalurgica1.modelo.Tarea;
 import com.metalurgica1.metalurgica1.repositorio.IClienteRepository;
-import com.metalurgica1.metalurgica1.repositorio.IEmpleadoRepository;
 import com.metalurgica1.metalurgica1.repositorio.IRegistroRepository;
 import com.metalurgica1.metalurgica1.repositorio.ITareaRepository;
 import com.metalurgica1.metalurgica1.service.Excepciones.ClienteNoEncontradoException;
@@ -27,13 +25,11 @@ public class RegistroService {
     private final IRegistroRepository iRegistroRepository;
     private final IClienteRepository iClienteRepository;
     private final ITareaRepository iTareaRepository;
-    private final IEmpleadoRepository iEmpleadoRepository;
 
-    public RegistroService(IRegistroRepository iRegistroRepository, IClienteRepository iClienteRepository, ITareaRepository iTareaRepository, IEmpleadoRepository iEmpleadoRepository) {
+    public RegistroService(IRegistroRepository iRegistroRepository, IClienteRepository iClienteRepository, ITareaRepository iTareaRepository) {
         this.iRegistroRepository = iRegistroRepository;
         this.iClienteRepository = iClienteRepository;
         this.iTareaRepository = iTareaRepository;
-        this.iEmpleadoRepository = iEmpleadoRepository;
     }
 
     public List<RegistroDTO> listarRegistros(){
@@ -55,7 +51,7 @@ public class RegistroService {
 
         for(Empleado e : r.getParticipantes())
         {
-            participantes.add(new EmpleadoDTO(e.getLegajo(),e.getEmail(),e.getNombre(),e.getTelefono(),e.getDni()));
+            participantes.add(new EmpleadoDTO(e.getEmail(),e.getNombre(),e.getTelefono(),e.getDni(),e.getLegajo()));
         }
         return participantes;
     }
