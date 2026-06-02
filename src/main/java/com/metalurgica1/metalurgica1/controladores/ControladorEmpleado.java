@@ -1,5 +1,7 @@
 package com.metalurgica1.metalurgica1.controladores;
 
+import com.metalurgica1.metalurgica1.modelo.Cliente;
+import com.metalurgica1.metalurgica1.modelo.Empleado;
 import com.metalurgica1.metalurgica1.service.EmpleadoService;
 import com.metalurgica1.metalurgica1.service.Excepciones.EmpleadoNoEncontradoException;
 import lombok.extern.slf4j.Slf4j;
@@ -40,6 +42,33 @@ public class ControladorEmpleado {
             return ResponseEntity.notFound().build();
         }
     }
+
+
+    @GetMapping("/buscar/{email}")
+    public ResponseEntity<Empleado> buscarPorEmail(@RequestParam String email){
+        return ResponseEntity.ok(empleadoService.buscarEmpleadoPorEmail(email));
+    }
+
+    @GetMapping("/buscar/{nombre}")
+    public ResponseEntity<List<Empleado>> buscarPorNombre(@RequestParam String nombre){
+        return ResponseEntity.ok(empleadoService.buscarEmpleadoPorNombre(nombre));
+    }
+
+    @GetMapping("/buscar/{telefono}")
+    public ResponseEntity<Empleado> buscarPorTelefono(@RequestParam String telefono){
+        return ResponseEntity.ok(empleadoService.buscarEmpleadoPorTelefono(telefono));
+    }
+
+    @GetMapping("/buscar/{dni}")
+    public ResponseEntity<Empleado> buscarPorDni(@RequestParam Long dni){
+        return ResponseEntity.ok(empleadoService.buscarEmpleadoPorDni(dni));
+    }
+
+    @GetMapping("/buscar/{legajo}")
+    public ResponseEntity<Empleado> buscarPorLegajo(@RequestParam Long legajo){
+        return ResponseEntity.ok(empleadoService.buscarEmpleadoPorLegajo(legajo));
+    }
+
     @PostMapping
     public ResponseEntity<CrearEmpleadoDTO> crearEmpleado(@RequestBody CrearEmpleadoDTO empleado)
     {

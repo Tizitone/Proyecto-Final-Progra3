@@ -1,5 +1,6 @@
 package com.metalurgica1.metalurgica1.service;
 
+import com.metalurgica1.metalurgica1.modelo.Cliente;
 import com.metalurgica1.metalurgica1.modelo.Empleado;
 import com.metalurgica1.metalurgica1.modelo.enums.EEtiquetaDeAcceso;
 import com.metalurgica1.metalurgica1.repositorio.IEmpleadoRepository;
@@ -34,6 +35,26 @@ public class EmpleadoService {
                 .orElseThrow(() -> new EmpleadoNoEncontradoException("Empleado no encontrado."));
 
         return convertirADTOResponse(empleado);
+    }
+
+    public Empleado buscarEmpleadoPorEmail(String email){
+        return iEmpleadoRepository.findByEmail(email);
+    }
+
+    public List<Empleado> buscarEmpleadoPorNombre(String nombre){
+        return iEmpleadoRepository.findByNombre(nombre);
+    }
+
+    public Empleado buscarEmpleadoPorTelefono(String telefono){
+        return iEmpleadoRepository.findByTelefono(telefono);
+    }
+
+    public Empleado buscarEmpleadoPorDni(Long dni){
+        return iEmpleadoRepository.findByDni(dni);
+    }
+
+    public Empleado buscarEmpleadoPorLegajo(Long legajo){
+        return iEmpleadoRepository.findByLegajo(legajo);
     }
 
     public CrearEmpleadoDTO crearEmpleado(CrearEmpleadoDTO dto) {

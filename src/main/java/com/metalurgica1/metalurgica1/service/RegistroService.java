@@ -68,6 +68,10 @@ public class RegistroService {
                 r.getParticipantes());
     }
 
+    public List<Registro> buscarRegistroPorTitulo(String titulo){
+        return iRegistroRepository.findByTitulo(titulo);
+    }
+
     public RegistroDTO crearRegistro(RegistroDTO dto) throws TareaNoEncontradaExeption, ClienteNoEncontradoException {
         Registro registro = new Registro();
 

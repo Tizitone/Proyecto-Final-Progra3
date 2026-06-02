@@ -1,6 +1,7 @@
 package com.metalurgica1.metalurgica1.controladores;
 
 import com.metalurgica1.metalurgica1.DTO.RegistroDTO;
+import com.metalurgica1.metalurgica1.modelo.Registro;
 import com.metalurgica1.metalurgica1.service.Excepciones.ClienteNoEncontradoException;
 import com.metalurgica1.metalurgica1.service.Excepciones.RegistroNoEncontradoException;
 import com.metalurgica1.metalurgica1.service.Excepciones.TareaNoEncontradaExeption;
@@ -38,6 +39,11 @@ public class ControladorRegistro {
             log.error("",e);
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("/buscar/{titulo}")
+    public ResponseEntity<List<Registro>> buscarPorTitulo(@RequestParam String titulo){
+        return ResponseEntity.ok(registroService.buscarRegistroPorTitulo(titulo));
     }
 
     @PostMapping

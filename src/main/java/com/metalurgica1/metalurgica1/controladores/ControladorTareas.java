@@ -46,12 +46,12 @@ public class ControladorTareas {
         }
     }
 
-    @GetMapping("/buscar")
+    @GetMapping("/buscar/{texto}")
     public ResponseEntity<List<Tarea>> buscarTareas(@RequestParam String texto){
         return ResponseEntity.ok(tareaService.buscarPorTexto(texto));
     }
 
-    @GetMapping("/buscar/categoria")
+    @GetMapping("/buscar/{categoria}")
     public ResponseEntity<List<Tarea>> buscarPorCategoria(@RequestParam ECategorias categoria){
         return ResponseEntity.ok(tareaService.buscarPorCategoria(categoria));
     }
