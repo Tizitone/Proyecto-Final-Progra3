@@ -1,4 +1,4 @@
-package com.metalurgica1.metalurgica1.dto;
+package com.metalurgica1.metalurgica1.DTO;
 
 import com.metalurgica1.metalurgica1.modelo.enums.ECategorias;
 

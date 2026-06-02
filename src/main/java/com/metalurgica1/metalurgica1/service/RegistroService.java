@@ -1,8 +1,7 @@
 package com.metalurgica1.metalurgica1.service;
 
-import com.metalurgica1.metalurgica1.dto.CrearEmpleadoDTO;
-import com.metalurgica1.metalurgica1.dto.EmpleadoDTO;
-import com.metalurgica1.metalurgica1.dto.RegistroDTO;
+import com.metalurgica1.metalurgica1.DTO.EmpleadoDTO;
+import com.metalurgica1.metalurgica1.DTO.RegistroDTO;
 import com.metalurgica1.metalurgica1.modelo.Cliente;
 import com.metalurgica1.metalurgica1.modelo.Empleado;
 import com.metalurgica1.metalurgica1.modelo.Registro;
@@ -55,7 +54,7 @@ public class RegistroService {
 
         for(Empleado e : r.getParticipantes())
         {
-            participantes.add(new EmpleadoDTO(e.getLegajo(),e.getEmail(),e.getNombre(),e.getTelefono(),e.getDni()));
+            participantes.add(new EmpleadoDTO(e.getEmail(),e.getNombre(),e.getTelefono(),e.getDni(),e.getLegajo()));
         }
         return participantes;
     }
