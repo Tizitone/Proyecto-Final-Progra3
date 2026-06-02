@@ -36,6 +36,22 @@ public class ClienteService {
         return convertirADTOResponse(cliente);
     }
 
+    public Cliente buscarClientePorEmail(String email){
+        return iClienteRepository.findByEmail(email);
+    }
+
+    public List<Cliente> buscarClientePorNombre(String nombre){
+        return iClienteRepository.findByNombre(nombre);
+    }
+
+    public Cliente buscarClientePorTelefono(String telefono){
+        return iClienteRepository.findByTelefono(telefono);
+    }
+
+    public Cliente buscarClientePorDni(Long dni){
+        return iClienteRepository.findByDni(dni);
+    }
+
     public CrearClienteDTO crearCliente(CrearClienteDTO dto) {
         Cliente cliente = new Cliente();
         cliente.setEmail(dto.email());

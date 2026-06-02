@@ -1,6 +1,7 @@
 package com.metalurgica1.metalurgica1.controladores;
 
 import com.metalurgica1.metalurgica1.DTO.CrearClienteDTO;
+import com.metalurgica1.metalurgica1.modelo.Cliente;
 import com.metalurgica1.metalurgica1.service.ClienteService;
 import com.metalurgica1.metalurgica1.service.Excepciones.ClienteNoEncontradoException;
 import lombok.extern.slf4j.Slf4j;
@@ -38,6 +39,26 @@ public class ControladorCliente {
             log.error("",e);
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("/buscar/{email}")
+    public ResponseEntity<Cliente> buscarPorEmail(@RequestParam String email){
+        return ResponseEntity.ok(clienteService.buscarClientePorEmail(email));
+    }
+
+    @GetMapping("/buscar/{nombre}")
+    public ResponseEntity<List<Cliente>> buscarPorNombre(@RequestParam String nombre){
+        return ResponseEntity.ok(clienteService.buscarClientePorNombre(nombre));
+    }
+
+    @GetMapping("/buscar/{telefono}")
+    public ResponseEntity<Cliente> buscarPorTelefono(@RequestParam String telefono){
+        return ResponseEntity.ok(clienteService.buscarClientePorTelefono(telefono));
+    }
+
+    @GetMapping("/buscar/{dni}")
+    public ResponseEntity<Cliente> buscarPorDni(@RequestParam Long dni){
+        return ResponseEntity.ok(clienteService.buscarClientePorDni(dni));
     }
 
     @PostMapping
