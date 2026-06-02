@@ -29,14 +29,9 @@ public class ControladorSolicitud {
     }
 
     @GetMapping("/buscar")
-    public ResponseEntity<SolicitudDTO> listarSolicitud(@RequestParam String desc) {
-        try {
-            SolicitudDTO solicitud = solicitudService.buscarSolicitudPorDescripcion(desc);
+    public ResponseEntity<List<SolicitudDTO>> listarSolicitud(@RequestParam String desc) {
+            List<SolicitudDTO> solicitud = solicitudService.buscarSolicitudPorDescripcion(desc);
             return ResponseEntity.ok(solicitud);
-        } catch (SolicitudNoEncontradaException e) {
-            log.error("",e);
-            return ResponseEntity.notFound().build();
-        }
     }
 
     @PostMapping

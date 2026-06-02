@@ -8,6 +8,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -27,9 +28,9 @@ public class SolicitudService {
                 .toList();
     }
 
-    public SolicitudDTO buscarSolicitudPorDescripcion(String descripcion) throws SolicitudNoEncontradaException {
-        Solicitud s = iSolicitudRepository.findByDescripcion(descripcion).orElseThrow(()-> new SolicitudNoEncontradaException("buscar solicitud por descripcion"));
-        return convertirADTO(s);
+    public List<SolicitudDTO> buscarSolicitudPorDescripcion(String descripcion){
+        List<Solicitud> s = iSolicitudRepository.findByDescripcionPorPalabras(descripcion);
+        return s.stream().map(p-> new SolicitudDTO(p.getNombre(),p.getEmail(),p.getTelefono(),p.getDescripcion())).collect(Collectors.toList());
     }
 
     public SolicitudDTO crearSolicitud(SolicitudDTO dto)

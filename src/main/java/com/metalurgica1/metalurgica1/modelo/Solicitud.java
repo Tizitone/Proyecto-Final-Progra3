@@ -21,5 +21,6 @@ public class Solicitud {
     private String nombre;
     private String email;
     private String telefono;
+    @Column(columnDefinition = "TEXT")
     private String descripcion;
 }
