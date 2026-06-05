@@ -8,5 +8,6 @@ public record RegistroDTO(
         String titulo,
         Long tareaId,
         Long clienteId,
-        List<Empleado> participantesId){
+        List<Empleado> participantesId,
+        Boolean publicado){
 }

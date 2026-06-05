@@ -35,4 +35,7 @@ public class Registro {
             inverseJoinColumns = @JoinColumn(name = "empleado_id")
     )
     private List<Empleado> participantes = new ArrayList<>();
+
+    @Column(nullable = false)
+    private Boolean publicado = false;
 }

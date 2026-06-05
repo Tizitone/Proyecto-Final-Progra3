@@ -45,6 +45,11 @@ public class ControladorRegistro {
         return ResponseEntity.ok(registroService.buscarRegistroPorTitulo(titulo));
     }
 
+    @GetMapping("/buscar/publicados")
+    public ResponseEntity<List<RegistroDTO>> buscarPublicados(){
+        return ResponseEntity.ok(registroService.buscarPublicados());
+    }
+
     @PostMapping
     public ResponseEntity<RegistroDTO> crearRegistro(@RequestBody RegistroDTO dto) {
         try {
@@ -65,6 +70,11 @@ public class ControladorRegistro {
             log.error("",e);
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @PutMapping("/publicar/{id}")
+    public ResponseEntity<RegistroDTO> publicarRegistro(@PathVariable Long id){
+        return ResponseEntity.ok(registroService.publicarRegistro(id));
     }
 
     @DeleteMapping("/{id}")

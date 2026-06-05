@@ -6,10 +6,12 @@ import com.metalurgica1.metalurgica1.modelo.Empleado_Gerente;
 import com.metalurgica1.metalurgica1.modelo.enums.EEtiquetaDeAcceso;
 import com.metalurgica1.metalurgica1.repositorio.IGerenteRepository;
 import com.metalurgica1.metalurgica1.service.Excepciones.EmpleadoNoEncontradoException;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class GerenteService {
 
     private final IGerenteRepository iGerenteRepository;

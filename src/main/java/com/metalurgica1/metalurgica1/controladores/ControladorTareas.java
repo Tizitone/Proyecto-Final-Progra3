@@ -49,7 +49,7 @@ public class ControladorTareas {
         return ResponseEntity.ok(tareaService.buscarPorTexto(texto));
     }
 
-    @GetMapping("/buscar")
+    @GetMapping("/buscar/categoria")
     public ResponseEntity<List<TareaDTO>> buscarPorCategoria(@RequestParam ECategorias categoria){
         return ResponseEntity.ok(tareaService.buscarPorCategoria(categoria));
     }

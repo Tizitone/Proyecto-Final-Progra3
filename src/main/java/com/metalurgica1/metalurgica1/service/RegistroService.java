@@ -34,7 +34,7 @@ public class RegistroService {
 
     private RegistroDTO convertirADTO(Registro r){
         return new RegistroDTO(r.getId(),r.getTitulo(),r.getTarea().getId(),
-                r.getCliente().getIdCliente(),r.getParticipantes());
+                r.getCliente().getIdCliente(),r.getParticipantes(), r.getPublicado());
     }
 
     public List<RegistroDTO> listarRegistros(){
@@ -46,7 +46,8 @@ public class RegistroService {
                         r.getTitulo(),
                         r.getTarea().getId(),
                         r.getCliente().getIdCliente(),
-                        r.getParticipantes()))
+                        r.getParticipantes(),
+                        r.getPublicado()))
                 .collect(Collectors.toList());
     }
 
@@ -71,11 +72,19 @@ public class RegistroService {
                 r.getTitulo(),
                 r.getTarea().getId(),
                 r.getCliente().getIdCliente(),
-                r.getParticipantes());
+                r.getParticipantes(),
+                r.getPublicado());
     }
 
     public List<RegistroDTO> buscarRegistroPorTitulo(String titulo){
         return iRegistroRepository.findByTitulo(titulo)
+                .stream()
+                .map(this::convertirADTO)
+                .collect(Collectors.toList());
+    }
+
+    public List<RegistroDTO> buscarPublicados(){
+        return iRegistroRepository.findByPublicadoTrue()
                 .stream()
                 .map(this::convertirADTO)
                 .collect(Collectors.toList());
@@ -109,7 +118,8 @@ public class RegistroService {
                 nuevoRegistro.getTitulo(),
                 nuevoRegistro.getTarea().getId(),
                 nuevoRegistro.getCliente().getIdCliente(),
-                nuevoRegistro.getParticipantes());
+                nuevoRegistro.getParticipantes(),
+                nuevoRegistro.getPublicado());
     }
 
     public RegistroDTO modificarRegistro(Long id, RegistroDTO dto) throws RegistroNoEncontradoException, TareaNoEncontradaExeption, ClienteNoEncontradoException {
@@ -141,7 +151,16 @@ public class RegistroService {
                 nuevoRegistro.getTitulo(),
                 nuevoRegistro.getTarea().getId(),
                 nuevoRegistro.getCliente().getIdCliente(),
-                nuevoRegistro.getParticipantes());
+                nuevoRegistro.getParticipantes(),
+                nuevoRegistro.getPublicado());
+    }
+
+    public RegistroDTO publicarRegistro(Long id){
+        Registro registro = iRegistroRepository.findById(id)
+                .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"Registro no encontrado"));
+        registro.setPublicado(true);
+
+        return convertirADTO(registro);
     }
 
     public void eliminarRegistro(Long id){
