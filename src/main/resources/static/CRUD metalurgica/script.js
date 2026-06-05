@@ -327,40 +327,7 @@ const clienteContraInput = document.getElementById("contraseniaCliente");
 const clienteNombreInput = document.getElementById("nombreCliente");
 const clienteTelefonoInput = document.getElementById("telefonoCliente");
 const clienteDniInput = document.getElementById("dniCliente")
-//const tablaCliente = document.getElementById("tablaPersonas");
 const clienteMensaje = document.getElementById("clienteMensaje");
-
-async function cargarCliente() {
-    try {
-        const respuesta = await fetch(clienteApiUrl);
-        const clientes = await respuesta.json();
-
-        tablaPersona.innerHTML = "";
-
-        clientes.array.forEach(cliente => {
-            const filaCliente = `
-            <tr>
-                <td>${cliente.id}</td>
-                <td>${cliente.email}</td>
-                <td>${cliente.contrasenia}</td>
-                <td>${cliente.nombre}</td>
-                <td>${cliente.telefono}</td>
-                <td>${cliente.acceso}</td>
-                <td>${cliente.dni}</td>
-                <td>
-                    <div class="acciones">
-                        <button onclick='editarCliente(${JSON.stringify(cliente)})'>Editar Cliente</button>
-                        <button onclick='eliminarCliente(${cliente.id})'>Eliminar Cliente</button>
-                    </div>
-                </td>
-            </tr>
-            `;
-            tablaPersona.innerHTML += filaCliente;
-        });
-    } catch(error) {
-        clienteMensaje.textContent = "Error al cargar cliente";
-    }
-}
 
 formCliente.addEventListener("submit", async function (e) {
     e.preventDefault();
@@ -375,33 +342,20 @@ formCliente.addEventListener("submit", async function (e) {
     };
 
     try {
-        if (idClienteInput.value = "") {
-            await fetch(clienteApiUrl, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(cliente)
-            });
+        await fetch(clienteApiUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(cliente)
+        });
 
-            clienteMensaje.textContent = "Cliente agregado correctamente.";
-        } else {
-            await fetch(`${clienteApiUrl}/${idClienteInput.value}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(cliente)
-            });
+        clienteMensaje.textContent = "Cliente agregado correctamente.";
+        console.log("Cliente creado correctamente");
 
-            clienteMensaje.textContent = "Cliente modificado correctamente."
-        }
-
-        formCliente.reset();
-        idClienteInput.value = "";
-        cargarCliente();
-    }catch(error){
-        clienteMensaje.textContent = "Error al guardar / modificar cliente.";
+    } catch(error) {
+        clienteMensaje.textContent = "Error al guardar cliente.";
+        console.log("Error creando un cliente.");
     }
 });
 
@@ -499,6 +453,56 @@ async function cargarEmpleados() {
                 </td>
             </tr>`;
     });
+    console.log("tabla personas cargada");
+}
+
+async function cargarClientes() { 
+    const tbodyClientes = document.querySelector('#tablaClientes tbody');
+
+    await fetch(clienteApiUrl)
+    .then(Response => {
+        if(!Response.ok) {
+            throw new Error('Error al obtener clientes.');
+        }
+        return Response.json();
+    })
+    .then(clientes => {
+        if(clientes.length === 0) {
+            tbodyClientes.innerHTML = `
+                <tr>
+                    <td>
+                        no existen clientes aún.
+                    </td>
+                </tr>`;
+            return;
+        }
+
+        clientes.forEach(cliente => {
+            const filaClientes = document.createElement('tr');
+            filaClientes.innerHTML = `
+                    <td>${cliente.idCliente}</td>
+                    <td>${cliente.email}</td>
+                    <td>${cliente.contrasenia}</td>
+                    <td>${cliente.nombre}</td>
+                    <td>${cliente.telefono}</td>
+                    <td>${cliente.etiquetaDeAcceso}</td>
+                    <td>${cliente.dni}</td>
+                `;
+
+        tbodyClientes.appendChild(filaClientes)
+        });
+    })
+    .catch(error => {
+        console.error(error);
+        tbodyClientes.innerHTML = `
+            <tr>
+                <td>
+                    Error al conectar con el servidor.
+                </td>
+            </tr>`;
+    });
+
+    console.log("tabla clientes cargada");
 }
 
 function resetTablas() {
@@ -506,9 +510,29 @@ function resetTablas() {
     while (tbodyPersonas.firstChild) {
         tbodyPersonas.firstChild.remove();
     }
+    console.log("tablas reseteadas");
+}
+
+function orderTabla(order = 'asc') {
+    const tbodyPersonas = document.querySelector('#tablaPersonas tbody');
+    const filas = Array.from(tbodyPersonas.querySelectorAll('tr'));
+
+    filas.sort((a, b) => {
+        const idA = parseInt(a.cells[0].textContent);
+        const idB = parseInt(b.cells[0].textContent);
+
+        return order === 'asc' ? idA - idB : idB - idA;
+    });
+
+    filas.forEach(fila => tbodyPersonas.appendChild(fila));
+    console.log("tablas ordenadas");
 }
 
 const refreshButton = document.getElementById('refrescarTablas');
 
-refreshButton.addEventListener("click", resetTablas);
-refreshButton.addEventListener("click", cargarEmpleados);
+async function eventosTablas() {
+    resetTablas();
+    await cargarEmpleados();
+    await cargarClientes();
+    orderTabla();
+}

@@ -26,7 +26,7 @@
         </div>
 
         <div class="caja escondido" id="crear">
-            <h1>Formularios de creación</h1>
+            <h1 class="subtitulo">Formularios de creación</h1>
             
             <div class="titulo-selector">
                 <label for="listaBlock">Formularios:  </label>
@@ -38,7 +38,7 @@
                 </select>
             </div>
             
-            <div class="persona escondido" id="bloquePersona">
+            <div class="form escondido" id="bloquePersona">
                 <h2>Formulario: Personas</h2>           
                     
                 <label for="acceso">Acceso: </label>
@@ -50,7 +50,7 @@
                     <option value="cliente">Cliente</option>
                 </select>
 
-                <div class="empleado escondido" id="bloqueEmpleado">
+                <div class="form escondido" id="bloqueEmpleado">
                     <h4>usted esta por crear un empleado</h4>
                     <form id="formEmpleado">
                         <input type="hidden" id="idEmpleado">
@@ -87,7 +87,7 @@
                     <br> <br>
                 </div>
 
-                <div class="administrador escondido" id="bloqueAdministrador">
+                <div class="form escondido" id="bloqueAdministrador">
                     <h4>usted esta por crear un administrador</h4>
                         <form id="formAdmin">
                         <input type="hidden" id="idAdmin">
@@ -124,7 +124,7 @@
                     <br> <br>
                 </div>
 
-                <div class="gerente escondido" id="bloqueGerente">
+                <div class="form escondido" id="bloqueGerente">
                     <h4>usted esta por crear un gerente</h4>
                         <form id="formGerente">
                         <input type="hidden" id="idGerente">
@@ -161,7 +161,7 @@
                     <br> <br>
                 </div>
 
-                <div class="cliente escondido" id="bloqueCliente">
+                <div class="form escondido" id="bloqueCliente">
                     <h4>usted esta por crear un cliente</h4>
                         <form id="formCliente">
                         <input type="hidden" id="idCliente">
@@ -200,7 +200,7 @@
             </div>
 
 
-            <div class="tarea escondido" id="bloqueTarea">
+            <div class="form escondido" id="bloqueTarea">
                 <h2>Formulario: Tareas</h2>
 
                 <form id="formTarea">
@@ -245,7 +245,7 @@
                 </form>
             </div> 
 
-            <div class="registro escondido" id="bloqueRegistro">
+            <div class="form escondido" id="bloqueRegistro">
                 <h2>Formulario: Registros</h2>
 
                 <div class="botones-form">
@@ -256,18 +256,38 @@
         </div>
 
         <div class="caja escondido" id="buscar">
-            <h1>Busqueda de registros</h1>
+            <h1 class="subtitulo"> Busqueda de registros </h1>
         </div>
 
         <div class="caja escondido" id="ver">
-            <h1>Vista de Tablas</h1>
+            <h1 class="subtitulo"> Vista de Tablas </h1>
             
-            <button class="btn-refresh" id="refrescarTablas">Recargar Tablas</button>
+            <button class="btn-refresh" onclick="eventosTablas()" id="refrescarTablas">Recargar Tablas</button>
 
+            <h2>- Tabla Personas</h2>
             <table id="tablaPersonas">
                 <thead>
                     <tr>
                         <th>Legajo</th>
+                        <th>Email</th>
+                        <th>Contraseña</th>
+                        <th>Nombre</th>
+                        <th>Telefono</th>
+                        <th>Acceso</th>
+                        <th>DNI</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+
+            <br><br>
+
+            <h2>- Tabla Clientes</h2>
+            <table id="tablaClientes">
+                <thead>
+                    <tr>
+                        <th>ID Cliente</th>
                         <th>Email</th>
                         <th>Contraseña</th>
                         <th>Nombre</th>
