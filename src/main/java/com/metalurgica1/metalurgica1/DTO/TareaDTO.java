@@ -10,5 +10,6 @@ public record TareaDTO(
      LocalDate fechaDeEntrega,
      LocalDateTime fechaDeRegistro,
      String descripcionMaterial,
-     String descripcionGeneral){
+     String descripcionGeneral
+) {
 }

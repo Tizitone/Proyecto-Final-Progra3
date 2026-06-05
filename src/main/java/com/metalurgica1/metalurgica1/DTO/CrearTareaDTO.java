@@ -4,8 +4,10 @@ import com.metalurgica1.metalurgica1.modelo.enums.ECategorias;
 
 import java.time.LocalDate;
 
-public record CrearTareaDTO(ECategorias categorias,
-                            LocalDate fechaDeEntrega,
-                            String descripcionMaterial,
-                            String descripcionGeneral) {
+public record CrearTareaDTO(
+        ECategorias categorias,
+        LocalDate fechaDeEntrega,
+        String descripcionMaterial,
+        String descripcionGeneral
+) {
 }

@@ -1,80 +1,98 @@
 package com.metalurgica1.metalurgica1.controladores;
 
-import com.metalurgica1.metalurgica1.modelo.Empleado_Gerente;
-import com.metalurgica1.metalurgica1.modelo.Tarea;
-import com.metalurgica1.metalurgica1.repositorio.IGerenteRepository;
-import com.metalurgica1.metalurgica1.repositorio.IRegistroRepository;
-import com.metalurgica1.metalurgica1.repositorio.ITareaRepository;
+import com.metalurgica1.metalurgica1.DTO.CrearGerenteDTO;
+import com.metalurgica1.metalurgica1.DTO.GerenteDTO;
+import com.metalurgica1.metalurgica1.service.Excepciones.EmpleadoNoEncontradoException;
+import com.metalurgica1.metalurgica1.service.GerenteService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.metalurgica1.metalurgica1.modelo.Registro;
 
 import java.util.List;
-import java.util.Optional;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/gerentes")
+
     public class ControladorGerente {
 
-        private final IGerenteRepository iGerenteRepository;
-        private final IRegistroRepository iRegistroRepository;
-        private final ITareaRepository iTareaRepository;
+      private final GerenteService gerenteService;
 
-        public ControladorGerente(IGerenteRepository iGerenteRepository, IRegistroRepository iRegistroRepository, ITareaRepository iTareaRepository) {
-            this.iGerenteRepository = iGerenteRepository;
-            this.iRegistroRepository = iRegistroRepository;
-            this.iTareaRepository = iTareaRepository;
+    public ControladorGerente(GerenteService gerenteService) {
+        this.gerenteService = gerenteService;
+    }
+
+    @GetMapping
+    public ResponseEntity<List<GerenteDTO>> listarTodosGerentes() {
+        List<GerenteDTO> gerentes = gerenteService.listarTodosGerentes();
+        return ResponseEntity.ok(gerentes);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<GerenteDTO> buscarEmpleado(Long id) {
+        try {
+            GerenteDTO gerente = gerenteService.listarGerente(id);
+            return ResponseEntity.ok(gerente);
+        } catch (EmpleadoNoEncontradoException e) {
+            log.error("",e);
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
+    @GetMapping("/buscar/email")
+    public ResponseEntity<GerenteDTO> buscarPorEmail(@RequestParam String email){
+        return ResponseEntity.ok(gerenteService.buscarGerentePorMail(email));
+    }
+
+    @GetMapping("/buscar/nombre")
+    public ResponseEntity<List<GerenteDTO>> buscarPorNombre(@RequestParam String nombre){
+        return ResponseEntity.ok(gerenteService.buscarGerentePorNombre(nombre));
+    }
+
+    @GetMapping("/buscar/telefono")
+    public ResponseEntity<GerenteDTO> buscarPorTelefono(@RequestParam String telefono){
+        return ResponseEntity.ok(gerenteService.buscarGerentePorTelefono(telefono));
+    }
+
+    @GetMapping("/buscar/dni")
+    public ResponseEntity<GerenteDTO> buscarPorDni(@RequestParam Long dni){
+        return ResponseEntity.ok(gerenteService.buscarGerentePorDni(dni));
+    }
+
+    @GetMapping("/buscar/legajo")
+    public ResponseEntity<GerenteDTO> buscarPorLegajo(@RequestParam Long legajo){
+        return ResponseEntity.ok(gerenteService.buscarGerentePorLegajo(legajo));
+    }
+
+    @PostMapping
+    public ResponseEntity<CrearGerenteDTO> crearEmpleado(@RequestBody CrearGerenteDTO gerente) {
+        CrearGerenteDTO response = gerenteService.crearGerente(gerente);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<CrearGerenteDTO> modificarGerente(@PathVariable Long id, @RequestBody CrearGerenteDTO gerente) {
+        try {
+            CrearGerenteDTO gerenteActualizado = gerenteService.modificarGerente(id, gerente);
+            return ResponseEntity.ok(gerenteActualizado);
+        } catch (EmpleadoNoEncontradoException e) {
+            log.error("",e);
+            return ResponseEntity.notFound().build();
         }
 
-        @GetMapping
-        public List<Empleado_Gerente> listarGerentes() {
-            return iGerenteRepository.findAll();
-        }
+    }
 
-        @GetMapping("/{id}")
-        public ResponseEntity<Empleado_Gerente> buscarGerente(@PathVariable Long id) {
-            Optional<Empleado_Gerente> gerente = iGerenteRepository.findById(id);
-            if (gerente.isPresent()) {
-                return ResponseEntity.ok(gerente.get());
-            }
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    @DeleteMapping("/{id}")
+    public ResponseEntity<GerenteDTO> eliminarEmpleado(@PathVariable Long id){
+        try {
+            gerenteService.eliminarEmpleado(id);
+            return ResponseEntity.noContent().build();
+        } catch (EmpleadoNoEncontradoException e) {
+            log.error("",e);
+            return ResponseEntity.notFound().build();
         }
-
-        @PostMapping
-        public ResponseEntity<String> crearGerente(@RequestBody Empleado_Gerente gerente) {
-            iGerenteRepository.save(gerente);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Gerente creado con exito");
-        }
-
-        @PutMapping("/{id}")
-        public ResponseEntity<String> modificarGerente(@PathVariable Long id, @RequestBody Empleado_Gerente gerente) {
-            if (!iGerenteRepository.existsById(id)) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Gerente no encontrado");
-            }
-            gerente.setLegajo(id);
-            iGerenteRepository.save(gerente);
-            return ResponseEntity.ok("Gerente modificado con exito");
-        }
-
-        @DeleteMapping("/{id}")
-        public ResponseEntity<String> eliminarGerente(@PathVariable Long id) {
-            if (!iGerenteRepository.existsById(id)) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Gerente no encontrado");
-            }
-            iGerenteRepository.deleteById(id);
-            return ResponseEntity.ok("Gerente eliminado con exito");
-        }
-
-
-        @GetMapping("/registros")
-        public List<Registro> verRegistros() {
-            return iRegistroRepository.findAll();
-        }
-
-        @GetMapping("/tareas")
-        public List<Tarea> verTareas() {
-            return iTareaRepository.findAll();
-        }
+    }
 }
 

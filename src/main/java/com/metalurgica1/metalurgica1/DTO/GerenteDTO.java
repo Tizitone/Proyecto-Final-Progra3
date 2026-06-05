@@ -1,10 +1,11 @@
 package com.metalurgica1.metalurgica1.DTO;
 
-public record SolicitudDTO(
-        Long id,
-        String nombre,
+public record GerenteDTO(
         String email,
+        String nombre,
         String telefono,
-        String descripcion
+        Long dni,
+        Long legajo
 ) {
+
 }

@@ -1,5 +1,6 @@
 package com.metalurgica1.metalurgica1.DTO;
 
+import com.metalurgica1.metalurgica1.modelo.Empleado;
 import java.util.List;
 
 public record RegistroDTO(
@@ -7,5 +8,5 @@ public record RegistroDTO(
         String titulo,
         Long tareaId,
         Long clienteId,
-        List<com.metalurgica1.metalurgica1.modelo.Empleado> participantesId){
+        List<Empleado> participantesId){
 }

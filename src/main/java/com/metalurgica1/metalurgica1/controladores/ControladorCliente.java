@@ -1,7 +1,6 @@
 package com.metalurgica1.metalurgica1.controladores;
 
 import com.metalurgica1.metalurgica1.DTO.CrearClienteDTO;
-import com.metalurgica1.metalurgica1.modelo.Cliente;
 import com.metalurgica1.metalurgica1.service.ClienteService;
 import com.metalurgica1.metalurgica1.service.Excepciones.ClienteNoEncontradoException;
 import lombok.extern.slf4j.Slf4j;
