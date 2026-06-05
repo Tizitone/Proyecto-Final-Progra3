@@ -510,6 +510,11 @@ function resetTablas() {
     while (tbodyPersonas.firstChild) {
         tbodyPersonas.firstChild.remove();
     }
+    const tbodyClientes = document.querySelector('#tablaClientes tbody');
+    while (tbodyClientes.firstChild) {
+        tbodyClientes.firstChild.remove();
+    }
+
     console.log("tablas reseteadas");
 }
 
