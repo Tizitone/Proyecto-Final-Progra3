@@ -48,3 +48,14 @@ function cargarSolicitudes() {
                 </tr>`;
         });
 }
+
+function resetTable() {
+    const tbody = document.querySelector('#tablaSolicitudes tbody');
+    while (tbody.firstChild) {
+        tbody.firstChild.remove();
+    }
+}
+
+const refreshButton = document.getElementById('btn-refresh')
+refreshButton.addEventListener("click", resetTable);
+refreshButton.addEventListener("click", cargarSolicitudes);

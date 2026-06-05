@@ -99,7 +99,7 @@ blockTypeSelect.addEventListener('change', function() {
     }
 });
 
-const EmpleadoapiUrl = "http://localhost:8080/api/empleados";
+const empleadoApiUrl = "http://localhost:8080/api/empleados";
 
 const formEmpleado = document.getElementById("formEmpleado");
 const idEmpleadoInput = document.getElementById("idEmpleado");
@@ -109,7 +109,7 @@ const empleadoContraInput = document.getElementById("contraseniaEmpleado");
 const empleadoNombreInput = document.getElementById("nombreEmpleado");
 const empleadoTelefonoInput = document.getElementById("telefonoEmpleado");
 const empleadoDniInput = document.getElementById("dniEmpleado");
-const tablaPersona = document.getElementById("tablaPersonas");
+const tablaPersona = document.querySelector("#tablaPersonas tbody");
 const empleadoMensaje = document.getElementById("empleadoMensaje");
 
 formEmpleado.addEventListener("submit", async function (e) {
@@ -125,7 +125,7 @@ formEmpleado.addEventListener("submit", async function (e) {
     };
 
     try {
-        await fetch(EmpleadoapiUrl, {
+        await fetch(empleadoApiUrl, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -136,54 +136,9 @@ formEmpleado.addEventListener("submit", async function (e) {
         empleadoMensaje.textContent = "Empleado agregado correctamente.";
 
     } catch(error) {
-        empleadoMensaje.textContent = "Error al guardar / modificar empleado.";
+        empleadoMensaje.textContent = "Error al guardar empleado.";
     }
 });
-
-    async function cargarEmpleado() {
-        const respuesta = await fetch(EmpleadoapiUrl)
-        .then(Response => {
-            if(!Response.ok) {
-                throw new Error('Error al obtener empleados.');
-            }
-            return Response.json();
-        })
-        .then(empleados => {
-            if(empleados.length === 0) {
-                tbody.innerHTML = `
-                    <tr>
-                        <td>
-                            no existen empleados aún.
-                        </td>
-                    </tr>`;
-                return;
-            }
-
-            empleados.forEach(empleado => {
-                const filaEmpleado = `
-            <tr>
-                <td>${empleado.idEmpleadoInput}</td>
-                <td>${empleado.email}</td>
-                <td>${empleado.contrasenia}</td>
-                <td>${empleado.nombre}</td>
-                <td>${empleado.telefono}</td>
-                <td>${empleado.acceso}</td>
-                <td>${empleado.dni}</td>
-            </tr>
-            `;
-            tbody.appendChild(filaEmpleado)
-            });
-        })
-        .catch(error => {
-            console.error(error);
-            tbody.innerHTML = `
-                <tr>
-                    <td>
-                        Error al conectar con el servidor.
-                    </td>
-                </tr>`;
-        });
-    }
 
     /*
     try {
@@ -236,38 +191,6 @@ const gerenteDniInput = document.getElementById("dniGerente")
 //const tablaGerente = document.getElementById("tablaPersonas");
 const gerenteMensaje = document.getElementById("gerenteMensaje");
 
-async function cargarGerente() {
-    try {
-        const respuesta = await fetch(gerenteApiUrl);
-        const gerentes = await respuesta.json();
-
-        tablaPersona.innerHTML = "";
-
-        gerentes.array.forEach(gerente => {
-            const filaGerente = `
-            <tr>
-                <td>${gerente.id}</td>
-                <td>${gerente.email}</td>
-                <td>${gerente.contrasenia}</td>
-                <td>${gerente.nombre}</td>
-                <td>${gerente.telefono}</td>
-                <td>${gerente.acceso}</td>
-                <td>${gerente.dni}</td>
-                <td>
-                    <div class="acciones">
-                        <button onclick='editarGerente(${JSON.stringify(gerente)})'>Editar Gerente</button>
-                        <button onclick='eliminarGerente(${gerente.id})'>Eliminar Gerente</button>
-                    </div>
-                </td>
-            </tr>
-            `;
-            tablaPersona.innerHTML += filaGerente;
-        });
-    } catch(error) {
-        gerenteMensaje.textContent = "Error al cargar gerente.";
-    }
-}
-
 formGerente.addEventListener("submit", async function (e) {
     e.preventDefault();
 
@@ -281,33 +204,18 @@ formGerente.addEventListener("submit", async function (e) {
     };
 
     try {
-        if (idGerenteInput.value = "") {
-            await fetch(gerenteApiUrl, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(gerente)
-            });
+        await fetch(gerenteApiUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(gerente)
+        });
 
-            gerenteMensaje.textContent = "Gerente agregado correctamente.";
-        } else {
-            await fetch(`${gerenteApiUrl}/${idGerenteInput.value}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(gerente)
-            });
+        gerenteMensaje.textContent = "Gerente agregado correctamente.";
 
-            gerenteMensaje.textContent = "Gerente modificado correctamente."
-        }
-
-        formGerente.reset();
-        idGerenteInput.value = "";
-        cargarGerente();
-    }catch(error){
-        gerenteMensaje.textContent = "Error al guardar / modificar gerente.";
+    } catch(error) {
+        gerenteMensaje.textContent = "Error al guardar gerente.";
     }
 });
 
@@ -502,3 +410,105 @@ function cancelarEdicionCliente() {
     idClienteInput.value = "";
     clienteMensaje.textContent = "Edición cancelada";
 }
+
+async function cargarEmpleados() { 
+    const tbodyPersonas = document.querySelector('#tablaPersonas tbody');
+
+    await fetch(empleadoApiUrl)
+    .then(Response => {
+        if(!Response.ok) {
+            throw new Error('Error al obtener empleados.');
+        }
+        return Response.json();
+    })
+    .then(personas => {
+        if(personas.length === 0) {
+            tbodyPersonas.innerHTML = `
+                <tr>
+                    <td>
+                        no existen empleados aún.
+                    </td>
+                </tr>`;
+            return;
+        }
+
+        personas.forEach(persona => {
+            const filaPersonas = document.createElement('tr');
+            filaPersonas.innerHTML = `
+                    <td>${persona.legajo}</td>
+                    <td>${persona.email}</td>
+                    <td>${persona.contrasenia}</td>
+                    <td>${persona.nombre}</td>
+                    <td>${persona.telefono}</td>
+                    <td>${persona.etiquetaDeAcceso}</td>
+                    <td>${persona.dni}</td>
+                `;
+
+        tbodyPersonas.appendChild(filaPersonas)
+        });
+    })
+    .catch(error => {
+        console.error(error);
+        tbodyPersonas.innerHTML = `
+            <tr>
+                <td>
+                    Error al conectar con el servidor.
+                </td>
+            </tr>`;
+    });
+
+    await fetch(gerenteApiUrl)
+    .then(Response => {
+        if(!Response.ok) {
+            throw new Error('Error al obtener empleados.');
+        }
+        return Response.json();
+    })
+    .then(personas => {
+        if(personas.length === 0) {
+            tbodyPersonas.innerHTML = `
+                <tr>
+                    <td>
+                        no existen empleados aún.
+                    </td>
+                </tr>`;
+            return;
+        }
+
+        personas.forEach(persona => {
+            const filaPersonas = document.createElement('tr');
+            filaPersonas.innerHTML = `
+                    <td>${persona.legajo}</td>
+                    <td>${persona.email}</td>
+                    <td>${persona.contrasenia}</td>
+                    <td>${persona.nombre}</td>
+                    <td>${persona.telefono}</td>
+                    <td>${persona.etiquetaDeAcceso}</td>
+                    <td>${persona.dni}</td>
+                `;
+
+        tbodyPersonas.appendChild(filaPersonas)
+        });
+    })
+    .catch(error => {
+        console.error(error);
+        tbodyPersonas.innerHTML = `
+            <tr>
+                <td>
+                    Error al conectar con el servidor.
+                </td>
+            </tr>`;
+    });
+}
+
+function resetTablas() {
+    const tbodyPersonas = document.querySelector('#tablaPersonas tbody');
+    while (tbodyPersonas.firstChild) {
+        tbodyPersonas.firstChild.remove();
+    }
+}
+
+const refreshButton = document.getElementById('refrescarTablas');
+
+refreshButton.addEventListener("click", resetTablas);
+refreshButton.addEventListener("click", cargarEmpleados);

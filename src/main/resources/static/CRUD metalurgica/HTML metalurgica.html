@@ -262,12 +262,12 @@
         <div class="caja escondido" id="ver">
             <h1>Vista de Tablas</h1>
             
-            <button class="btn-refresh" onclick="cargarEmpleado()">Recargar Tablas</button>
+            <button class="btn-refresh" id="refrescarTablas">Recargar Tablas</button>
 
             <table id="tablaPersonas">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>Legajo</th>
                         <th>Email</th>
                         <th>Contraseña</th>
                         <th>Nombre</th>
@@ -276,7 +276,8 @@
                         <th>DNI</th>
                     </tr>
                 </thead>
-                <tbody id="tablaPersonas"></tbody>
+                <tbody>
+                </tbody>
             </table>
 
             <br><br>

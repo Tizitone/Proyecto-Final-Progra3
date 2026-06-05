@@ -107,11 +107,17 @@ option{
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
-.oculto {
+.escondido {
     display: none;
 }
 
-.escondido{
-    display: none;
+.btn-refresh {
+    text-align: center;
+    padding: 10px;
+    margin: 20px;
+    margin-left: 150px;
+    background-color: cornflowerblue;
+    border: black;
+    border-radius: 20px;
 }
 
