@@ -188,7 +188,6 @@ const gerenteContraInput = document.getElementById("contraseniaGerente");
 const gerenteNombreInput = document.getElementById("nombreGerente");
 const gerenteTelefonoInput = document.getElementById("telefonoGerente");
 const gerenteDniInput = document.getElementById("dniGerente")
-//const tablaGerente = document.getElementById("tablaPersonas");
 const gerenteMensaje = document.getElementById("gerenteMensaje");
 
 formGerente.addEventListener("submit", async function (e) {
@@ -234,40 +233,7 @@ const adminContraInput = document.getElementById("contraseniaAdmin");
 const adminNombreInput = document.getElementById("nombreAdmin");
 const adminTelefonoInput = document.getElementById("telefonoAdmin");
 const adminDniInput = document.getElementById("dniAdmin")
-//const tablaAdmin = document.getElementById("tablaPersonas");
 const adminMensaje = document.getElementById("adminMensaje");
-
-async function cargarAdmin() {
-    try {
-        const respuesta = await fetch(adminApiUrl);
-        const admins = await respuesta.json();
-
-        tablaPersona.innerHTML = "";
-
-        admins.array.forEach(admin => {
-            const filaAdmin = `
-            <tr>
-                <td>${admin.id}</td>
-                <td>${admin.email}</td>
-                <td>${admin.contrasenia}</td>
-                <td>${admin.nombre}</td>
-                <td>${admin.telefono}</td>
-                <td>${admin.acceso}</td>
-                <td>${admin.dni}</td>
-                <td>
-                    <div class="acciones">
-                        <button onclick='editarAdmin(${JSON.stringify(admin)})'>Editar Admin</button>
-                        <button onclick='eliminarAdmin(${admin.id})'>Eliminar Admin</button>
-                    </div>
-                </td>
-            </tr>
-            `;
-            tablaPersona.innerHTML += filaAdmin;
-        });
-    } catch(error) {
-        adminMensaje.textContent = "Error al cargar administrador.";
-    }
-}
 
 formAdmin.addEventListener("submit", async function (e) {
     e.preventDefault();
@@ -277,38 +243,25 @@ formAdmin.addEventListener("submit", async function (e) {
         contrasenia: adminContraInput.value,
         nombre: adminNombreInput.value,
         telefono: adminTelefonoInput.value,
-        acceso: "administrador",
+        acceso: "ADMIN",
         dni: adminDniInput.value 
     };
 
     try {
-        if (idAdminInput.value = "") {
-            await fetch(adminApiUrl, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(admin)
-            });
+        await fetch(adminApiUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(admin)
+        });
 
-            adminMensaje.textContent = "Administrador agregado correctamente.";
-        } else {
-            await fetch(`${adminApiUrl}/${idAdminInput.value}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(admin)
-            });
+        adminMensaje.textContent = "Administrador agregado correctamente.";
+        console.log("Administrador agregado correctamente.");
 
-            adminMensaje.textContent = "Administrador modificado correctamente."
-        }
-
-        formAdmin.reset();
-        idAdminInput.value = "";
-        cargarAdmin();
-    }catch(error){
-        adminMensaje.textContent = "Error al guardar / modificar administrador.";
+    } catch(error) {
+        adminMensaje.textContent = "Error al guardar administrador.";
+        console.log("Error al guardar administrador.");
     }
 });
 
@@ -456,6 +409,55 @@ async function cargarEmpleados() {
     console.log("tabla personas cargada");
 }
 
+async function cargarAdmins() { 
+    const tbodyAdmins = document.querySelector('#tablaAdmins tbody');
+
+    await fetch(adminApiUrl)
+    .then(Response => {
+        if(!Response.ok) {
+            throw new Error('Error al obtener administradores.');
+        }
+        return Response.json();
+    })
+    .then(admins => {
+        if(admins.length === 0) {
+            tbodyAdmins.innerHTML = `
+                <tr>
+                    <td>
+                        no existen administradores aún.
+                    </td>
+                </tr>`;
+            return;
+        }
+
+        admins.forEach(admin => {
+            const filaAdmin = document.createElement('tr');
+            filaAdmin.innerHTML = `
+                    <td>${admin.id_administrador}</td>
+                    <td>${admin.email}</td>
+                    <td>${admin.contrasenia}</td>
+                    <td>${admin.nombre}</td>
+                    <td>${admin.telefono}</td>
+                    <td>${admin.etiquetaDeAcceso}</td>
+                    <td>${admin.dni}</td>
+                `;
+
+        tbodyAdmins.appendChild(filaAdmin)
+        });
+    })
+    .catch(error => {
+        console.error(error);
+        tbodyAdmins.innerHTML = `
+            <tr>
+                <td>
+                    Error al conectar con el servidor.
+                </td>
+            </tr>`;
+    });
+
+    console.log("tabla administradores cargada");
+}
+
 async function cargarClientes() { 
     const tbodyClientes = document.querySelector('#tablaClientes tbody');
 
@@ -510,9 +512,15 @@ function resetTablas() {
     while (tbodyPersonas.firstChild) {
         tbodyPersonas.firstChild.remove();
     }
+
     const tbodyClientes = document.querySelector('#tablaClientes tbody');
     while (tbodyClientes.firstChild) {
         tbodyClientes.firstChild.remove();
+    }
+
+    const tbodyAdmins = document.querySelector('#tablaClientes tbody');
+    while (tbodyAdmins.firstChild) {
+        tbodyAdmins.firstChild.remove();
     }
 
     console.log("tablas reseteadas");
@@ -539,5 +547,6 @@ async function eventosTablas() {
     resetTablas();
     await cargarEmpleados();
     await cargarClientes();
+    await cargarAdmins();
     orderTabla();
 }
