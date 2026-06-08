@@ -1,5 +1,7 @@
 package com.metalurgica1.metalurgica1.modelo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.metalurgica1.metalurgica1.modelo.enums.EEstadoActividad;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,4 +22,8 @@ public class Solicitud {
     private String telefono;
     @Column(columnDefinition = "TEXT")
     private String descripcion;
+
+    @Enumerated(EnumType.STRING)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private EEstadoActividad eEstadoActividad;
 }

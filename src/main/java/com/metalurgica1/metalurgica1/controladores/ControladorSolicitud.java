@@ -56,7 +56,7 @@ public class ControladorSolicitud {
 
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/borrar/{id}")
     public ResponseEntity<SolicitudDTO> eliminarSolicitud(@PathVariable Long id){
         try
         {

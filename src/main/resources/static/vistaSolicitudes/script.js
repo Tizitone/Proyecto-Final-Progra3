@@ -147,7 +147,7 @@ function EliminarSolicitud(id) {
     const url = `http://localhost:8080/api/solicitudes/borrar/${id}`;
 
     fetch(url, {
-        method: 'DELETE'
+        method: 'PUT'
     })
     .then(response => {
         if (response.ok) {

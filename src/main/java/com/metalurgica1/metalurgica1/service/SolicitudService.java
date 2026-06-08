@@ -2,6 +2,7 @@ package com.metalurgica1.metalurgica1.service;
 
 import com.metalurgica1.metalurgica1.DTO.SolicitudDTO;
 import com.metalurgica1.metalurgica1.modelo.Solicitud;
+import com.metalurgica1.metalurgica1.modelo.enums.EEstadoActividad;
 import com.metalurgica1.metalurgica1.repositorio.ISolicitudRepository;
 import com.metalurgica1.metalurgica1.service.Excepciones.SolicitudNoEncontradaException;
 import jakarta.transaction.Transactional;
@@ -25,6 +26,7 @@ public class SolicitudService {
     public List<SolicitudDTO> listarTodasSolicitudes(){
         return iSolicitudRepository.findAll()
                 .stream()
+                .filter(p-> p.getEEstadoActividad().equals(EEstadoActividad.ACTIVO))
                 .map(this::convertirADTO)
                 .toList();
     }
@@ -44,7 +46,7 @@ public class SolicitudService {
         s.setEmail(dto.email());
         s.setTelefono(dto.telefono());
         s.setDescripcion(dto.descripcion());
-
+        s.setEEstadoActividad(EEstadoActividad.ACTIVO);
         Solicitud nuevaSolicitud = iSolicitudRepository.save(s);
 
         return convertirADTO(nuevaSolicitud);
@@ -65,7 +67,9 @@ public class SolicitudService {
     public void eliminarSolicitud(Long id) throws SolicitudNoEncontradaException {
         Solicitud s = iSolicitudRepository.findById(id).orElseThrow(()->new SolicitudNoEncontradaException("eliminar solicitud"));
 
-        iSolicitudRepository.delete(s);
+        s.setEEstadoActividad(EEstadoActividad.CANCELADO);
+
+        iSolicitudRepository.save(s);
     }
 
     private SolicitudDTO convertirADTO(Solicitud solicitud){
