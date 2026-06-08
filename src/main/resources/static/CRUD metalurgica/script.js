@@ -318,6 +318,89 @@ function cancelarEdicionCliente() {
     clienteMensaje.textContent = "Edición cancelada";
 }
 
+function buscarPersona(idPersona){
+
+    try {
+        
+        
+
+    } catch (error) {
+        
+    }
+
+}
+
+function buscarAdmin(idAdmin){
+
+    try {
+        
+    } catch (error) {
+        
+    }
+
+}
+
+function buscarCliente(idCliente){
+
+    try {
+        
+    } catch (error) {
+        
+    }
+
+}
+
+function buscarTarea(idTarea){
+
+    try {
+        
+    } catch (error) {
+        
+    }
+
+}
+
+function buscarRegistro(idRegistro){
+
+    try {
+        
+    } catch (error) {
+        
+    }
+
+}
+
+const formBuscar = document.getElementById("formBuscar");
+const tipoBusquedaInput = document.getElementById("tipoBusqueda");
+const idABuscar = document.getElementById("idBuscado");
+
+formBuscar.addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    switch(tipoBusquedaInput){
+
+        case 'persona': 
+            buscarPersona(idABuscar);
+            break;
+
+        case 'admin':
+            buscarAdmin(idABuscar);
+            break;
+
+        case 'cliente':
+            buscarCliente(idABuscar);
+            break;
+
+        case 'tarea':
+            buscarTarea(idABuscar);
+            break;
+
+        case 'registro':
+            buscarRegistro(idABuscar);
+            break;
+    }
+})
+
 async function cargarEmpleados() { 
     const tbodyPersonas = document.querySelector('#tablaPersonas tbody');
 

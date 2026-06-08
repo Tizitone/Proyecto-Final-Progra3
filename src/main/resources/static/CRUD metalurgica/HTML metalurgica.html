@@ -257,6 +257,124 @@
 
         <div class="caja escondido" id="buscar">
             <h1 class="subtitulo"> Busqueda de registros </h1>
+            <br><br>
+
+            <form class="form busqueda" id="formBusqueda">
+                <label for="tipoBusqueda">¿Qué esta buscando?</label>
+                <select name="tipoBusqueda" id="tipoBusqueda" size="2">
+                    <option value="persona">Persona</option>
+                    <option value="admin">Administrador</option>
+                    <option value="cliente">Cliente</option>
+                    <option value="tarea">Tarea</option>
+                    <option value="registro">Registro</option>
+                </select>
+
+                <br><br>
+                
+                <label for="idBuscado">Identificador</label>
+                <input type="number" required id="idBuscado" />
+
+                <div>
+                    <button type="submit">Buscar</button>
+                </div>
+            </form>
+
+            <div class="tablaBusquedaPersona escondido" id="tablaBusquedaPersona">
+                <h3>- Persona Encontrada</h3>
+                <table id="tablaPersonaBusqueda">
+                    <thead>
+                        <tr>
+                            <th>Legajo</th>
+                            <th>Email</th>
+                            <th>Contraseña</th>
+                            <th>Nombre</th>
+                            <th>Telefono</th>
+                            <th>Acceso</th>
+                            <th>DNI</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="tablaBusquedaAdmin escondido" id="tablaBusquedaAdmin">
+                <h3>- Administrador Encontrado</h3>
+                <table id="tablaAdminBusqueda">
+                <thead>
+                    <tr>
+                        <th>ID Admin</th>
+                        <th>Email</th>
+                        <th>Contraseña</th>
+                        <th>Nombre</th>
+                        <th>Telefono</th>
+                        <th>Acceso</th>
+                        <th>DNI</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            </div>
+
+            <div class="clienteEncontrado escondido" id="clienteEncontrado">
+                <h3>- Cliente Encontrado</h3>
+                <table id="tablaClienteBusqueda">
+                <thead>
+                    <tr>
+                        <th>ID Cliente</th>
+                        <th>Email</th>
+                        <th>Contraseña</th>
+                        <th>Nombre</th>
+                        <th>Telefono</th>
+                        <th>Acceso</th>
+                        <th>DNI</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            </div>
+
+            <div class="tareaEncontrada escondido" id="tareaEncontrada">
+                <h3>- Tarea Encontrada -</h3>
+                <table id="tablaTareaBusqueda">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Categoria</th>
+                        <th>FechaRegistro</th>
+                        <th>FechaEntrega</th>
+                        <th>DescripcionMaterial</th>
+                        <th>DescripcionTarea</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            </div>
+
+            <div class="registroEncontrado escondido" id="registroEncontrado">
+                <h3>- Registro Encontrado -</h3>
+                <table id="tablaRegistroBusqueda">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Titulo</th>
+                        <th>TareaID</th>
+                        <th>ClienteID</th>
+                        <th>Contacto</th>
+                        <th>Estado</th>
+                        <th>Monto</th>
+                        <th>Participantes</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            </div>
+
+            <br> <br>
+            <p class="mensaje busqueda" id="busquedaMensaje"></p>
+            <br> <br>
+            
         </div>
 
         <div class="caja escondido" id="ver">
@@ -321,7 +439,7 @@
 
             <br><br>
 
-            <table>
+            <table id="tablaTarea">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -332,12 +450,12 @@
                         <th>DescripcionTarea</th>
                     </tr>
                 </thead>
-                <tbody id="tablaTarea"></tbody>
+                <tbody></tbody>
             </table>
 
             <br><br>
 
-            <table>
+            <table id="tablaRegistro">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -350,7 +468,7 @@
                         <th>Participantes</th>
                     </tr>
                 </thead>
-                <tbody id="tablaRegistro"></tbody>
+                <tbody></tbody>
             </table>
         </div>
     </body>
