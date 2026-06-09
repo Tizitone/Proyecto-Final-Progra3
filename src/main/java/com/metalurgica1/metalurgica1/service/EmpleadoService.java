@@ -1,7 +1,6 @@
 package com.metalurgica1.metalurgica1.service;
 
 import com.metalurgica1.metalurgica1.modelo.Empleado;
-import com.metalurgica1.metalurgica1.modelo.enums.EEtiquetaDeAcceso;
 import com.metalurgica1.metalurgica1.repositorio.IEmpleadoRepository;
 import com.metalurgica1.metalurgica1.DTO.EmpleadoDTO;
 import com.metalurgica1.metalurgica1.DTO.CrearEmpleadoDTO;
@@ -70,8 +69,6 @@ public class EmpleadoService {
         empleado.setNombre(dto.nombre());
         empleado.setTelefono(dto.telefono());
         empleado.setDni(dto.dni());
-        empleado.setEtiquetaDeAcceso(EEtiquetaDeAcceso.EMPLEADO);
-
         empleado = iEmpleadoRepository.save(empleado);
 
         return convertirADTORequest(empleado);

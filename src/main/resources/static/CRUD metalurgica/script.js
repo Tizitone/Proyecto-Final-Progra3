@@ -68,6 +68,7 @@ inicioSelect.addEventListener('change', function() {
             crearBlock.classList.add('escondido');
             buscarBlock.classList.add('escondido');
             verBlock.classList.remove('escondido');
+            cargarEmpleado();
             break;
     }
 });
@@ -99,7 +100,7 @@ blockTypeSelect.addEventListener('change', function() {
     }
 });
 
-const EmpleadoapiUrl = "http://localhost:8080/api/empleados";
+const EmpleadoapiUrl = "http://localhost:8080/api/empleadosGeneral";
 
 const formEmpleado = document.getElementById("formEmpleado");
 const idEmpleadoInput = document.getElementById("idEmpleado");
@@ -114,35 +115,64 @@ const empleadoMensaje = document.getElementById("mensaje");
 
     
 async function cargarEmpleado() {
-    try {
-        const respuesta = await fetch(EmpleadoapiUrl);
-        const empleados = await respuesta.json();
 
-        tablaPersona.innerHTML = "";
+        tablaPersona.innerHTML='';
 
-        empleados.array.forEach(empleado => {
-            const filaEmpleado = `
+        try {
+        const respuesta = await fetch(EmpleadoapiUrl, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!respuesta.ok) {
+            throw new Error('Error al obtener los empleados');
+        }
+
+        const solicitudes = await respuesta.json();
+        console.log("Datos recibidos del servidor:", solicitudes); 
+
+         if (solicitudes.length === 0) {
+            tablaPersona.innerHTML = `
             <tr>
-                <td>${empleado.idEmpleadoInput}</td>
+                <td colspan="8" style="text-align: center;">
+                    No hay empleados registrados.
+                </td>
+            </tr>`;
+            return;
+        }
+
+                solicitudes.forEach(empleado => {
+                    const filaEmpleado = `
+            <tr>
+                <td>${empleado.legajo}</td>
                 <td>${empleado.email}</td>
-                <td>${empleado.contrasenia}</td>
                 <td>${empleado.nombre}</td>
                 <td>${empleado.telefono}</td>
-                <td>${empleado.acceso}</td>
                 <td>${empleado.dni}</td>
                 <td>
                     <div class="acciones">
-                        <button onclick='editarMascota(${JSON.stringify(empleado)})'>Editar Empleado</button>
-                        <button onclick='eliminarMascota(${empleado.idEmpleadoInput})'>Eliminar Emplado</button>
+                        <button onclick='editarEmpleado(${JSON.stringify(empleado)})'>Editar Empleado</button>
+                        <button onclick='eliminarEmpleado(${empleado.idEmpleadoInput})'>Eliminar Emplado</button>
                     </div>
                 </td>
             </tr>
             `;
-            tablaPersona.innerHTML += filaEmpleado;
-        });
-    } catch(error) {
-        empleadoMensaje.textContent = "Error al cargar Empleados";
-    }
+                    tablaPersona.innerHTML += filaEmpleado;
+                });
+            }
+                    catch(error)
+                    {
+                        console.error(error);
+                        tablaPersona.innerHTML = `
+                <tr>
+                    <td>
+                        Error al conectar con el servidor.
+                    </td>
+                </tr>`;
+                    };
+
 }
 
 formEmpleado.addEventListener("submit", async function (e) {
@@ -153,13 +183,13 @@ formEmpleado.addEventListener("submit", async function (e) {
         contrasenia: empleadoContraInput.value,
         nombre: empleadoNombreInput.value,
         telefono: empleadoTelefonoInput.value,
-        acceso: "empleado",
+        acceso: "EMPLEADO",
         dni: empleadoDniInput.value 
     };
 
     try {
-        if (idEmpleadoInput.value = "") {
-            await fetch(EmpleadoapiUrl, {
+        if (idEmpleadoInput.value == "") {
+            await fetch(new URL(EmpleadoapiUrl).href, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -206,37 +236,6 @@ const gerenteDniInput = document.getElementById("dniGerente")
 //const tablaGerente = document.getElementById("tablaPersonas");
 const gerenteMensaje = document.getElementById("gerenteMensaje");
 
-async function cargarGerente() {
-    try {
-        const respuesta = await fetch(gerenteApiUrl);
-        const gerentes = await respuesta.json();
-
-        tablaPersona.innerHTML = "";
-
-        gerentes.array.forEach(gerente => {
-            const filaGerente = `
-            <tr>
-                <td>${gerente.id}</td>
-                <td>${gerente.email}</td>
-                <td>${gerente.contrasenia}</td>
-                <td>${gerente.nombre}</td>
-                <td>${gerente.telefono}</td>
-                <td>${gerente.acceso}</td>
-                <td>${gerente.dni}</td>
-                <td>
-                    <div class="acciones">
-                        <button onclick='editarGerente(${JSON.stringify(gerente)})'>Editar Gerente</button>
-                        <button onclick='eliminarGerente(${gerente.id})'>Eliminar Gerente</button>
-                    </div>
-                </td>
-            </tr>
-            `;
-            tablaPersona.innerHTML += filaGerente;
-        });
-    } catch(error) {
-        gerenteMensaje.textContent = "Error al cargar gerente.";
-    }
-}
 
 formGerente.addEventListener("submit", async function (e) {
     e.preventDefault();
@@ -246,13 +245,13 @@ formGerente.addEventListener("submit", async function (e) {
         contrasenia: gerenteContraInput.value,
         nombre: gerenteNombreInput.value,
         telefono: gerenteTelefonoInput.value,
-        acceso: "gerente",
+        acceso: "GERENTE",
         dni: gerenteDniInput.value 
     };
 
     try {
-        if (idGerenteInput.value = "") {
-            await fetch(gerenteApiUrl, {
+        if (idGerenteInput.value == "") {
+            await fetch(new URL(gerenteApiUrl).href, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -275,7 +274,7 @@ formGerente.addEventListener("submit", async function (e) {
 
         formGerente.reset();
         idGerenteInput.value = "";
-        cargarGerente();
+        cargarEmpleado();
     }catch(error){
         gerenteMensaje.textContent = "Error al guardar / modificar gerente.";
     }
@@ -311,10 +310,8 @@ async function cargarAdmin() {
             <tr>
                 <td>${admin.id}</td>
                 <td>${admin.email}</td>
-                <td>${admin.contrasenia}</td>
                 <td>${admin.nombre}</td>
                 <td>${admin.telefono}</td>
-                <td>${admin.acceso}</td>
                 <td>${admin.dni}</td>
                 <td>
                     <div class="acciones">
@@ -404,10 +401,8 @@ async function cargarCliente() {
             <tr>
                 <td>${cliente.id}</td>
                 <td>${cliente.email}</td>
-                <td>${cliente.contrasenia}</td>
                 <td>${cliente.nombre}</td>
                 <td>${cliente.telefono}</td>
-                <td>${cliente.acceso}</td>
                 <td>${cliente.dni}</td>
                 <td>
                     <div class="acciones">

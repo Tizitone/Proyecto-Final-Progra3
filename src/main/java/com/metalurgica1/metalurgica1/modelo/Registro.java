@@ -1,5 +1,6 @@
 package com.metalurgica1.metalurgica1.modelo;
 
+import com.metalurgica1.metalurgica1.modelo.enums.EProceso;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,6 +28,9 @@ public class Registro {
     @ManyToOne
     @JoinColumn(name = "cliente_id") // Nombre de la columna en la tabla SQL
     private Cliente cliente;
+
+    @Enumerated(EnumType.STRING)
+    private EProceso eProceso;
 
     @ManyToMany
     @JoinTable(

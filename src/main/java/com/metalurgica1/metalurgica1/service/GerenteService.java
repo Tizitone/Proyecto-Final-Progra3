@@ -3,7 +3,6 @@ package com.metalurgica1.metalurgica1.service;
 import com.metalurgica1.metalurgica1.DTO.CrearGerenteDTO;
 import com.metalurgica1.metalurgica1.DTO.GerenteDTO;
 import com.metalurgica1.metalurgica1.modelo.Empleado_Gerente;
-import com.metalurgica1.metalurgica1.modelo.enums.EEtiquetaDeAcceso;
 import com.metalurgica1.metalurgica1.repositorio.IGerenteRepository;
 import com.metalurgica1.metalurgica1.service.Excepciones.EmpleadoNoEncontradoException;
 import org.springframework.stereotype.Service;
@@ -68,7 +67,6 @@ public class GerenteService {
         gerente.setNombre(dto.nombre());
         gerente.setTelefono(dto.telefono());
         gerente.setDni(dto.dni());
-        gerente.setEtiquetaDeAcceso(EEtiquetaDeAcceso.GERENTE);
 
         return convertirADTORequest(iGerenteRepository.save(gerente));
     }

@@ -5,11 +5,13 @@ import com.metalurgica1.metalurgica1.modelo.enums.EEtiquetaDeAcceso;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,10 +30,7 @@ public class Cliente extends Persona{
         return encargos != null && !encargos.isEmpty();
     }
 
-    @PrePersist
-    public void asignarEtiqueta(){
-        if(this.getEtiquetaDeAcceso() == null){
-            this.setEtiquetaDeAcceso(EEtiquetaDeAcceso.CLIENTE);
-        }
+    public EEtiquetaDeAcceso getEtiquetaDeAcceso() {
+        return EEtiquetaDeAcceso.CLIENTE;
     }
 }

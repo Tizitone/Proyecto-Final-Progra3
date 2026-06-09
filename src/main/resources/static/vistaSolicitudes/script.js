@@ -71,7 +71,7 @@ function cargarSolicitudes() {
                     <td>${s.descripcion || '-'}</td>
                     <td style="text-align: center;">
             <a href="#" class="btn-borrar" data-id="${s.id}" title="Borrar">
-                <img src="./source/img/basuraIcon.png" style="width: 20px; height: 20px; cursor: pointer;">
+                <img alt="borrar" src="./source/img/basuraIcon.png" style="width: 20px; height: 20px; cursor: pointer;">
             </a>
         </td>
                 `;

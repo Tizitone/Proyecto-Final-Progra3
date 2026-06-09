@@ -3,7 +3,6 @@ package com.metalurgica1.metalurgica1.service;
 import com.metalurgica1.metalurgica1.DTO.ClienteDTO;
 import com.metalurgica1.metalurgica1.DTO.CrearClienteDTO;
 import com.metalurgica1.metalurgica1.modelo.Cliente;
-import com.metalurgica1.metalurgica1.modelo.enums.EEtiquetaDeAcceso;
 import com.metalurgica1.metalurgica1.repositorio.IClienteRepository;
 import com.metalurgica1.metalurgica1.service.Excepciones.ClienteNoEncontradoException;
 import jakarta.transaction.Transactional;
@@ -66,7 +65,6 @@ public class ClienteService {
         cliente.setNombre(dto.nombre());
         cliente.setTelefono(dto.telefono());
         cliente.setDni(dto.dni());
-        cliente.setEtiquetaDeAcceso(EEtiquetaDeAcceso.CLIENTE);
 
         cliente = iClienteRepository.save(cliente);
 

@@ -14,6 +14,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/api/gerentes")
+@CrossOrigin(origins = "*")
 
     public class ControladorGerente {
 

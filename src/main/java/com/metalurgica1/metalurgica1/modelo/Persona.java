@@ -18,11 +18,9 @@ public abstract class Persona {
     private String telefono;
     private Long dni;
 
-    @Enumerated(EnumType.STRING)
-    private EEtiquetaDeAcceso etiquetaDeAcceso;
+    public abstract EEtiquetaDeAcceso getEtiquetaDeAcceso();
 
     public boolean validarCuenta(String correo, String contrasenia) {
         return this.email.equals(correo) && this.contrasenia.equals(contrasenia);
     }
-// nota: persona no tiene un id, los id se definen en las clases que se derivan de esta.
 }

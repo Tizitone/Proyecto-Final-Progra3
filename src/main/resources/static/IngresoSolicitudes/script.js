@@ -15,6 +15,7 @@ function enviarDatos() {
     }
 
     const datos = {
+
         nombre: nombreInput.value,
         email: emailInput.value,
         telefono: telefonoInput.value,

@@ -1,6 +1,8 @@
 package com.metalurgica1.metalurgica1.DTO;
 
 import com.metalurgica1.metalurgica1.modelo.Empleado;
+import com.metalurgica1.metalurgica1.modelo.enums.EProceso;
+
 import java.util.List;
 
 public record RegistroDTO(
@@ -8,6 +10,7 @@ public record RegistroDTO(
         String titulo,
         Long tareaId,
         Long clienteId,
+        EProceso proceso,
         List<Empleado> participantesId,
         Boolean publicado){
 }

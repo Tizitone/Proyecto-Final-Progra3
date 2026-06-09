@@ -2,11 +2,11 @@
 <html Lang="es">
     <head>
         <meta charset="UTF-8" />
-        <meta name="viewport" content="1500 px, initial-scale=1.0" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>CRUD metalurgico</title>
 
         <link rel="stylesheet" href="style.css">
-        <script src="script.js" defer></script>
+
     </head>
 
     <body>
@@ -16,6 +16,7 @@
         <p class="introduccion"><br>Nuestra mision es ayudar a nuestros clientes a organizar y publicitar sus productos de metalurgia.<br>por favor, notifique de cualquier error en el sistema.<br><br></p>
         
         <div class="inicio" id="inicio">
+            <label></label>
             <select name="Lista" id="opciones" size="2">
                 <option value="crear">Crear</option>
                 <option value="buscar">Buscar</option>
@@ -261,16 +262,15 @@
 
         <div class="caja escondido" id="ver">
             <h1>Vista de Tablas</h1>
-
+            <h2>Tabla empleados</h2>
             <table>
+
                 <thead>
                     <tr>
                         <th>ID</th>
                         <th>Email</th>
-                        <th>Contraseña</th>
                         <th>Nombre</th>
                         <th>Telefono</th>
-                        <th>Acceso</th>
                         <th>DNI</th>
                     </tr>
                 </thead>
@@ -279,6 +279,7 @@
 
             <br><br>
 
+            <h2>Tabla tareas</h2>
             <table>
                 <thead>
                     <tr>
@@ -295,6 +296,7 @@
 
             <br><br>
 
+            <h2>Tabla registros</h2>
             <table>
                 <thead>
                     <tr>
@@ -304,12 +306,12 @@
                         <th>ClienteID</th>
                         <th>Contacto</th>
                         <th>Estado</th>
-                        <th>Monto</th>
                         <th>Participantes</th>
                     </tr>
                 </thead>
                 <tbody id="tablaRegistro"></tbody>
             </table>
         </div>
+        <script src="script.js" defer></script>
     </body>
 </html>

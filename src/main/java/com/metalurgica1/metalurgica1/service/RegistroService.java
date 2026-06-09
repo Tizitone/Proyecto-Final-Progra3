@@ -6,6 +6,7 @@ import com.metalurgica1.metalurgica1.modelo.Cliente;
 import com.metalurgica1.metalurgica1.modelo.Empleado;
 import com.metalurgica1.metalurgica1.modelo.Registro;
 import com.metalurgica1.metalurgica1.modelo.Tarea;
+import com.metalurgica1.metalurgica1.modelo.enums.EProceso;
 import com.metalurgica1.metalurgica1.repositorio.IClienteRepository;
 import com.metalurgica1.metalurgica1.repositorio.IRegistroRepository;
 import com.metalurgica1.metalurgica1.repositorio.ITareaRepository;
@@ -34,7 +35,7 @@ public class RegistroService {
 
     private RegistroDTO convertirADTO(Registro r){
         return new RegistroDTO(r.getId(),r.getTitulo(),r.getTarea().getId(),
-                r.getCliente().getIdCliente(),r.getParticipantes(), r.getPublicado());
+                r.getCliente().getIdCliente(),r.getEProceso(),r.getParticipantes(), r.getPublicado());
     }
 
     public List<RegistroDTO> listarRegistros(){
@@ -46,6 +47,7 @@ public class RegistroService {
                         r.getTitulo(),
                         r.getTarea().getId(),
                         r.getCliente().getIdCliente(),
+                        r.getEProceso(),
                         r.getParticipantes(),
                         r.getPublicado()))
                 .collect(Collectors.toList());
@@ -72,6 +74,7 @@ public class RegistroService {
                 r.getTitulo(),
                 r.getTarea().getId(),
                 r.getCliente().getIdCliente(),
+                r.getEProceso(),
                 r.getParticipantes(),
                 r.getPublicado());
     }
@@ -99,6 +102,8 @@ public class RegistroService {
         Cliente c = iClienteRepository.findById(dto.clienteId())
                 .orElseThrow(()-> new ClienteNoEncontradoException(dto.clienteId()));
 
+        registro.setEProceso(EProceso.ESPERA);
+
         registro.setTitulo(dto.titulo());
 
         registro.setTarea(t);
@@ -118,6 +123,7 @@ public class RegistroService {
                 nuevoRegistro.getTitulo(),
                 nuevoRegistro.getTarea().getId(),
                 nuevoRegistro.getCliente().getIdCliente(),
+                nuevoRegistro.getEProceso(),
                 nuevoRegistro.getParticipantes(),
                 nuevoRegistro.getPublicado());
     }
@@ -134,6 +140,8 @@ public class RegistroService {
 
         registro.setTitulo(dto.titulo());
 
+        registro.setEProceso(dto.proceso());
+
         registro.setTarea(t);
 
         registro.setCliente(c);
@@ -151,6 +159,7 @@ public class RegistroService {
                 nuevoRegistro.getTitulo(),
                 nuevoRegistro.getTarea().getId(),
                 nuevoRegistro.getCliente().getIdCliente(),
+                nuevoRegistro.getEProceso(),
                 nuevoRegistro.getParticipantes(),
                 nuevoRegistro.getPublicado());
     }
