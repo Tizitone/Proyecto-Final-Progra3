@@ -33,6 +33,7 @@ public class Registro {
     private Cliente cliente;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "e_proceso")
     private EProceso eProceso;
 
     @ManyToMany

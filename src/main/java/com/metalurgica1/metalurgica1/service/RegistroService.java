@@ -94,7 +94,7 @@ public class  RegistroService {
     }
 
     public List<RegistroDTO> buscarPorProceso(EProceso proceso){
-        return iRegistroRepository.findByEProceso(proceso)
+        return iRegistroRepository.findByeProceso(proceso)
                 .stream()
                 .map(this::convertirADTO)
                 .collect(Collectors.toList());

@@ -71,7 +71,7 @@ function cargarSolicitudes() {
                     <td>${s.descripcion || '-'}</td>
                     <td style="text-align: center;">
             <a href="#" class="btn-borrar" data-id="${s.id}" title="Borrar">
-                <img alt="borrar" src="./source/img/basuraIcon.png" style="width: 20px; height: 20px; cursor: pointer;">
+                <img alt="borrar" src="source/img/basura.png" style="width: 20px; height: 20px; cursor: pointer;">
             </a>
         </td>
                 `;
@@ -147,7 +147,7 @@ function EliminarSolicitud(id) {
     const url = `http://localhost:8080/api/solicitudes/borrar/${id}`;
 
     fetch(url, {
-        method: 'PUT'
+        method: 'DELETE'
     })
     .then(response => {
         if (response.ok) {
@@ -156,6 +156,7 @@ function EliminarSolicitud(id) {
             if (filaAsociada) {
                 filaAsociada.remove(); // Remueve la fila de la tabla inmediatamente
             }
+            cargarSolicitudes();
             alert('Solicitud eliminada con éxito.');
         } else {
             throw new Error('No se pudo eliminar el registro del servidor.');

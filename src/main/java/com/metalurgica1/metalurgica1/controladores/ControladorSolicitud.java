@@ -31,7 +31,7 @@ public class ControladorSolicitud {
 
     @GetMapping("/buscar")
     public ResponseEntity<List<SolicitudDTO>> listarSolicitud(@RequestParam(name = "desc", required = false) String desc) {
-        if (desc == null || desc.trim().isEmpty()) {
+        if (desc == null || desc.trim().isEmpty() ) {
             return ResponseEntity.ok(new ArrayList<>());
         }
             List<SolicitudDTO> solicitud = solicitudService.buscarSolicitudPorDescripcion(desc);
@@ -60,7 +60,7 @@ public class ControladorSolicitud {
     public ResponseEntity<SolicitudDTO> eliminarSolicitud(@PathVariable Long id){
         try
         {
-            solicitudService.eliminarSolicitud(id);
+           solicitudService.eliminarSolicitud(id);
             return ResponseEntity.noContent().build();
         } catch (SolicitudNoEncontradaException e) {
             log.error("",e);

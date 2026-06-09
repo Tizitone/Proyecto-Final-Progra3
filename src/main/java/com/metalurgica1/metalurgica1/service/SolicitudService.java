@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-
 public class SolicitudService {
 
     private final ISolicitudRepository iSolicitudRepository;
@@ -26,7 +25,7 @@ public class SolicitudService {
     public List<SolicitudDTO> listarTodasSolicitudes(){
         return iSolicitudRepository.findAll()
                 .stream()
-                .filter(p-> p.getEEstadoActividad().equals(EEstadoActividad.ACTIVO))
+                .filter(p-> p.getEEstadoActividad() == (EEstadoActividad.ACTIVO))
                 .map(this::convertirADTO)
                 .toList();
     }
@@ -37,7 +36,7 @@ public class SolicitudService {
             return new ArrayList<>();
         }
         List<Solicitud> s = iSolicitudRepository.findByDescripcionContainingIgnoreCase(descripcion);
-        return s.stream().map(p-> new SolicitudDTO(p.getId(), p.getNombre(),p.getEmail(),p.getTelefono(),p.getDescripcion())).collect(Collectors.toList());
+        return s.stream().filter(p-> p.getEEstadoActividad()== EEstadoActividad.ACTIVO).map(p-> new SolicitudDTO(p.getId(), p.getNombre(),p.getEmail(),p.getTelefono(),p.getDescripcion())).collect(Collectors.toList());
     }
 
     public SolicitudDTO crearSolicitud(SolicitudDTO dto) {

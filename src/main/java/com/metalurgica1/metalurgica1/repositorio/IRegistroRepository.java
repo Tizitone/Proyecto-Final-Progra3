@@ -9,5 +9,5 @@ import java.util.List;
 public interface IRegistroRepository extends JpaRepository<Registro,Long> {
     List<Registro> findByTitulo(String titulo);
     List<Registro> findByPublicadoTrue();
-    List<Registro> findByEProceso(EProceso proceso);
+    List<Registro> findByeProceso(EProceso proceso);
 }
