@@ -319,54 +319,58 @@ function cancelarEdicionCliente() {
 }
 
 function buscarPersona(idPersona){
+    const tablaBusquedaPersona = document.querySelector('#tablaBusquedaPersona tbody');
+    const mensajeBusqueda = document.getElementById("busquedaMensaje");
 
-    try {
+    await fetch('http://localhost:8080/api/personas/${idPersona}')
         
-        
+        .then(respuesta => {
+            if(respuesta.status === 404){
+                console.log.Error("No se encontro un registro relacionado al id.");
+                mensajeBusqueda.textContent("No hay una persona con ese identificador.");
+                return respuesta.json();
+            }
 
-    } catch (error) {
-        
-    }
+            if(!respuesta.ok){
+                throw Error("Ocurrio un error obteniendo la persona.");
+            }
+            
+        })
 
+        .then(persona => {
+            tablaBusquedaPersona.innerHTML = `
+                <td>${persona.legajo}</td>
+                <th>${persona.email}</th>
+                <th>${persona.contrasenia}</th>
+                <th>${persona.nombre}</th>
+                <th>${persona.telefono}</th>
+                <th>${persona.acceso}</th>
+                <th>${persona.dni}</th>
+            `;
+        })
+
+        .catch(error => {
+            console.error(error);
+            mensajeBusqueda.textContent("Ocurrio un error obteniendo la persona.");
+        }); 
 }
 
 function buscarAdmin(idAdmin){
-
-    try {
-        
-    } catch (error) {
-        
-    }
 
 }
 
 function buscarCliente(idCliente){
 
-    try {
-        
-    } catch (error) {
-        
-    }
 
 }
 
 function buscarTarea(idTarea){
 
-    try {
-        
-    } catch (error) {
-        
-    }
 
 }
 
 function buscarRegistro(idRegistro){
 
-    try {
-        
-    } catch (error) {
-        
-    }
 
 }
 
