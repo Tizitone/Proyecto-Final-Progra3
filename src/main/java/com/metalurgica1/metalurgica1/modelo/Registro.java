@@ -2,6 +2,7 @@ package com.metalurgica1.metalurgica1.modelo;
 
 import com.metalurgica1.metalurgica1.modelo.enums.EProceso;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,10 +22,12 @@ public class Registro {
 
     private String titulo;
 
+    @NotNull(message = "el registro debe tener una tarea asignada")
     @ManyToOne
     @JoinColumn(name = "tarea_id") // Nombre de la columna en la tabla SQL
     private Tarea tarea;
 
+    @NotNull(message = "el registro debe tener un cliente asignado")
     @ManyToOne
     @JoinColumn(name = "cliente_id") // Nombre de la columna en la tabla SQL
     private Cliente cliente;

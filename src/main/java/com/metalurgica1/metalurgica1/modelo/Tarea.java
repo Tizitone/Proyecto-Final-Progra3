@@ -1,17 +1,15 @@
 package com.metalurgica1.metalurgica1.modelo;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.metalurgica1.metalurgica1.modelo.enums.ECategorias;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -31,9 +29,12 @@ public class Tarea {
     @JsonProperty("fecha_de_entrega")
     private LocalDate fechaDeEntrega ;
 
+
     @Column(columnDefinition = "TEXT")
     @JsonProperty("descripcion_material")
     private String descripcionMaterial;
+
+    @NotNull(message = "Se necesita una descripcion general de la tarea")
     @Column(columnDefinition = "TEXT")
     @JsonProperty("descripcion_general")
     private String descripcionGeneral;

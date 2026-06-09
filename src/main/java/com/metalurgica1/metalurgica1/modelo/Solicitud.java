@@ -25,5 +25,5 @@ public class Solicitud {
 
     @Enumerated(EnumType.STRING)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private EEstadoActividad eEstadoActividad;
+    private EEstadoActividad eEstadoActividad = EEstadoActividad.ACTIVO;
 }

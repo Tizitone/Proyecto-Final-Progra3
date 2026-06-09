@@ -1,22 +1,27 @@
 package com.metalurgica1.metalurgica1.service;
 
-import com.metalurgica1.metalurgica1.DTO.CrearGerenteDTO;
-import com.metalurgica1.metalurgica1.DTO.GerenteDTO;
+import com.metalurgica1.metalurgica1.DTO.*;
 import com.metalurgica1.metalurgica1.modelo.Empleado_Gerente;
-import com.metalurgica1.metalurgica1.repositorio.IGerenteRepository;
+import com.metalurgica1.metalurgica1.modelo.enums.EEtiquetaDeAcceso;
+import com.metalurgica1.metalurgica1.modelo.interfaces.IGestion;
+import com.metalurgica1.metalurgica1.repositorio.*;
 import com.metalurgica1.metalurgica1.service.Excepciones.EmpleadoNoEncontradoException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class GerenteService {
+public class GerenteService extends MetodosGestion {
 
     private final IGerenteRepository iGerenteRepository;
 
+
+
     public GerenteService(IGerenteRepository iGerenteRepository) {
         this.iGerenteRepository = iGerenteRepository;
+
     }
 
     public List<GerenteDTO> listarTodosGerentes() {
@@ -110,5 +115,9 @@ public class GerenteService {
                 gerente.getDni()
         );
     }
+
+
+
+
 }
 

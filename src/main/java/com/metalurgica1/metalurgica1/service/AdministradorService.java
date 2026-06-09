@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class AdministradorService {
+public class AdministradorService extends MetodosGestion{
 
     @Autowired
     private IAdministradorRepository iAdministradorRepository;

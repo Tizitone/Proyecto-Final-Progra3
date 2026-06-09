@@ -25,5 +25,4 @@ public class Administrador extends Persona{
         return EEtiquetaDeAcceso.ADMIN;
     }
 
-    //nota: administrador no es un empleado, por lo que hereda de persona
 }
