@@ -140,39 +140,6 @@ formEmpleado.addEventListener("submit", async function (e) {
     }
 });
 
-    /*
-    try {
-        if (idEmpleadoInput.value = "") {
-            await fetch(EmpleadoapiUrl, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(empleado),
-            });
-
-            empleadoMensaje.textContent = "Empleado agregado correctamente.";
-        } else {
-            await fetch(`${EmpleadoapiUrl}/${idEmpleadoInput.value}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(empleado)
-            });
-
-            empleadoMensaje.textContent = "Empleado modificado correctamente."
-        }
-
-        formEmpleado.reset();
-        idEmpleadoInput.value = "";
-        cargarEmpleado();
-    }catch(error){
-        empleadoMensaje.textContent = "Error al guardar / modificar empleado.";
-    }
-        */
-
-
 function cancelarEdicionEmpleado() {
     formEmpleado.reset();
     idEmpleadoInput.value = "";
@@ -318,40 +285,87 @@ function cancelarEdicionCliente() {
     clienteMensaje.textContent = "Edición cancelada";
 }
 
-function buscarPersona(idPersona){
-    const tablaBusquedaPersona = document.querySelector('#tablaBusquedaPersona tbody');
-    const mensajeBusqueda = document.getElementById("busquedaMensaje");
+const tareaApiUrl = "http://localhost:8080/api/tareas";
 
-    await fetch('http://localhost:8080/api/personas/${idPersona}')
+const formTarea = document.getElementById("formTarea");
+const idTareaInput = document.getElementById("idTarea");
+const fechaEntregaInput = document.getElementById("FechaEntrega");
+const fechaRegistroInput = document.getElementById("FechaRegistro");
+const descGeneralInput = document.getElementById("descripcionGeneral");
+const descMateialInput = document.getElementById("descripcionMaterial");
+const categoriaInput = document.getElementById("categoria")
+const tareaMensaje = document.getElementById("tareaMensaje");
+
+formTarea.addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const tarea = {
+        fecha_de_entrega: fechaEntregaInput.value,
+        fecha_de_registro: fechaRegistroInput.value,
+        descripcion_material: descMateialInput.value,
+        descripcion_general: descGeneralInput.value,
+        categorias: categoriaInput.value,
+    };
+
+    try {
+        await fetch(tareaApiUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(tarea)
+        });
+
+        tareaMensaje.textContent = "Tarea agregada correctamente.";
+        console.log("Cliente creado correctamente");
+        formTarea.reset();
+
+    } catch(error) {
+        tareaMensaje.textContent = "Error al guardar tarea.";
+        console.log("Error creando un tarea.");
+    }
+});
+
+function cancelarEdicionTarea() {
+    formTarea.reset();
+    idTareaInput.value = "";
+    tareaMensaje.textContent = "Edición cancelada";
+}
+
+async function buscarEmpleado(idEmpleado){
+    const tablaBusquedaEmpleado = document.querySelector('#tablaBusquedaEmpleado tbody');
+    const mensajeBusqueda = document.getElementById("busquedaMensaje");
+    
+    await fetch(`http://localhost:8080/api/empleados/${idEmpleado.value}`)
         
         .then(respuesta => {
             if(respuesta.status === 404){
-                console.log.Error("No se encontro un registro relacionado al id.");
-                mensajeBusqueda.textContent("No hay una persona con ese identificador.");
+                console.log("No se encontro un registro relacionado al id.");
+                mensajeBusqueda.textContent = "No hay una empleado con ese identificador.";
                 return respuesta.json();
             }
 
             if(!respuesta.ok){
-                throw Error("Ocurrio un error obteniendo la persona.");
+                throw Error("Ocurrio un error obteniendo la empleado.");
             }
             
         })
 
-        .then(persona => {
-            tablaBusquedaPersona.innerHTML = `
-                <td>${persona.legajo}</td>
-                <th>${persona.email}</th>
-                <th>${persona.contrasenia}</th>
-                <th>${persona.nombre}</th>
-                <th>${persona.telefono}</th>
-                <th>${persona.acceso}</th>
-                <th>${persona.dni}</th>
+        .then(empleado => {
+            tablaBusquedaEmpleado.innerHTML = `
+                <td>${empleado.legajo}</td>
+                <th>${empleado.email}</th>
+                <th>${empleado.contrasenia}</th>
+                <th>${empleado.nombre}</th>
+                <th>${empleado.telefono}</th>
+                <th>${empleado.acceso}</th>
+                <th>${empleado.dni}</th>
             `;
         })
 
         .catch(error => {
             console.error(error);
-            mensajeBusqueda.textContent("Ocurrio un error obteniendo la persona.");
+            mensajeBusqueda.textContent = "Ocurrio un error obteniendo el empleado.";
         }); 
 }
 
@@ -374,17 +388,17 @@ function buscarRegistro(idRegistro){
 
 }
 
-const formBuscar = document.getElementById("formBuscar");
+const formBuscar = document.getElementById("formBusqueda");
 const tipoBusquedaInput = document.getElementById("tipoBusqueda");
 const idABuscar = document.getElementById("idBuscado");
 
 formBuscar.addEventListener("submit", async function (e) {
     e.preventDefault();
 
-    switch(tipoBusquedaInput){
+    switch(tipoBusquedaInput.value){
 
-        case 'persona': 
-            buscarPersona(idABuscar);
+        case 'empleado': 
+            buscarEmpleado(idABuscar);
             break;
 
         case 'admin':
@@ -594,6 +608,67 @@ async function cargarClientes() {
     console.log("tabla clientes cargada");
 }
 
+async function cargarTareas() { 
+    const tbodyTarea = document.querySelector('#tablaTareas tbody');
+
+    await fetch(tareaApiUrl)
+    .then(Response => {
+        if(!Response.ok) {
+            throw new Error('Error al obtener tareas.');
+        }
+        return Response.json();
+    })
+    .then(tarea => {
+        if(tarea.length === 0) {
+            tbodyTarea.innerHTML = `
+                <tr>
+                    <td>
+                        no existen tareas aún.
+                    </td>
+                </tr>`;
+            return;
+        }
+
+        tarea.forEach(tarea => {
+            const filaTarea = document.createElement('tr');
+
+            const options = {
+                year: 'numeric',
+                month: 'long', 
+                day: '2-digit', 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                hour12: false 
+            }
+
+            const formatter = Intl.DateTimeFormat(navigator.languages, options);
+            const fechaAMostrar = formatter.format(new Date(tarea.fechaDeRegistro));
+
+            filaTarea.innerHTML = `
+                    <td>${tarea.id}</td>
+                    <td>${tarea.categorias}</td>
+                    <td>${fechaAMostrar}</td>
+                    <td>${tarea.fecha_de_entrega}</td>
+                    <td>${tarea.descripcion_general}</td>
+                    <td>${tarea.descripcion_material}</td>
+                `;
+
+        tbodyTarea.appendChild(filaTarea)
+        });
+    })
+    .catch(error => {
+        console.error(error);
+        tbodyTarea.innerHTML = `
+            <tr>
+                <td>
+                    Ocurrio un error inesperado.
+                </td>
+            </tr>`;
+    });
+
+    console.log("tabla tareas cargada");
+}
+
 function resetTablas() {
     const tbodyPersonas = document.querySelector('#tablaPersonas tbody');
     while (tbodyPersonas.firstChild) {
@@ -605,9 +680,14 @@ function resetTablas() {
         tbodyClientes.firstChild.remove();
     }
 
-    const tbodyAdmins = document.querySelector('#tablaClientes tbody');
+    const tbodyAdmins = document.querySelector('#tablaAdmins tbody');
     while (tbodyAdmins.firstChild) {
         tbodyAdmins.firstChild.remove();
+    }
+
+    const tbodyTarea = document.querySelector('#tablaTareas tbody');
+    while (tbodyTarea.firstChild) {
+        tbodyTarea.firstChild.remove();
     }
 
     console.log("tablas reseteadas");
@@ -635,5 +715,6 @@ async function eventosTablas() {
     await cargarEmpleados();
     await cargarClientes();
     await cargarAdmins();
+    await cargarTareas();
     orderTabla();
 }

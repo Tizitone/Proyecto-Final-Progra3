@@ -208,9 +208,9 @@
                     
                     <label for="categoria">Categoria: </label>
                     <select id="categoria" required>
-                        <option value="ligero">Ligero</option>
-                        <option value="mediano">Mediano</option>
-                        <option value="pesado">Pesado</option>
+                        <option value="LIGERO">Ligero</option>
+                        <option value="MEDIANO">Mediano</option>
+                        <option value="PESADO">Pesado</option>
                     </select>
 
                     <br><br>
@@ -218,31 +218,34 @@
                     <input type="hidden" id="FechaRegistro">
                     
                     <label for="FechaEntrega">Ingrese la fecha de entrega</label>
-                    <input type="date" 
+                    <input type="date"
                         id="FechaEntrega" 
                         name="FechaEntrega" 
                         value="2026-05-12"
                         min="2026-01-01"
                         max="2035-12-31" 
-                    />
+                        required
+                        />
 
                     <br> <br>
-
-                    <label for="descripcionMaterial">Ingrese una descripcion del material.</label>
-                    <textarea name="descripcionMaterial" id="descripcionMaterial" rows="10" cols="50"></textarea>
+                
+                    <textarea name="descripcionMaterial" id="descripcionMaterial" placeholder="Ingrese una descripcion del material." rows="10" cols="50" required></textarea>
 
                     <br><br>
 
-                    <label for="descripcionTarea">Ingrese una descripcion de las tareas a realizar.</label>
-                    <textarea name="descripcionTarea" id="descripcionTarea" rows="10" cols="50"></textarea>
+                    <textarea name="descripcionGeneral" id="descripcionGeneral" placeholder="Ingrese una descripcion de las tareas a realizar." rows="10" cols="50" required></textarea>
 
                     <br><br>
 
                     <div class="botones-form">
-                        <button type="submit">Guardar</button>
-                        <button type="button" onclick="cancelarEdicion()">Cancelar edición</button>
+                        <button type="submit" form="formTarea">Guardar</button>
+                        <button type="button" onclick="cancelarEdicionTarea()">Cancelar edición</button>
                     </div>
                 </form>
+
+                <br> <br>
+                <p class="mensaje" id="tareaMensaje"></p>
+                <br> <br>
             </div> 
 
             <div class="form escondido" id="bloqueRegistro">
@@ -262,7 +265,7 @@
             <form class="form busqueda" id="formBusqueda">
                 <label for="tipoBusqueda">¿Qué esta buscando?</label>
                 <select name="tipoBusqueda" id="tipoBusqueda" size="2">
-                    <option value="persona">Persona</option>
+                    <option value="empleado">Empleado</option>
                     <option value="admin">Administrador</option>
                     <option value="cliente">Cliente</option>
                     <option value="tarea">Tarea</option>
@@ -279,9 +282,9 @@
                 </div>
             </form>
 
-            <div class="tablaBusquedaPersona escondido" id="tablaBusquedaPersona">
-                <h3>- Persona Encontrada</h3>
-                <table id="tablaPersonaBusqueda">
+            <div class="tablaBusquedaEmpleado escondido" id="tablaBusquedaEmpleado">
+                <h3>- Empleado Encontrado</h3>
+                <table id="tablaEmpleadoBusqueda">
                     <thead>
                         <tr>
                             <th>Legajo</th>
@@ -369,12 +372,10 @@
                 </thead>
                 <tbody></tbody>
             </table>
-            </div>
-
             <br> <br>
             <p class="mensaje busqueda" id="busquedaMensaje"></p>
             <br> <br>
-            
+            </div>            
         </div>
 
         <div class="caja escondido" id="ver">
@@ -439,7 +440,8 @@
 
             <br><br>
 
-            <table id="tablaTarea">
+            <h2>- Tabla Tareas</h2>
+            <table id="tablaTareas">
                 <thead>
                     <tr>
                         <th>ID</th>
