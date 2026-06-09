@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class RegistroService {
+public class  RegistroService {
     private final IRegistroRepository iRegistroRepository;
     private final IClienteRepository iClienteRepository;
     private final ITareaRepository iTareaRepository;
@@ -88,6 +88,13 @@ public class RegistroService {
 
     public List<RegistroDTO> buscarPublicados(){
         return iRegistroRepository.findByPublicadoTrue()
+                .stream()
+                .map(this::convertirADTO)
+                .collect(Collectors.toList());
+    }
+
+    public List<RegistroDTO> buscarPorProceso(EProceso proceso){
+        return iRegistroRepository.findByEProceso(proceso)
                 .stream()
                 .map(this::convertirADTO)
                 .collect(Collectors.toList());
