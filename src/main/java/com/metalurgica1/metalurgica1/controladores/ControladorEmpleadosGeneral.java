@@ -1,6 +1,6 @@
 package com.metalurgica1.metalurgica1.controladores;
 
-import com.metalurgica1.metalurgica1.dto_temp.EmpleadoModeloDTO;
+import com.metalurgica1.metalurgica1.DTO.EmpleadoModeloDTO;
 import com.metalurgica1.metalurgica1.service.EmpleadoModeloService;
 import com.metalurgica1.metalurgica1.service.Excepciones.EmpleadoNoEncontradoException;
 import lombok.extern.slf4j.Slf4j;

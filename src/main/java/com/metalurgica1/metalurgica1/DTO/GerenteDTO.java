@@ -1,4 +1,4 @@
-package com.metalurgica1.metalurgica1.dto_temp;
+package com.metalurgica1.metalurgica1.DTO;
 
 // no hace falta validar ya que este dto solo muestra informacion
 public record GerenteDTO(

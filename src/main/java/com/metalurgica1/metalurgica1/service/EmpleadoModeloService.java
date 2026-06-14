@@ -1,6 +1,6 @@
 package com.metalurgica1.metalurgica1.service;
 
-import com.metalurgica1.metalurgica1.dto_temp.EmpleadoModeloDTO;
+import com.metalurgica1.metalurgica1.DTO.EmpleadoModeloDTO;
 import com.metalurgica1.metalurgica1.modelo.Empleado;
 import com.metalurgica1.metalurgica1.modelo.Empleado_Gerente;
 import com.metalurgica1.metalurgica1.modelo.Empleado_modelo;

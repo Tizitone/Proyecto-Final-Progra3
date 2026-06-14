@@ -1,6 +1,6 @@
 package com.metalurgica1.metalurgica1.controladores;
 
-import com.metalurgica1.metalurgica1.dto_temp.CrearClienteDTO;
+import com.metalurgica1.metalurgica1.DTO.CrearClienteDTO;
 import com.metalurgica1.metalurgica1.service.ClienteService;
 import com.metalurgica1.metalurgica1.service.Excepciones.ClienteNoEncontradoException;
 import jakarta.validation.Valid;
@@ -8,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.metalurgica1.metalurgica1.dto_temp.ClienteDTO;
+import com.metalurgica1.metalurgica1.DTO.ClienteDTO;
 
 import java.util.List;
 

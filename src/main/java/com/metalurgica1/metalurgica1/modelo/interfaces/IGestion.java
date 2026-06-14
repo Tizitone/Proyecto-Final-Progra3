@@ -1,6 +1,6 @@
 package com.metalurgica1.metalurgica1.modelo.interfaces;
 
-import com.metalurgica1.metalurgica1.dto_temp.*;
+import com.metalurgica1.metalurgica1.DTO.*;
 import com.metalurgica1.metalurgica1.service.Excepciones.ClienteNoEncontradoException;
 import com.metalurgica1.metalurgica1.service.Excepciones.RegistroNoEncontradoException;
 import com.metalurgica1.metalurgica1.service.Excepciones.TareaNoEncontradaExeption;

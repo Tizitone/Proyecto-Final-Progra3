@@ -1,8 +1,8 @@
-package com.metalurgica1.metalurgica1.dto_temp;
+package com.metalurgica1.metalurgica1.DTO;
 
 import jakarta.validation.constraints.*;
 
-public record CrearEmpleadoDTO(
+public record CrearGerenteDTO(
 
         @NotBlank(message = "El email no puede estar en blanco")
         @Email(message = "No es un email valido")

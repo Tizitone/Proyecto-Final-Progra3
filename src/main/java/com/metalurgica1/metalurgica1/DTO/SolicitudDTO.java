@@ -1,4 +1,4 @@
-package com.metalurgica1.metalurgica1.dto_temp;
+package com.metalurgica1.metalurgica1.DTO;
 
 import jakarta.validation.constraints.*;
 

@@ -1,6 +1,6 @@
 package com.metalurgica1.metalurgica1.service;
 
-import com.metalurgica1.metalurgica1.dto_temp.*;
+import com.metalurgica1.metalurgica1.DTO.*;
 import com.metalurgica1.metalurgica1.modelo.Empleado_Gerente;
 import com.metalurgica1.metalurgica1.repositorio.*;
 import com.metalurgica1.metalurgica1.service.Excepciones.EmpleadoNoEncontradoException;

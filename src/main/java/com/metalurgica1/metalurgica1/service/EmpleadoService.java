@@ -2,8 +2,8 @@ package com.metalurgica1.metalurgica1.service;
 
 import com.metalurgica1.metalurgica1.modelo.Empleado;
 import com.metalurgica1.metalurgica1.repositorio.IEmpleadoRepository;
-import com.metalurgica1.metalurgica1.dto_temp.EmpleadoDTO;
-import com.metalurgica1.metalurgica1.dto_temp.CrearEmpleadoDTO;
+import com.metalurgica1.metalurgica1.DTO.EmpleadoDTO;
+import com.metalurgica1.metalurgica1.DTO.CrearEmpleadoDTO;
 import com.metalurgica1.metalurgica1.service.Excepciones.EmpleadoNoEncontradoException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;

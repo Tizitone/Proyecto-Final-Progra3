@@ -7,8 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.metalurgica1.metalurgica1.dto_temp.EmpleadoDTO;
-import com.metalurgica1.metalurgica1.dto_temp.CrearEmpleadoDTO;
+import com.metalurgica1.metalurgica1.DTO.EmpleadoDTO;
+import com.metalurgica1.metalurgica1.DTO.CrearEmpleadoDTO;
 
 import java.util.List;
 
