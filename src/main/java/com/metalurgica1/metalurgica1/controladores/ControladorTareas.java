@@ -5,6 +5,7 @@ import com.metalurgica1.metalurgica1.DTO.TareaDTO;
 import com.metalurgica1.metalurgica1.modelo.enums.ECategorias;
 import com.metalurgica1.metalurgica1.service.Excepciones.TareaNoEncontradaExeption;
 import com.metalurgica1.metalurgica1.service.TareaService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -61,13 +62,13 @@ public class ControladorTareas {
     }
 
     @PostMapping
-    public ResponseEntity<CrearTareaDTO> crearTarea(@RequestBody CrearTareaDTO dto) {
+    public ResponseEntity<CrearTareaDTO> crearTarea(@Valid @RequestBody CrearTareaDTO dto) {
         CrearTareaDTO c = tareaService.crearTarea(dto);
         return ResponseEntity.ok(c);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CrearTareaDTO> modificarTarea(@PathVariable Long id,@RequestBody CrearTareaDTO dto) {
+    public ResponseEntity<CrearTareaDTO> modificarTarea(@Valid @PathVariable Long id,@RequestBody CrearTareaDTO dto) {
         try {
             CrearTareaDTO t = tareaService.modificarTarea(id, dto);
             return ResponseEntity.ok(t);

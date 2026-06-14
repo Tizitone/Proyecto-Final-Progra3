@@ -1,5 +1,6 @@
 package com.metalurgica1.metalurgica1.service;
 
+import com.metalurgica1.metalurgica1.DTO.CrearRegistroDTO;
 import com.metalurgica1.metalurgica1.DTO.EmpleadoDTO;
 import com.metalurgica1.metalurgica1.DTO.RegistroDTO;
 import com.metalurgica1.metalurgica1.modelo.Cliente;
@@ -100,7 +101,7 @@ public class  RegistroService {
                 .collect(Collectors.toList());
     }
 
-    public RegistroDTO crearRegistro(RegistroDTO dto) throws TareaNoEncontradaExeption, ClienteNoEncontradoException {
+    public CrearRegistroDTO crearRegistro(CrearRegistroDTO dto) throws TareaNoEncontradaExeption, ClienteNoEncontradoException {
         Registro registro = new Registro();
 
         Tarea t = iTareaRepository.findById(dto.tareaId())
@@ -125,8 +126,7 @@ public class  RegistroService {
 
         Registro nuevoRegistro = iRegistroRepository.save(registro);
 
-        return new RegistroDTO(
-                nuevoRegistro.getId(),
+        return new CrearRegistroDTO(
                 nuevoRegistro.getTitulo(),
                 nuevoRegistro.getTarea().getId(),
                 nuevoRegistro.getCliente().getIdCliente(),
@@ -135,7 +135,7 @@ public class  RegistroService {
                 nuevoRegistro.getPublicado());
     }
 
-    public RegistroDTO modificarRegistro(Long id, RegistroDTO dto) throws RegistroNoEncontradoException, TareaNoEncontradaExeption, ClienteNoEncontradoException {
+    public CrearRegistroDTO modificarRegistro(Long id, CrearRegistroDTO dto) throws RegistroNoEncontradoException, TareaNoEncontradaExeption, ClienteNoEncontradoException {
         Registro registro = iRegistroRepository.findById(id)
                 .orElseThrow(()-> new RegistroNoEncontradoException(id));
 
@@ -161,8 +161,7 @@ public class  RegistroService {
 
         Registro nuevoRegistro = iRegistroRepository.save(registro);
 
-        return new RegistroDTO(
-                nuevoRegistro.getId(),
+        return new CrearRegistroDTO(
                 nuevoRegistro.getTitulo(),
                 nuevoRegistro.getTarea().getId(),
                 nuevoRegistro.getCliente().getIdCliente(),

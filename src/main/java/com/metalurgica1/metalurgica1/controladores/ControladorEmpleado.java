@@ -2,6 +2,7 @@ package com.metalurgica1.metalurgica1.controladores;
 
 import com.metalurgica1.metalurgica1.service.EmpleadoService;
 import com.metalurgica1.metalurgica1.service.Excepciones.EmpleadoNoEncontradoException;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -67,13 +68,13 @@ public class ControladorEmpleado {
     }
 
     @PostMapping
-    public ResponseEntity<CrearEmpleadoDTO> crearEmpleado(@RequestBody CrearEmpleadoDTO empleado) {
+    public ResponseEntity<CrearEmpleadoDTO> crearEmpleado(@Valid @RequestBody CrearEmpleadoDTO empleado) {
         CrearEmpleadoDTO response = empleadoService.crearEmpleado(empleado);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CrearEmpleadoDTO> modificarEmpleado(@PathVariable Long id, @RequestBody CrearEmpleadoDTO empleado) {
+    public ResponseEntity<CrearEmpleadoDTO> modificarEmpleado(@Valid @PathVariable Long id, @RequestBody CrearEmpleadoDTO empleado) {
         try {
             CrearEmpleadoDTO empleadoActualizado = empleadoService.modificarEmpleado(id, empleado);
             return ResponseEntity.ok(empleadoActualizado);

@@ -3,6 +3,7 @@ package com.metalurgica1.metalurgica1.controladores;
 import com.metalurgica1.metalurgica1.DTO.CrearClienteDTO;
 import com.metalurgica1.metalurgica1.service.ClienteService;
 import com.metalurgica1.metalurgica1.service.Excepciones.ClienteNoEncontradoException;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -61,13 +62,13 @@ public class ControladorCliente {
     }
 
     @PostMapping
-    public ResponseEntity<CrearClienteDTO> crearCliente(@RequestBody CrearClienteDTO cliente){
+    public ResponseEntity<CrearClienteDTO> crearCliente(@Valid @RequestBody CrearClienteDTO cliente){
         CrearClienteDTO response = clienteService.crearCliente(cliente);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CrearClienteDTO> modificarCliente(@PathVariable Long id, @RequestBody CrearClienteDTO cliente){
+    public ResponseEntity<CrearClienteDTO> modificarCliente(@Valid @PathVariable Long id, @RequestBody CrearClienteDTO cliente){
         try {
             CrearClienteDTO clienteActualizado = clienteService.modificarCliente(id, cliente);
             return ResponseEntity.ok(clienteActualizado);

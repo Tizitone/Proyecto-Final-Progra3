@@ -4,6 +4,7 @@ import com.metalurgica1.metalurgica1.DTO.CrearGerenteDTO;
 import com.metalurgica1.metalurgica1.DTO.GerenteDTO;
 import com.metalurgica1.metalurgica1.service.Excepciones.EmpleadoNoEncontradoException;
 import com.metalurgica1.metalurgica1.service.GerenteService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -68,13 +69,13 @@ import java.util.List;
     }
 
     @PostMapping
-    public ResponseEntity<CrearGerenteDTO> crearEmpleado(@RequestBody CrearGerenteDTO gerente) {
+    public ResponseEntity<CrearGerenteDTO> crearGerente(@Valid @RequestBody CrearGerenteDTO gerente) {
         CrearGerenteDTO response = gerenteService.crearGerente(gerente);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CrearGerenteDTO> modificarGerente(@PathVariable Long id, @RequestBody CrearGerenteDTO gerente) {
+    public ResponseEntity<CrearGerenteDTO> modificarGerente(@Valid @PathVariable Long id, @RequestBody CrearGerenteDTO gerente) {
         try {
             CrearGerenteDTO gerenteActualizado = gerenteService.modificarGerente(id, gerente);
             return ResponseEntity.ok(gerenteActualizado);

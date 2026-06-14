@@ -3,6 +3,7 @@ package com.metalurgica1.metalurgica1.controladores;
 import com.metalurgica1.metalurgica1.DTO.SolicitudDTO;
 import com.metalurgica1.metalurgica1.service.Excepciones.SolicitudNoEncontradaException;
 import com.metalurgica1.metalurgica1.service.SolicitudService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,13 +40,13 @@ public class ControladorSolicitud {
     }
 
     @PostMapping
-    public ResponseEntity<SolicitudDTO> crearSolicitud(@RequestBody SolicitudDTO solicitud) {
+    public ResponseEntity<SolicitudDTO> crearSolicitud(@Valid @RequestBody SolicitudDTO solicitud) {
         SolicitudDTO response = solicitudService.crearSolicitud(solicitud);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<SolicitudDTO> modificarSolicitud(@PathVariable Long id, @RequestBody SolicitudDTO solicitud){
+    public ResponseEntity<SolicitudDTO> modificarSolicitud(@Valid @PathVariable Long id, @RequestBody SolicitudDTO solicitud){
         try {
             SolicitudDTO solicitudActualizada = solicitudService.modificarSolicitud(id, solicitud);
             return ResponseEntity.ok(solicitudActualizada);

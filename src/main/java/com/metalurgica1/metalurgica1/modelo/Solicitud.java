@@ -3,6 +3,8 @@ package com.metalurgica1.metalurgica1.modelo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.metalurgica1.metalurgica1.modelo.enums.EEstadoActividad;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,10 +23,10 @@ public class Solicitud {
     private String nombre;
     private String email;
     private String telefono;
+
     @Column(columnDefinition = "TEXT")
     private String descripcion;
 
-    @NotNull(message = "no puede ser nulo")
     @Enumerated(EnumType.STRING)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private EEstadoActividad eEstadoActividad;

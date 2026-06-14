@@ -6,17 +6,25 @@ import com.metalurgica1.metalurgica1.modelo.enums.EEstadoActividad;
 import com.metalurgica1.metalurgica1.repositorio.ISolicitudRepository;
 import com.metalurgica1.metalurgica1.service.Excepciones.SolicitudNoEncontradaException;
 import jakarta.transaction.Transactional;
+import jakarta.validation.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @Transactional
 public class SolicitudService {
 
     private final ISolicitudRepository iSolicitudRepository;
+
+    ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+    Validator validator = factory.getValidator();
+
 
     public SolicitudService(ISolicitudRepository iSolicitudRepository) {
         this.iSolicitudRepository = iSolicitudRepository;
@@ -46,6 +54,18 @@ public class SolicitudService {
         s.setTelefono(dto.telefono());
         s.setDescripcion(dto.descripcion());
         s.setEEstadoActividad(EEstadoActividad.ACTIVO);
+
+        Set<ConstraintViolation<Solicitud>> violations = validator.validate(s);
+
+        for(ConstraintViolation<Solicitud> violation : violations)
+        {
+            log.error(violation.getMessage());
+        }
+        if(!violations.isEmpty())
+        {
+            throw new RuntimeException();
+        }
+
         Solicitud nuevaSolicitud = iSolicitudRepository.save(s);
 
         return convertirADTO(nuevaSolicitud);

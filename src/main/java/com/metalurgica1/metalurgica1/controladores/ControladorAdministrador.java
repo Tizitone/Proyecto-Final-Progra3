@@ -4,6 +4,7 @@ import com.metalurgica1.metalurgica1.DTO.AdministradorDTO;
 import com.metalurgica1.metalurgica1.DTO.CrearAdministradorDTO;
 import com.metalurgica1.metalurgica1.service.AdministradorService;
 import com.metalurgica1.metalurgica1.service.Excepciones.AdministradorNoEncontradoException;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,13 +46,13 @@ public class ControladorAdministrador {
     }
 
     @PostMapping
-    public ResponseEntity<CrearAdministradorDTO> crearAdministrador(@RequestBody CrearAdministradorDTO administrador) {
+    public ResponseEntity<CrearAdministradorDTO> crearAdministrador(@Valid @RequestBody CrearAdministradorDTO administrador) {
         CrearAdministradorDTO administradorDTO = administradorService.crearAdministrador(administrador);
         return new ResponseEntity<>(administradorDTO,HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AdministradorDTO> modificarAdministrador(@PathVariable Long id,@RequestBody AdministradorDTO dto) {
+    public ResponseEntity<AdministradorDTO> modificarAdministrador(@Valid @PathVariable Long id,@RequestBody AdministradorDTO dto) {
         try
         {
             AdministradorDTO administradorDTO = administradorService.modificarAdministrador(id,dto);

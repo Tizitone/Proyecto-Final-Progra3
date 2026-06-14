@@ -1,11 +1,13 @@
 package com.metalurgica1.metalurgica1.controladores;
 
+import com.metalurgica1.metalurgica1.DTO.CrearRegistroDTO;
 import com.metalurgica1.metalurgica1.DTO.RegistroDTO;
 import com.metalurgica1.metalurgica1.modelo.enums.EProceso;
 import com.metalurgica1.metalurgica1.service.Excepciones.ClienteNoEncontradoException;
 import com.metalurgica1.metalurgica1.service.Excepciones.RegistroNoEncontradoException;
 import com.metalurgica1.metalurgica1.service.Excepciones.TareaNoEncontradaExeption;
 import com.metalurgica1.metalurgica1.service.RegistroService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -57,9 +59,9 @@ public class ControladorRegistro {
     }
 
     @PostMapping
-    public ResponseEntity<RegistroDTO> crearRegistro(@RequestBody RegistroDTO dto) {
+    public ResponseEntity<CrearRegistroDTO> crearRegistro(@Valid @RequestBody CrearRegistroDTO dto) {
         try {
-            RegistroDTO registro = registroService.crearRegistro(dto);
+            CrearRegistroDTO registro = registroService.crearRegistro(dto);
             return ResponseEntity.ok(registro);
         } catch (TareaNoEncontradaExeption | ClienteNoEncontradoException e) {
             log.error("",e);
@@ -68,9 +70,9 @@ public class ControladorRegistro {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RegistroDTO> modificarRegistros(@PathVariable Long id, @RequestBody RegistroDTO dto) {
+    public ResponseEntity<CrearRegistroDTO> modificarRegistros(@Valid @PathVariable Long id, @RequestBody CrearRegistroDTO dto) {
         try {
-            RegistroDTO registroModificado = registroService.modificarRegistro(id, dto);
+            CrearRegistroDTO registroModificado = registroService.modificarRegistro(id, dto);
             return ResponseEntity.ok(registroModificado);
         } catch (TareaNoEncontradaExeption | ClienteNoEncontradoException | RegistroNoEncontradoException e) {
             log.error("",e);

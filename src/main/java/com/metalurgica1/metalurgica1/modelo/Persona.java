@@ -15,19 +15,10 @@ import lombok.NoArgsConstructor;
 @MappedSuperclass
 public abstract class Persona {
 
-    @NotNull(message = "el email no puede estar vacio")
-    @Email(message = "Tiene que ingresar un email valido")
     private String email;
-
-    @NotNull(message = "la contraseña no puede estar vacia")
     private String contrasenia;
-
-    @NotNull(message = "Tiene que tener un nombre")
     private String nombre;
-
-    @NotNull(message = "Debe tener un telefono")
     private String telefono;
-    @Max(value = 99999999, message = "dni fuera de rango")
     private Long dni;
 
     public abstract EEtiquetaDeAcceso getEtiquetaDeAcceso();

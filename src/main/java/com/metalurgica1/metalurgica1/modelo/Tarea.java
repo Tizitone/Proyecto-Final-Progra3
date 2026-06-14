@@ -29,12 +29,10 @@ public class Tarea {
     @JsonProperty("fecha_de_entrega")
     private LocalDate fechaDeEntrega ;
 
-
     @Column(columnDefinition = "TEXT")
     @JsonProperty("descripcion_material")
     private String descripcionMaterial;
 
-    @NotNull(message = "Se necesita una descripcion general de la tarea")
     @Column(columnDefinition = "TEXT")
     @JsonProperty("descripcion_general")
     private String descripcionGeneral;
