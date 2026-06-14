@@ -1,7 +1,7 @@
 package com.metalurgica1.metalurgica1.controladores;
 
-import com.metalurgica1.metalurgica1.DTO.CrearRegistroDTO;
-import com.metalurgica1.metalurgica1.DTO.RegistroDTO;
+import com.metalurgica1.metalurgica1.dto_temp.CrearRegistroDTO;
+import com.metalurgica1.metalurgica1.dto_temp.RegistroDTO;
 import com.metalurgica1.metalurgica1.modelo.enums.EProceso;
 import com.metalurgica1.metalurgica1.service.Excepciones.ClienteNoEncontradoException;
 import com.metalurgica1.metalurgica1.service.Excepciones.RegistroNoEncontradoException;

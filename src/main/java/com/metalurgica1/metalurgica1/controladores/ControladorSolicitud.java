@@ -1,6 +1,6 @@
 package com.metalurgica1.metalurgica1.controladores;
 
-import com.metalurgica1.metalurgica1.DTO.SolicitudDTO;
+import com.metalurgica1.metalurgica1.dto_temp.SolicitudDTO;
 import com.metalurgica1.metalurgica1.service.Excepciones.SolicitudNoEncontradaException;
 import com.metalurgica1.metalurgica1.service.SolicitudService;
 import jakarta.validation.Valid;

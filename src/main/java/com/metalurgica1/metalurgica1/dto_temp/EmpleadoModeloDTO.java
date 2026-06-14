@@ -1,4 +1,4 @@
-package com.metalurgica1.metalurgica1.DTO;
+package com.metalurgica1.metalurgica1.dto_temp;
 
 //aca no hace faltan validaciones porque solo muestran los datos
 public record EmpleadoModeloDTO(

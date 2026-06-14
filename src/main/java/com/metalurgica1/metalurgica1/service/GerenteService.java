@@ -1,12 +1,9 @@
 package com.metalurgica1.metalurgica1.service;
 
-import com.metalurgica1.metalurgica1.DTO.*;
+import com.metalurgica1.metalurgica1.dto_temp.*;
 import com.metalurgica1.metalurgica1.modelo.Empleado_Gerente;
-import com.metalurgica1.metalurgica1.modelo.enums.EEtiquetaDeAcceso;
-import com.metalurgica1.metalurgica1.modelo.interfaces.IGestion;
 import com.metalurgica1.metalurgica1.repositorio.*;
 import com.metalurgica1.metalurgica1.service.Excepciones.EmpleadoNoEncontradoException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

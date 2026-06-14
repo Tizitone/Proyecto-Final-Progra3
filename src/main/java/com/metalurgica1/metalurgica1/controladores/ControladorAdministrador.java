@@ -1,7 +1,7 @@
 package com.metalurgica1.metalurgica1.controladores;
 
-import com.metalurgica1.metalurgica1.DTO.AdministradorDTO;
-import com.metalurgica1.metalurgica1.DTO.CrearAdministradorDTO;
+import com.metalurgica1.metalurgica1.dto_temp.AdministradorDTO;
+import com.metalurgica1.metalurgica1.dto_temp.CrearAdministradorDTO;
 import com.metalurgica1.metalurgica1.service.AdministradorService;
 import com.metalurgica1.metalurgica1.service.Excepciones.AdministradorNoEncontradoException;
 import jakarta.validation.Valid;

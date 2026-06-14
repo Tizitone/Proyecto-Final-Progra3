@@ -1,7 +1,7 @@
 package com.metalurgica1.metalurgica1.controladores;
 
-import com.metalurgica1.metalurgica1.DTO.CrearGerenteDTO;
-import com.metalurgica1.metalurgica1.DTO.GerenteDTO;
+import com.metalurgica1.metalurgica1.dto_temp.CrearGerenteDTO;
+import com.metalurgica1.metalurgica1.dto_temp.GerenteDTO;
 import com.metalurgica1.metalurgica1.service.Excepciones.EmpleadoNoEncontradoException;
 import com.metalurgica1.metalurgica1.service.GerenteService;
 import jakarta.validation.Valid;

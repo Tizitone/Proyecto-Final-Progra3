@@ -1,7 +1,7 @@
 package com.metalurgica1.metalurgica1.service;
 
-import com.metalurgica1.metalurgica1.DTO.ClienteDTO;
-import com.metalurgica1.metalurgica1.DTO.CrearClienteDTO;
+import com.metalurgica1.metalurgica1.dto_temp.ClienteDTO;
+import com.metalurgica1.metalurgica1.dto_temp.CrearClienteDTO;
 import com.metalurgica1.metalurgica1.modelo.Cliente;
 import com.metalurgica1.metalurgica1.repositorio.IClienteRepository;
 import com.metalurgica1.metalurgica1.service.Excepciones.ClienteNoEncontradoException;

@@ -1,6 +1,6 @@
 package com.metalurgica1.metalurgica1.service;
 
-import com.metalurgica1.metalurgica1.DTO.SolicitudDTO;
+import com.metalurgica1.metalurgica1.dto_temp.SolicitudDTO;
 import com.metalurgica1.metalurgica1.modelo.Solicitud;
 import com.metalurgica1.metalurgica1.modelo.enums.EEstadoActividad;
 import com.metalurgica1.metalurgica1.repositorio.ISolicitudRepository;

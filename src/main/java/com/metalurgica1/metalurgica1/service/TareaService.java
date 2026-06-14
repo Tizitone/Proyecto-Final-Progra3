@@ -1,7 +1,7 @@
 package com.metalurgica1.metalurgica1.service;
 
-import com.metalurgica1.metalurgica1.DTO.CrearTareaDTO;
-import com.metalurgica1.metalurgica1.DTO.TareaDTO;
+import com.metalurgica1.metalurgica1.dto_temp.CrearTareaDTO;
+import com.metalurgica1.metalurgica1.dto_temp.TareaDTO;
 import com.metalurgica1.metalurgica1.modelo.Tarea;
 import com.metalurgica1.metalurgica1.modelo.enums.ECategorias;
 import com.metalurgica1.metalurgica1.repositorio.ITareaRepository;

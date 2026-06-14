@@ -1,8 +1,8 @@
 package com.metalurgica1.metalurgica1.service;
 
-import com.metalurgica1.metalurgica1.DTO.CrearRegistroDTO;
-import com.metalurgica1.metalurgica1.DTO.EmpleadoDTO;
-import com.metalurgica1.metalurgica1.DTO.RegistroDTO;
+import com.metalurgica1.metalurgica1.dto_temp.CrearRegistroDTO;
+import com.metalurgica1.metalurgica1.dto_temp.EmpleadoDTO;
+import com.metalurgica1.metalurgica1.dto_temp.RegistroDTO;
 import com.metalurgica1.metalurgica1.modelo.Cliente;
 import com.metalurgica1.metalurgica1.modelo.Empleado;
 import com.metalurgica1.metalurgica1.modelo.Registro;
