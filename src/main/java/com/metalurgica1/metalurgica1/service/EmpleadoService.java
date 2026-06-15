@@ -6,6 +6,8 @@ import com.metalurgica1.metalurgica1.DTO.EmpleadoDTO;
 import com.metalurgica1.metalurgica1.DTO.CrearEmpleadoDTO;
 import com.metalurgica1.metalurgica1.service.Excepciones.EmpleadoNoEncontradoException;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +18,9 @@ import java.util.stream.Collectors;
 public class EmpleadoService {
 
     private final IEmpleadoRepository iEmpleadoRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public EmpleadoService(IEmpleadoRepository iEmpleadoRepository) {
         this.iEmpleadoRepository = iEmpleadoRepository;
@@ -65,7 +70,7 @@ public class EmpleadoService {
     public CrearEmpleadoDTO crearEmpleado(CrearEmpleadoDTO dto) {
         Empleado empleado = new Empleado();
         empleado.setEmail(dto.email());
-        empleado.setContrasenia(dto.contrasenia());
+        empleado.setContrasenia(passwordEncoder.encode(dto.contrasenia()));
         empleado.setNombre(dto.nombre());
         empleado.setTelefono(dto.telefono());
         empleado.setDni(dto.dni());
@@ -79,7 +84,7 @@ public class EmpleadoService {
                 .orElseThrow(() -> new EmpleadoNoEncontradoException("Empleado no encontrado."));
 
         empleado.setEmail(dto.email());
-        empleado.setContrasenia(dto.contrasenia());
+        empleado.setContrasenia(passwordEncoder.encode(dto.contrasenia()));
         empleado.setNombre(dto.nombre());
         empleado.setTelefono(dto.telefono());
         empleado.setDni(dto.dni());

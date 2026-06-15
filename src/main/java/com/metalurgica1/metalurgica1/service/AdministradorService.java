@@ -6,6 +6,7 @@ import com.metalurgica1.metalurgica1.modelo.Administrador;
 import com.metalurgica1.metalurgica1.repositorio.IAdministradorRepository;
 import com.metalurgica1.metalurgica1.service.Excepciones.AdministradorNoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +17,9 @@ public class AdministradorService extends MetodosGestion{
 
     @Autowired
     private IAdministradorRepository iAdministradorRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public AdministradorService(IAdministradorRepository iAdministradorRepository) {
         this.iAdministradorRepository = iAdministradorRepository;
@@ -37,7 +41,7 @@ public class AdministradorService extends MetodosGestion{
         Administrador a = new Administrador();
         a.setNombre(dto.nombre());
         a.setEmail(dto.email());
-        a.setContrasenia(dto.contrasenia());
+        a.setContrasenia(passwordEncoder.encode(dto.contrasenia()));
         a.setTelefono(dto.telefono());
         a.setDni(dto.dni());
 

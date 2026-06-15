@@ -4,6 +4,8 @@ import com.metalurgica1.metalurgica1.DTO.*;
 import com.metalurgica1.metalurgica1.modelo.Empleado_Gerente;
 import com.metalurgica1.metalurgica1.repositorio.*;
 import com.metalurgica1.metalurgica1.service.Excepciones.EmpleadoNoEncontradoException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,7 +16,8 @@ public class GerenteService extends MetodosGestion {
 
     private final IGerenteRepository iGerenteRepository;
 
-
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public GerenteService(IGerenteRepository iGerenteRepository) {
         this.iGerenteRepository = iGerenteRepository;
@@ -65,7 +68,7 @@ public class GerenteService extends MetodosGestion {
     public CrearGerenteDTO crearGerente(CrearGerenteDTO dto) {
         Empleado_Gerente gerente = new Empleado_Gerente();
         gerente.setEmail(dto.email());
-        gerente.setContrasenia(dto.contrasenia());
+        gerente.setContrasenia(passwordEncoder.encode(dto.contrasenia()));
         gerente.setNombre(dto.nombre());
         gerente.setTelefono(dto.telefono());
         gerente.setDni(dto.dni());
@@ -78,7 +81,7 @@ public class GerenteService extends MetodosGestion {
                 .orElseThrow(() -> new EmpleadoNoEncontradoException("Gerente no encontrado."));
 
         gerente.setEmail(dto.email());
-        gerente.setContrasenia(dto.contrasenia());
+        gerente.setContrasenia(passwordEncoder.encode(dto.contrasenia()));
         gerente.setNombre(dto.nombre());
         gerente.setTelefono(dto.telefono());
         gerente.setDni(dto.dni());
