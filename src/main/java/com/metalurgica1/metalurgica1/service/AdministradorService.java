@@ -55,7 +55,7 @@ public class AdministradorService extends MetodosGestion{
                 nuevoAdministrador.getDni());
     }
 
-    public AdministradorDTO modificarAdministrador(Long id, AdministradorDTO dto) throws AdministradorNoEncontradoException {
+    public CrearAdministradorDTO modificarAdministrador(Long id, CrearAdministradorDTO dto) throws AdministradorNoEncontradoException {
         Administrador a = iAdministradorRepository.findById(id).orElseThrow(()-> new AdministradorNoEncontradoException("El administrador con la id:"+id+" no se encontro para modificar"));
         a.setNombre(dto.nombre());
         a.setEmail(dto.email());
@@ -64,8 +64,9 @@ public class AdministradorService extends MetodosGestion{
 
         Administrador nuevoAdministrador = iAdministradorRepository.save(a);
 
-        return new AdministradorDTO(
+        return new CrearAdministradorDTO(
                 nuevoAdministrador.getEmail(),
+                nuevoAdministrador.getContrasenia(),
                 nuevoAdministrador.getNombre(),
                 nuevoAdministrador.getTelefono(),
                 nuevoAdministrador.getDni());
