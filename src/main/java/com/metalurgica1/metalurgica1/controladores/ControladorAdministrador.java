@@ -52,10 +52,10 @@ public class ControladorAdministrador {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AdministradorDTO> modificarAdministrador(@Valid @PathVariable Long id,@RequestBody AdministradorDTO dto) {
+    public ResponseEntity<CrearAdministradorDTO> modificarAdministrador(@Valid @PathVariable Long id,@RequestBody CrearAdministradorDTO dto) {
         try
         {
-            AdministradorDTO administradorDTO = administradorService.modificarAdministrador(id,dto);
+            CrearAdministradorDTO administradorDTO = administradorService.modificarAdministrador(id,dto);
             return ResponseEntity.ok(administradorDTO);
         } catch (AdministradorNoEncontradoException e) {
             log.error("",e);
