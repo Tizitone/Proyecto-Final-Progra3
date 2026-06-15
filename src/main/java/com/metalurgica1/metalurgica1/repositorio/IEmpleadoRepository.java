@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface IEmpleadoRepository extends JpaRepository<Empleado, Long> {
     Empleado findByEmail (String email);
-    java.util.Optional<Empleado> findByEmailOptional(String email);
     List<Empleado> findByNombre (String nombre);
     Empleado findByTelefono (String telefono);
     Empleado findByDni (Long dni);

@@ -29,7 +29,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         // Try Admin
-        Persona user = iAdministradorRepository.findByEmailOptional(email).orElse(null);
+        Persona user = iAdministradorRepository.findByEmail(email);
         if (user != null) {
             return org.springframework.security.core.userdetails.User
                     .withUsername(user.getEmail())
@@ -39,7 +39,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         }
 
         // Try Cliente
-        user = iClienteRepository.findByEmailOptional(email).orElse(null);
+        user = iClienteRepository.findByEmail(email);
         if (user != null) {
             return org.springframework.security.core.userdetails.User
                     .withUsername(user.getEmail())
@@ -49,7 +49,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         }
 
         // Try Empleado
-        user = iEmpleadoRepository.findByEmailOptional(email).orElse(null);
+        user = iEmpleadoRepository.findByEmail(email);
         if (user != null) {
             return org.springframework.security.core.userdetails.User
                     .withUsername(user.getEmail())
@@ -59,7 +59,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         }
 
         // Try Gerente
-        user = iGerenteRepository.findByEmailOptional(email).orElse(null);
+        user = iGerenteRepository.findByEmail(email);
         if (user != null) {
             return org.springframework.security.core.userdetails.User
                     .withUsername(user.getEmail())
