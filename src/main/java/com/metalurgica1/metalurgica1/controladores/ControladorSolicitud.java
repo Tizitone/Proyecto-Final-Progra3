@@ -24,7 +24,7 @@ public class ControladorSolicitud {
         this.solicitudService = solicitudService;
     }
 
-    @GetMapping
+    @GetMapping("/buscar/all")
     public ResponseEntity<List<SolicitudDTO>> listarTodasSolicitudes() {
         List<SolicitudDTO> solicitudes = solicitudService.listarTodasSolicitudes();
         return ResponseEntity.ok(solicitudes);
@@ -39,7 +39,7 @@ public class ControladorSolicitud {
             return ResponseEntity.ok(solicitud);
     }
 
-    @PostMapping
+    @PostMapping("/crear")
     public ResponseEntity<SolicitudDTO> crearSolicitud(@Valid @RequestBody SolicitudDTO solicitud) {
         SolicitudDTO response = solicitudService.crearSolicitud(solicitud);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);

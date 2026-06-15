@@ -25,7 +25,7 @@ import java.util.List;
         this.gerenteService = gerenteService;
     }
 
-    @GetMapping
+    @GetMapping("/buscar/all")
     public ResponseEntity<List<GerenteDTO>> listarTodosGerentes() {
         List<GerenteDTO> gerentes = gerenteService.listarTodosGerentes();
         return ResponseEntity.ok(gerentes);

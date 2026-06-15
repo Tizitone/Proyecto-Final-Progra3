@@ -24,7 +24,7 @@ public class ControladorCliente {
         this.clienteService = clienteService;
     }
 
-    @GetMapping
+    @GetMapping("/buscar/all")
     public ResponseEntity<List<ClienteDTO>> listarTodosClientes(){
         List<ClienteDTO> clientes = clienteService.listarTodosClientes();
         return ResponseEntity.ok(clientes);

@@ -26,7 +26,7 @@ public class ControladorEmpleadosGeneral {
         this.empleadoModeloService = empleadoModeloService;
     }
 
-    @GetMapping
+    @GetMapping("/buscar/all")
     public ResponseEntity<List<EmpleadoModeloDTO>> listarTodosLosEmpleados() {
         List<EmpleadoModeloDTO> empleadosGeneral = empleadoModeloService.listarTodosEmpleados();
         return ResponseEntity.ok(empleadosGeneral);

@@ -27,7 +27,7 @@ public class ControladorTareas {
         this.tareaService = tareaService;
     }
 
-    @GetMapping
+    @GetMapping("/buscar/all")
     public List<TareaDTO> listarTareas()
     {
         return tareaService.listarTareas();
