@@ -32,7 +32,7 @@ CREATE TABLE `administradores` (
   `nombre` varchar(255) DEFAULT NULL,
   `telefono` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id_administrador`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +41,7 @@ CREATE TABLE `administradores` (
 
 LOCK TABLES `administradores` WRITE;
 /*!40000 ALTER TABLE `administradores` DISABLE KEYS */;
-INSERT INTO `administradores` VALUES (2,'$2a$12$hzsyMQF1e1eamEbGGSNne..aievi11BTuDSBxssiBfGsoD5Yxv/R2',11111111,'root@gmail.com','root','1111111111'),(3,'$2a$10$8Kx7zL9pQmWvXtYcN2bR5eJ7uK9pLmN3vBxZqW8sRtYvUjKlMnOpQ',12345678,'admin@metalurgica.com','Carlos Rodríguez','1122334455');
+INSERT INTO `administradores` VALUES (1,'$2a$12$x8BpxtlXTB2qj7pTr3EdAeuhP682UXYAmg1HcIf/F/TCGgeTd5IOG',12345678,'admin@metalurgica.com','Carlos Rodríguez','1122334455');
 /*!40000 ALTER TABLE `administradores` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -69,7 +69,7 @@ CREATE TABLE `clientes` (
 
 LOCK TABLES `clientes` WRITE;
 /*!40000 ALTER TABLE `clientes` DISABLE KEYS */;
-INSERT INTO `clientes` VALUES (1,'$2a$10$8Kx7zL9pQmWvXtYcN2bR5eJ7uK9pLmN3vBxZqW8sRtYvUjKlMnOpQ',87654321,'cliente1@ejemplo.com','Laura Gómez','1155667788'),(2,'$2a$10$8Kx7zL9pQmWvXtYcN2bR5eJ7uK9pLmN3vBxZqW8sRtYvUjKlMnOpQ',44556677,'cliente2@ejemplo.com','Miguel Torres','1144778899');
+INSERT INTO `clientes` VALUES (1,'$2a$12$x8BpxtlXTB2qj7pTr3EdAeuhP682UXYAmg1HcIf/F/TCGgeTd5IOG',87654321,'cliente1@ejemplo.com','Laura Gómez','1155667788'),(2,'$2a$12$x8BpxtlXTB2qj7pTr3EdAeuhP682UXYAmg1HcIf/F/TCGgeTd5IOG',44556677,'cliente2@ejemplo.com','Miguel Torres','1144778899');
 /*!40000 ALTER TABLE `clientes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -124,7 +124,7 @@ CREATE TABLE `empleados` (
 
 LOCK TABLES `empleados` WRITE;
 /*!40000 ALTER TABLE `empleados` DISABLE KEYS */;
-INSERT INTO `empleados` VALUES ('EMPLEADO',1,'$2a$10$8Kx7zL9pQmWvXtYcN2bR5eJ7uK9pLmN3vBxZqW8sRtYvUjKlMnOpQ',33445566,'empleado1@metalurgica.com','Juan Pérez','1166554433'),('EMPLEADO',2,'$2a$10$8Kx7zL9pQmWvXtYcN2bR5eJ7uK9pLmN3vBxZqW8sRtYvUjKlMnOpQ',22334455,'empleado2@metalurgica.com','Ana López','1177889900'),('GERENTE',3,'$2a$10$8Kx7zL9pQmWvXtYcN2bR5eJ7uK9pLmN3vBxZqW8sRtYvUjKlMnOpQ',11223344,'gerente@metalurgica.com','Roberto Sánchez','1199887766');
+INSERT INTO `empleados` VALUES ('EMPLEADO',1,'$2a$12$x8BpxtlXTB2qj7pTr3EdAeuhP682UXYAmg1HcIf/F/TCGgeTd5IOG',33445566,'empleado1@metalurgica.com','Juan Pérez','1166554433'),('EMPLEADO',2,'$2a$12$x8BpxtlXTB2qj7pTr3EdAeuhP682UXYAmg1HcIf/F/TCGgeTd5IOG',22334455,'empleado2@metalurgica.com','Ana López','1177889900'),('GERENTE',3,'$2a$12$x8BpxtlXTB2qj7pTr3EdAeuhP682UXYAmg1HcIf/F/TCGgeTd5IOG',11223344,'gerente@metalurgica.com','Roberto Sánchez','1199887766');
 /*!40000 ALTER TABLE `empleados` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -251,4 +251,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-06-15 16:56:01
+-- Dump completed on 2026-06-15 17:18:59
