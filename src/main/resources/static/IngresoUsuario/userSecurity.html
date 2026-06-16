@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html Lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="content-Security-Policy" content="upgrade-insecure-requests" />
+        <meta http-equiv="content-Security-Policy" content="default-src 'self'; script-src 'self'; connect-src *">
+        <title>Login Form HTML</title>
+
+        <link rel="stylesheet" href="style.css">
+        <script src="script.js" defer></script>
+    </head>
+
+    <body>
+        <h1>Login</h1>
+
+        <form action="localhost:8080/api/auth/login" method="POST" autocomplete="off" id="loginForm">
+
+            <div class="formulario">
+                <div>
+                    <label for="email">Email: </label>
+                    <input type="text" name="email" id="email">
+                    <span id="emailError" class="error"></span> 
+                </div>
+
+                <div>
+                    <label for="contra">Contraseña: </label>
+                    <input type="text" name="password" id="password">
+                    <span id="passwordError" class="error"></span>
+                </div>
+
+                <div class="recuerdame">
+                    <label><input type="checkbox" name="recuerdame" id="recuerdame"> Recuerdame</label>
+                    <a href="#">Olvide mi contraseña</a>
+                </div>
+
+                <input type="hidden" name="csrf-token" value="<?php echo generateCSRFToken(); ?>">
+
+                <button type="submit" class="btn">Login</button>
+                
+                <div class="response"><p id="loginStatus"></p></div>
+
+                <div class="registrar-link">
+                    <p>No tienes una cuenta? <a href="#">Registrarse</a></p>
+                </div>
+            </div>
+
+        </form>
+    </body>
+</html>
