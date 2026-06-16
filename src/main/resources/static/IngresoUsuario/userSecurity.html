@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html Lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="1500 px, initial-scale=1.0" />
+        <meta http-equiv="content-Security-Policy" content="upgrade-insecure-requests" />
+        <meta http-equiv="content-Security-Policy" content="default-src 'self'; script-src 'self'">
+        <title>Login Page</title>
+
+        <link rel="stylesheet" href="style.css">
+        <script src="script.js" defer></script>
+    </head>
+
+    <body>
+        <h1>Login</h1>
+
+        <form method="POST" autocomplete="off">
+
+            <div class="formulario">
+                <div>
+                    <label for="usuario">Nombre de usuario: </label>
+                    <input type="text" name="username" id="username"
+                    pattern="[a-zA-Z0-9]{5,}"
+                    title="El nombre de usuario debe contener al menos 5 carácteres alfanumericos." 
+                    required>
+                    <span id="usernameError" class="error"></span> 
+                </div>
+
+                <div>
+                    <label for="contra">Contraseña: </label>
+                    <input type="text" name="password" id="password"
+                    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$"
+                    title="La contraseña debe contener al menos 8 carácteres, una letra mayuscula, una letra minuscula y un numero.">
+                    <span id="passwordError" class="error"></span>
+                </div>
+
+                <input type="hidden" name="csrf-token" value="<?php echo generateCSRFToken(); ?>">
+
+                <button type="submit">Log In</button>
+            </div>
+
+        </form>
+    </body>
+</html>
