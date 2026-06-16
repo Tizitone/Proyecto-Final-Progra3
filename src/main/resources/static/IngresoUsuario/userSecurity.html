@@ -20,17 +20,14 @@
                 <div>
                     <label for="email">Email: </label>
                     <input type="text" name="email" id="email"
-                    pattern="[a-zA-Z0-9]{5,}"
-                    title="El email debe contener al menos 5 carácteres alfanumericos." 
-                    required>
+                    required >
                     <span id="emailError" class="error"></span> 
                 </div>
 
                 <div>
-                    <label for="contra">Contraseña: </label>
+                    <label for="password">Contraseña: </label>
                     <input type="text" name="password" id="password"
-                    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$"
-                    title="La contraseña debe contener al menos 8 carácteres, una letra mayuscula, una letra minuscula y un numero.">
+                    required>
                     <span id="passwordError" class="error"></span>
                 </div>
 

@@ -216,7 +216,7 @@ formTarea.addEventListener("submit", async function (e) {
         });
 
         tareaMensaje.textContent = "Tarea agregada correctamente.";
-        console.log("Cliente creado correctamente");
+        console.log("Tarea creada correctamente");
         formTarea.reset();
 
     } catch(error) {
@@ -231,8 +231,57 @@ function cancelarEdicionTarea() {
     tareaMensaje.textContent = "Edición cancelada";
 }
 
+const registroApiUrl = "http://localhost:8080/api/registros";
+
+const formRegistro = document.getElementById("formRegistro");
+const tituloRegistroInput = document.getElementById("tituloRegistro");
+const idRegistroInput = document.getElementById("idRegistro");
+const idTareaRegistroInput = document.getElementById("idTarea");
+const idClienteRegistroInput = document.getElementById("idCliente");
+const procesoInput = document.getElementById("proceso");
+const publicadoInput = document.getElementById("publicado");
+const participantesInput = document.getElementById("participantes");
+const registroMensaje = document.getElementById("registroMensaje");
+
+formRegistro.addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const registro = {
+        titulo: tituloRegistroInput.value,
+        tarea_id: idTareaRegistroInput.value,
+        cliente_id: idClienteRegistroInput.value,
+        e_proceso: procesoInput.value,
+        participantes_id: participantesInput.value,
+        publicado: publicadoInput.value,
+    };
+
+    try {
+        await fetch(registroApiUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(registro)
+        });
+
+        registroMensaje.textContent = "Registro agregado correctamente.";
+        console.log("Registro creado correctamente");
+        formRegistro.reset();
+
+    } catch(error) {
+        registroMensaje.textContent = "Error al guardar registro.";
+        console.log("Error creando el registro.");
+    }
+});
+
+function cancelarEdicionRegistro() {
+    formRegistro.reset();
+    idRegistroInput.value = "";
+    registroMensaje.textContent = "Edición cancelada";
+}
+
 async function buscarEmpleado(idEmpleado){
-    const tablaBusquedaEmpleado = document.querySelector('#tablaBusquedaEmpleado tbody');
+    const tablaBusquedaEmpleado = document.querySelector('#tablaEmpleadoBusqueda tbody');
     const mensajeBusqueda = document.getElementById("busquedaMensaje");
     
     await fetch(`http://localhost:8080/api/empleados/${idEmpleado.value}`)
@@ -245,7 +294,7 @@ async function buscarEmpleado(idEmpleado){
             }
 
             if(!respuesta.ok){
-                throw Error("Ocurrio un error obteniendo la empleado.");
+                throw Error("Ocurrio un error obteniendo el empleado.");
             }
             
         })
@@ -257,7 +306,7 @@ async function buscarEmpleado(idEmpleado){
                 <th>${empleado.contrasenia}</th>
                 <th>${empleado.nombre}</th>
                 <th>${empleado.telefono}</th>
-                <th>${empleado.acceso}</th>
+                <th>${empleado.etiquetaDeAcceso}</th>
                 <th>${empleado.dni}</th>
             `;
         })
@@ -268,23 +317,151 @@ async function buscarEmpleado(idEmpleado){
         }); 
 }
 
-function buscarAdmin(idAdmin){
+async function buscarAdmin(idAdmin){
+    const tablaBusquedaAdmin = document.querySelector('#tablaAdminBusqueda tbody');
+    const mensajeBusqueda = document.getElementById("busquedaMensaje");
+    
+    await fetch(`http://localhost:8080/api/administradores/${idAdmin.value}`)
+        
+        .then(respuesta => {
+            if(respuesta.status === 404){
+                console.log("No se encontro un registro relacionado al id.");
+                mensajeBusqueda.textContent = "No hay una administrador con ese identificador.";
+                return respuesta.json();
+            }
 
+            if(!respuesta.ok){
+                throw Error("Ocurrio un error obteniendo el administrador.");
+            }
+            
+        })
+
+        .then(admin => {
+            tablaBusquedaAdmin.innerHTML = `
+                <td>${admin.id_administrador}</td>
+                <th>${admin.email}</th>
+                <th>${admin.contrasenia}</th>
+                <th>${admin.nombre}</th>
+                <th>${admin.telefono}</th>
+                <th>${admin.etiquetaDeAcceso}</th>
+                <th>${admin.dni}</th>
+            `;
+        })
+
+        .catch(error => {
+            console.error(error);
+            mensajeBusqueda.textContent = "Ocurrio un error obteniendo el administrador.";
+        }); 
 }
 
-function buscarCliente(idCliente){
+async function buscarCliente(idCliente){
+    const tablaBusquedaCliente = document.querySelector('#tablaClienteBusqueda tbody');
+    const mensajeBusqueda = document.getElementById("busquedaMensaje");
+    
+    await fetch(`http://localhost:8080/api/cliente/${idCliente.value}`)
+        
+        .then(respuesta => {
+            if(respuesta.status === 404){
+                console.log("No se encontro un registro relacionado al id.");
+                mensajeBusqueda.textContent = "No hay un cliente con ese identificador.";
+                return respuesta.json();
+            }
 
+            if(!respuesta.ok){
+                throw Error("Ocurrio un error obteniendo el cliente.");
+            }
+            
+        })
 
+        .then(cliente => {
+            tablaBusquedaCliente.innerHTML = `
+                <td>${cliente.idCliente}</td>
+                <th>${cliente.email}</th>
+                <th>${cliente.contrasenia}</th>
+                <th>${cliente.nombre}</th>
+                <th>${cliente.telefono}</th>
+                <th>${cliente.etiquetaDeAcceso}</th>
+                <th>${cliente.dni}</th>
+            `;
+        })
+
+        .catch(error => {
+            console.error(error);
+            mensajeBusqueda.textContent = "Ocurrio un error obteniendo el cliente.";
+        }); 
 }
 
-function buscarTarea(idTarea){
+async function buscarTarea(idTarea){
+    const tablaBusquedaTarea = document.querySelector('#tablaTareaBusqueda tbody');
+    const mensajeBusqueda = document.getElementById("busquedaMensaje");
+    
+    await fetch(`http://localhost:8080/api/tareas/${idTarea.value}`)
+        
+        .then(respuesta => {
+            if(respuesta.status === 404){
+                console.log("No se encontro un registro relacionado al id.");
+                mensajeBusqueda.textContent = "No hay una tarea con ese identificador.";
+                return respuesta.json();
+            }
 
+            if(!respuesta.ok){
+                throw Error("Ocurrio un error obteniendo la tarea.");
+            }
+            
+        })
 
+        .then(tarea => {
+            tablaBusquedaTarea.innerHTML = `
+                <td>${tarea.id}</td>
+                <th>${tarea.email}</th>
+                <th>${tarea.fechaDeRegistro}</th>
+                <th>${tarea.fecha_de_entrega}</th>
+                <th>${tarea.descripcion_general}</th>
+                <th>${tarea.descripcion_material}</th>
+            `;
+        })
+
+        .catch(error => {
+            console.error(error);
+            mensajeBusqueda.textContent = "Ocurrio un error obteniendo la tarea.";
+        }); 
 }
 
-function buscarRegistro(idRegistro){
+async function buscarRegistro(idRegistro){
+    const tablaBusquedaRegistro = document.querySelector('#tablaRegistroBusqueda tbody');
+    const mensajeBusqueda = document.getElementById("busquedaMensaje");
+    
+    await fetch(`http://localhost:8080/api/registros/${idRegistro.value}`)
+        
+        .then(respuesta => {
+            if(respuesta.status === 404){
+                console.log("No se encontro un registro relacionado al id.");
+                mensajeBusqueda.textContent = "No hay un registro con ese identificador.";
+                return respuesta.json();
+            }
 
+            if(!respuesta.ok){
+                throw Error("Ocurrio un error obteniendo el registro.");
+            }
+            
+        })
 
+        .then(registro => {
+            tablaBusquedaRegistro.innerHTML = `
+                <td>${registro.id}</td>
+                <th>${registro.titulo}</th>
+                <th>${registro.proceso}</th>
+                <th>${registro.tareaId}</th>
+                <th>${registro.clienteId}</th>
+                <th>${registro.publicado}</th>
+                <th>${registro.participantesId}</th>
+            `;
+        })
+
+        .catch(error => {
+            console.error(error);
+            mensajeBusqueda.textContent = "Ocurrio un error obteniendo la registro.";
+        }); 
 }
 
 const formBuscar = document.getElementById("formBusqueda");
@@ -560,12 +737,62 @@ async function cargarTareas() {
         tbodyTarea.innerHTML = `
             <tr>
                 <td>
-                    Ocurrio un error inesperado.
+                    Error al conectar con el servidor.
                 </td>
             </tr>`;
     });
 
     console.log("tabla tareas cargada");
+}
+
+async function cargarRegistros() { 
+    const tbodyRegistro = document.querySelector('#tablaRegistro tbody');
+
+    await fetch(registroApiUrl)
+    .then(Response => {
+        if(!Response.ok) {
+            throw new Error('Error al obtener registros.');
+        }
+        return Response.json();
+    })
+    .then(registro => {
+        if(registro.length === 0) {
+            tbodyRegistro.innerHTML = `
+                <tr>
+                    <td>
+                        no existen registros aún.
+                    </td>
+                </tr>`;
+            return;
+        }
+
+        registro.forEach(registro => {
+            const filaRegistro = document.createElement('tr');
+
+            filaRegistro.innerHTML = `
+                    <td>${registro.id}</td>
+                    <td>${registro.titulo}</td>
+                    <td>${registro.tareaId}</td>
+                    <td>${registro.clienteId}</td>
+                    <td>${registro.proceso}</td>
+                    <td>${registro.participantesId}</td>
+                    <td>${registro.publicado}</td>
+                `;
+
+        tbodyRegistro.appendChild(filaRegistro)
+        });
+    })
+    .catch(error => {
+        console.error(error);
+        tbodyRegistro.innerHTML = `
+            <tr>
+                <td>
+                    Error al conectar con el servidor.
+                </td>
+            </tr>`;
+    });
+
+    console.log("tabla registros cargada");
 }
 
 function resetTablas() {
@@ -615,5 +842,6 @@ async function eventosTablas() {
     await cargarClientes();
     await cargarAdmins();
     await cargarTareas();
+    await cargarRegistros();
     orderTabla();
 }

@@ -8,14 +8,14 @@ formLogin.addEventListener('submit', async function(evento) {
 
     let isValid = true;
 
-    if (!email.match(/[a-zA-Z0-9]{5,}/)) {
+    if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
         document.getElementById('emailError').textContent = "El email debe contener al menos 5 carácteres alfanumericos."
         isValid = false;
     } else {
         document.getElementById('emailError').textContent = '';
     }
 
-    if (!contrasenia.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/)) {
+    if (!contrasenia.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/)) {
         document.getElementById('passwordError').textContent = 'La contraseña debe contener al menos 8 carácteres, una letra mayuscula, una letra minuscula y un numero.'
         isValid = false;
     } else {
@@ -28,9 +28,10 @@ formLogin.addEventListener('submit', async function(evento) {
             const response = await fetch("http://localhost:8080/api/auth/login", {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json",
+                    "Content-Type": "x-www-form-urlencoded",
                 },
-                body: JSON.stringify({ email, contrasenia})
+                body: JSON.stringify({ email, contrasenia}),
+                credentials: "include",
             });
 
             if (!response.ok) {
