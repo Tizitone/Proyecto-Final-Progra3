@@ -260,12 +260,12 @@
                     <br> <br>
 
                     <label for="idTarea">Identificador Tarea: </label>
-                    <input type="number" id="idTarea" required />
+                    <input type="number" id="idTareaRegistro" required />
 
                     <br> <br>
                     
                     <label for="idCliente">Identificador Cliente: </label>
-                    <input type="number" id="idCliente" required />
+                    <input type="number" id="idClienteRegistro" required />
 
                     <br> <br>
 
@@ -324,7 +324,7 @@
                 </div>
             </form>
 
-            <div class="tablaBusquedaEmpleado escondido" id="tablaBusquedaEmpleado">
+            <div class="EmpleadoEncontrado escondido" id="tablaBusquedaEmpleado">
                 <h3>- Empleado Encontrado</h3>
                 <table id="tablaEmpleadoBusqueda">
                     <thead>
@@ -343,7 +343,7 @@
                 </table>
             </div>
 
-            <div class="tablaBusquedaAdmin escondido" id="tablaBusquedaAdmin">
+            <div class="AdminEncontrado escondido" id="tablaBusquedaAdmin">
                 <h3>- Administrador Encontrado</h3>
                 <table id="tablaAdminBusqueda">
                 <thead>
@@ -506,9 +506,8 @@
                         <th>Titulo</th>
                         <th>TareaID</th>
                         <th>ClienteID</th>
-                        <th>Contacto</th>
-                        <th>Estado</th>
-                        <th>Monto</th>
+                        <th>Publicado</th>
+                        <th>Proceso</th>
                         <th>Participantes</th>
                     </tr>
                 </thead>

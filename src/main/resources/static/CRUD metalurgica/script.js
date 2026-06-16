@@ -281,7 +281,7 @@ function cancelarEdicionRegistro() {
 }
 
 async function buscarEmpleado(idEmpleado){
-    const tablaBusquedaEmpleado = document.querySelector('#tablaBusquedaEmpleado tbody');
+    const tablaBusquedaEmpleado = document.querySelector('#tablaEmpleadoBusqueda tbody');
     const mensajeBusqueda = document.getElementById("busquedaMensaje");
     
     await fetch(`http://localhost:8080/api/empleados/${idEmpleado.value}`)
@@ -294,7 +294,7 @@ async function buscarEmpleado(idEmpleado){
             }
 
             if(!respuesta.ok){
-                throw Error("Ocurrio un error obteniendo la empleado.");
+                throw Error("Ocurrio un error obteniendo el empleado.");
             }
             
         })
@@ -317,8 +317,8 @@ async function buscarEmpleado(idEmpleado){
         }); 
 }
 
-function buscarAdmin(idAdmin){
-    const tablaBusquedaAdmin = document.querySelector('#tablaBusquedaAdmin tbody');
+async function buscarAdmin(idAdmin){
+    const tablaBusquedaAdmin = document.querySelector('#tablaAdminBusqueda tbody');
     const mensajeBusqueda = document.getElementById("busquedaMensaje");
     
     await fetch(`http://localhost:8080/api/administradores/${idAdmin.value}`)
@@ -331,7 +331,7 @@ function buscarAdmin(idAdmin){
             }
 
             if(!respuesta.ok){
-                throw Error("Ocurrio un error obteniendo la administrador.");
+                throw Error("Ocurrio un error obteniendo el administrador.");
             }
             
         })
@@ -354,8 +354,8 @@ function buscarAdmin(idAdmin){
         }); 
 }
 
-function buscarCliente(idCliente){
-    const tablaBusquedaCliente = document.querySelector('#tablaBusquedaCliente tbody');
+async function buscarCliente(idCliente){
+    const tablaBusquedaCliente = document.querySelector('#tablaClienteBusqueda tbody');
     const mensajeBusqueda = document.getElementById("busquedaMensaje");
     
     await fetch(`http://localhost:8080/api/cliente/${idCliente.value}`)
@@ -391,8 +391,8 @@ function buscarCliente(idCliente){
         }); 
 }
 
-function buscarTarea(idTarea){
-    const tablaBusquedaTarea = document.querySelector('#tablaBusquedaTarea tbody');
+async function buscarTarea(idTarea){
+    const tablaBusquedaTarea = document.querySelector('#tablaTareaBusqueda tbody');
     const mensajeBusqueda = document.getElementById("busquedaMensaje");
     
     await fetch(`http://localhost:8080/api/tareas/${idTarea.value}`)
@@ -427,8 +427,8 @@ function buscarTarea(idTarea){
         }); 
 }
 
-function buscarRegistro(idRegistro){
-    const tablaBusquedaRegistro = document.querySelector('#tablaBusquedaRegistro tbody');
+async function buscarRegistro(idRegistro){
+    const tablaBusquedaRegistro = document.querySelector('#tablaRegistroBusqueda tbody');
     const mensajeBusqueda = document.getElementById("busquedaMensaje");
     
     await fetch(`http://localhost:8080/api/registros/${idRegistro.value}`)
@@ -737,12 +737,62 @@ async function cargarTareas() {
         tbodyTarea.innerHTML = `
             <tr>
                 <td>
-                    Ocurrio un error inesperado.
+                    Error al conectar con el servidor.
                 </td>
             </tr>`;
     });
 
     console.log("tabla tareas cargada");
+}
+
+async function cargarRegistros() { 
+    const tbodyRegistro = document.querySelector('#tablaRegistro tbody');
+
+    await fetch(registroApiUrl)
+    .then(Response => {
+        if(!Response.ok) {
+            throw new Error('Error al obtener registros.');
+        }
+        return Response.json();
+    })
+    .then(registro => {
+        if(registro.length === 0) {
+            tbodyRegistro.innerHTML = `
+                <tr>
+                    <td>
+                        no existen registros aún.
+                    </td>
+                </tr>`;
+            return;
+        }
+
+        registro.forEach(registro => {
+            const filaRegistro = document.createElement('tr');
+
+            filaRegistro.innerHTML = `
+                    <td>${registro.id}</td>
+                    <td>${registro.titulo}</td>
+                    <td>${registro.tareaId}</td>
+                    <td>${registro.clienteId}</td>
+                    <td>${registro.proceso}</td>
+                    <td>${registro.participantesId}</td>
+                    <td>${registro.publicado}</td>
+                `;
+
+        tbodyRegistro.appendChild(filaRegistro)
+        });
+    })
+    .catch(error => {
+        console.error(error);
+        tbodyRegistro.innerHTML = `
+            <tr>
+                <td>
+                    Error al conectar con el servidor.
+                </td>
+            </tr>`;
+    });
+
+    console.log("tabla registros cargada");
 }
 
 function resetTablas() {
@@ -792,5 +842,6 @@ async function eventosTablas() {
     await cargarClientes();
     await cargarAdmins();
     await cargarTareas();
+    await cargarRegistros();
     orderTabla();
 }
