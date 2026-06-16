@@ -3,20 +3,20 @@ const formLogin = document.getElementById('loginForm')
 formLogin.addEventListener('submit', async function(evento) {
     evento.preventDefault();
 
-    const email = document.getElementById('email').value;
-    const contrasenia = document.getElementById('password').value;
+    const emailInput = document.getElementById('email').value;
+    const contraseniaInput = document.getElementById('password').value;
 
     let isValid = true;
 
-    if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+    if (!emailInput.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
         document.getElementById('emailError').textContent = "El email debe contener al menos 5 carácteres alfanumericos."
         isValid = false;
     } else {
         document.getElementById('emailError').textContent = '';
     }
 
-    if (!contrasenia.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/)) {
-        document.getElementById('passwordError').textContent = 'La contraseña debe contener al menos 8 carácteres, una letra mayuscula, una letra minuscula y un numero.'
+    if (!contraseniaInput.match(/^[a-zA-Z\d]{6,}$/)) {
+        document.getElementById('passwordError').textContent = 'La contraseña debe contener al menos 6 carácteres, solo letras y numeros estan permitidos.'
         isValid = false;
     } else {
         document.getElementById('passwordError').textContent = '';
@@ -30,7 +30,7 @@ formLogin.addEventListener('submit', async function(evento) {
                 headers: {
                     "Content-Type": "x-www-form-urlencoded",
                 },
-                body: JSON.stringify({ email, contrasenia}),
+                body: JSON.stringify({ emailInput, contraseniaInput}),
                 credentials: "include",
             });
 
@@ -43,17 +43,17 @@ formLogin.addEventListener('submit', async function(evento) {
             alert("login logrado! Redirigiendo...");
             
             setTimeout(function() {
-                window.location.href = "IdeaProjects\Proyecto-Final-Progra3\src\main\resources\static\CRUD metalurgica\HTML metalurgica.html";
+                window.location.href = "http://localhost:8080/CRUD%20metalurgica/HTML%20metalurgica.html";
             }, 3000);
 
         } catch {
 
         }
-        simularRequestAServer(email, contrasenia);
+        simularRequestAServer(emailInput, contraseniaInput);
     }
 });
 
-function simularRequestAServer(email, contrasenia) {
+function simularRequestAServer(emailInput, contraseniaInput) {
     const statusElement = document.getElementById('loginStatus');
 
     setTimeout(() => {
