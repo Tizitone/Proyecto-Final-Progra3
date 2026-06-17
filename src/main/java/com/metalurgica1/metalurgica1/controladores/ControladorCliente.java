@@ -19,7 +19,7 @@ import java.util.List;
 @RequestMapping("/api/clientes")
 
 public class ControladorCliente {
-    
+
     private final ClienteService clienteService;
 
     public ControladorCliente(ClienteService clienteService) {
