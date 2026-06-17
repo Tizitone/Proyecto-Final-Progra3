@@ -18,10 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/gerentes")
 @CrossOrigin(origins = "*")
-
     public class ControladorGerente {
-
-    private static final Logger log = LoggerFactory.getLogger(ControladorGerente.class);
     private final GerenteService gerenteService;
 
     public ControladorGerente(GerenteService gerenteService) {

@@ -23,7 +23,6 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class ControladorTareas {
 
-    private static final Logger log = LoggerFactory.getLogger(ControladorTareas.class);
     private final TareaService tareaService;
 
     public ControladorTareas(TareaService tareaService) {

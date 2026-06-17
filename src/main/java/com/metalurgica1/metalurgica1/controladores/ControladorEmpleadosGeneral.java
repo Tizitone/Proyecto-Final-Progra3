@@ -21,7 +21,6 @@ import java.util.Optional;
 @Validated
 public class ControladorEmpleadosGeneral {
 
-    private static final Logger log = LoggerFactory.getLogger(ControladorEmpleadosGeneral.class);
     @Autowired
     private EmpleadoModeloService empleadoModeloService;
 

@@ -20,7 +20,6 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class ControladorEmpleado {
 
-    private static final Logger log = LoggerFactory.getLogger(ControladorEmpleado.class);
     private final EmpleadoService empleadoService;
 
     public ControladorEmpleado(EmpleadoService empleadoService) {

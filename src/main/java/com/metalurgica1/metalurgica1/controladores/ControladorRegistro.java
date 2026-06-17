@@ -21,8 +21,6 @@ import java.util.List;
 @RequestMapping("/api/registros")
 @CrossOrigin(origins = "*")
 public class ControladorRegistro {
-
-    private static final Logger log = LoggerFactory.getLogger(ControladorRegistro.class);
     private final RegistroService registroService;
 
     public ControladorRegistro(RegistroService registroService) {

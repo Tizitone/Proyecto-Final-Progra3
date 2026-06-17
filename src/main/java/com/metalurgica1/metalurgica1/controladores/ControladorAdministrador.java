@@ -21,7 +21,6 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class ControladorAdministrador {
 
-    private static final Logger log = LoggerFactory.getLogger(ControladorAdministrador.class);
     @Autowired
     private AdministradorService administradorService;
 
