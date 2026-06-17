@@ -19,8 +19,7 @@ import java.util.List;
 @RequestMapping("/api/solicitudes")
 @CrossOrigin(origins = "*")
 public class ControladorSolicitud {
-
-    private static final Logger log = LoggerFactory.getLogger(ControladorSolicitud.class);
+    
     private final SolicitudService solicitudService;
 
     public ControladorSolicitud(SolicitudService solicitudService) {
