@@ -19,8 +19,7 @@ import java.util.List;
 @RequestMapping("/api/clientes")
 
 public class ControladorCliente {
-
-    private static final Logger log = LoggerFactory.getLogger(ControladorCliente.class);
+    
     private final ClienteService clienteService;
 
     public ControladorCliente(ClienteService clienteService) {
