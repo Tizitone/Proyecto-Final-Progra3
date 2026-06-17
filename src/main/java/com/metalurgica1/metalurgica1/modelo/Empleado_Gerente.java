@@ -1,9 +1,7 @@
 package com.metalurgica1.metalurgica1.modelo;
 
 import com.metalurgica1.metalurgica1.modelo.enums.EEtiquetaDeAcceso;
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Transient;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -28,6 +26,10 @@ public class Empleado_Gerente extends Empleado_modelo{
     public boolean modificarEmpleado(Long dni){
         return this.getDni().equals(dni);
     }
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "etiqueta_de_acceso", insertable = false, updatable = false)
+    private EEtiquetaDeAcceso etiquetaDeAcceso = EEtiquetaDeAcceso.GERENTE;
 
     @Override
     public EEtiquetaDeAcceso getEtiquetaDeAcceso() {
