@@ -100,7 +100,8 @@ blockTypeSelect.addEventListener('change', function() {
     }
 });
 
-const EmpleadoapiUrl = "http://localhost:8080/api/empleadosGeneral";
+const EmpleadosGeneralApiUrl = "http://localhost:8080/api/empleadosGeneral";
+const EmpleadoApiUrl = "http://localhost:8080/api/empleados"
 
 const formEmpleado = document.getElementById("formEmpleado");
 const idEmpleadoInput = document.getElementById("idEmpleado");
@@ -119,7 +120,7 @@ async function cargarEmpleado() {
         tablaPersona.innerHTML='';
 
         try {
-        const respuesta = await fetch(EmpleadoapiUrl, {
+        const respuesta = await fetch(EmpleadosGeneralApiUrl, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -189,7 +190,7 @@ formEmpleado.addEventListener("submit", async function (e) {
 
     try {
         if (idEmpleadoInput.value == "") {
-            await fetch(new URL(EmpleadoapiUrl).href, {
+            await fetch(new URL(EmpleadoApiUrl).href, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -199,7 +200,7 @@ formEmpleado.addEventListener("submit", async function (e) {
 
             empleadoMensaje.textContent = "Empleado agregado correctamente.";
         } else {
-            await fetch(`${EmpleadoapiUrl}/${idEmpleadoInput.value}`, {
+            await fetch(`${EmpleadoApiUrl}/${idEmpleadoInput.value}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json"

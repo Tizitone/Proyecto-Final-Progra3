@@ -4,6 +4,8 @@ import com.metalurgica1.metalurgica1.DTO.EmpleadoModeloDTO;
 import com.metalurgica1.metalurgica1.service.EmpleadoModeloService;
 import com.metalurgica1.metalurgica1.service.Excepciones.EmpleadoNoEncontradoException;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -19,6 +21,7 @@ import java.util.Optional;
 @Validated
 public class ControladorEmpleadosGeneral {
 
+    private static final Logger log = LoggerFactory.getLogger(ControladorEmpleadosGeneral.class);
     @Autowired
     private EmpleadoModeloService empleadoModeloService;
 

@@ -2,14 +2,18 @@ package com.metalurgica1.metalurgica1.modelo;
 
 import com.metalurgica1.metalurgica1.modelo.enums.EEtiquetaDeAcceso;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @DiscriminatorValue("EMPLEADO")
 public class Empleado extends Empleado_modelo {
@@ -22,6 +26,9 @@ public class Empleado extends Empleado_modelo {
     )
     private List<Tarea> historial = new ArrayList<>();
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "etiqueta_de_acceso", insertable = false, updatable = false)
+    private EEtiquetaDeAcceso etiquetaDeAcceso = EEtiquetaDeAcceso.EMPLEADO;
 
     @Override
     public EEtiquetaDeAcceso getEtiquetaDeAcceso() {

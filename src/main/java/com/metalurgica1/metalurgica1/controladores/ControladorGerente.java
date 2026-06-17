@@ -6,6 +6,8 @@ import com.metalurgica1.metalurgica1.service.Excepciones.EmpleadoNoEncontradoExc
 import com.metalurgica1.metalurgica1.service.GerenteService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +21,8 @@ import java.util.List;
 
     public class ControladorGerente {
 
-      private final GerenteService gerenteService;
+    private static final Logger log = LoggerFactory.getLogger(ControladorGerente.class);
+    private final GerenteService gerenteService;
 
     public ControladorGerente(GerenteService gerenteService) {
         this.gerenteService = gerenteService;

@@ -10,7 +10,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Table(name = "empleados")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "tipo_acceso", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorColumn(name = "etiqueta_de_acceso", discriminatorType = DiscriminatorType.STRING)
 public abstract class Empleado_modelo extends Persona{
 
     @Id
