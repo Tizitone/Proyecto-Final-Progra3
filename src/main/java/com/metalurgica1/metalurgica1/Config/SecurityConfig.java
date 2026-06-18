@@ -37,12 +37,17 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/IngresoUsuario/**").permitAll()
-                        .requestMatchers("/api/**").hasRole("ADMIN")
-                        .requestMatchers("CRUD metalurgica/HTML metalurgica.html").hasRole("ADMIN")
-                        .requestMatchers("/api/administradores/**","api/clientes/**","api/empleados/buscar/**","api/tareas/**","api/registros/**").hasRole("GERENTE")
-                        .requestMatchers("/api/tareas/buscar/**").hasRole("EMPLEADO")
-                        .requestMatchers("api/solicitudes/crear","api/registros/buscar/**").hasRole("CLIENTE")
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        .requestMatchers("/api/tareas/buscar/**").hasAnyRole("EMPLEADO", "GERENTE", "ADMIN")
+                        .requestMatchers("/api/solicitudes/crear", "/api/registros/buscar/**").hasAnyRole("CLIENTE", "GERENTE", "ADMIN")
+                        .requestMatchers(
+                                "/api/administradores/**",
+                                "/api/clientes/**",
+                                "/api/empleados/**",
+                                "/api/tareas/**",
+                                "/api/registros/**"
+                        ).hasAnyRole("GERENTE","ADMIN")
+                        .requestMatchers("/api/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

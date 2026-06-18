@@ -107,7 +107,7 @@ DROP TABLE IF EXISTS `empleados`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `empleados` (
-  `tipo_acceso` varchar(31) NOT NULL,
+  `etiqueta_de_acceso` varchar(31) NOT NULL,
   `legajo` bigint NOT NULL AUTO_INCREMENT,
   `contrasenia` varchar(255) DEFAULT NULL,
   `dni` bigint DEFAULT NULL,
