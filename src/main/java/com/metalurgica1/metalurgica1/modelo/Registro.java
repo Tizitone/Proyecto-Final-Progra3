@@ -1,5 +1,7 @@
 package com.metalurgica1.metalurgica1.modelo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.metalurgica1.metalurgica1.modelo.enums.EEstadoActividad;
 import com.metalurgica1.metalurgica1.modelo.enums.EProceso;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -41,6 +43,10 @@ public class Registro {
             inverseJoinColumns = @JoinColumn(name = "empleado_id")
     )
     private List<Empleado> participantes = new ArrayList<>();
+
+    @Enumerated(EnumType.STRING)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private EEstadoActividad eEstadoActividad;
 
     @Column(nullable = false)
     private Boolean publicado = false;

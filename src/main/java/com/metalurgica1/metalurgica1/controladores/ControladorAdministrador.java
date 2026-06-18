@@ -64,4 +64,18 @@ public class ControladorAdministrador {
             return ResponseEntity.notFound().build();
         }
     }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> eliminarAdministrador(@PathVariable Long id)
+    {
+        try
+        {
+            administradorService.eliminarAdministrador(id);
+            return ResponseEntity.ok("se elimino el administrador con exito");
+        } catch (AdministradorNoEncontradoException e) {
+            log.error("",e);
+            return ResponseEntity.notFound().build();
+        }
+
+
+    }
 }

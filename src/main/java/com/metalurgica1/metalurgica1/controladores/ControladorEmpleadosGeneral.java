@@ -17,7 +17,6 @@ import java.util.Optional;
 @Slf4j
 @RestController
 @RequestMapping("/api/empleadosGeneral")
-@CrossOrigin(origins = ("*"))
 @Validated
 public class ControladorEmpleadosGeneral {
 

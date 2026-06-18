@@ -7,7 +7,6 @@ public record CrearAdministradorDTO(
         @Email(message = "No es un email valido")
         String email,
 
-        @NotBlank(message = "La contraseña puede estar en blanco")
         String contrasenia,
 
         @NotBlank(message = "El email no puede estar en blanco")

@@ -1,6 +1,8 @@
 package com.metalurgica1.metalurgica1.modelo;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.metalurgica1.metalurgica1.modelo.enums.EEstadoActividad;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,5 +19,7 @@ public abstract class Empleado_modelo extends Persona{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long legajo;
 
-
+    @Enumerated(EnumType.STRING)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private EEstadoActividad eEstadoActividad;
 }

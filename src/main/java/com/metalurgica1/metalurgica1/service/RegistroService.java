@@ -7,6 +7,7 @@ import com.metalurgica1.metalurgica1.modelo.Cliente;
 import com.metalurgica1.metalurgica1.modelo.Empleado;
 import com.metalurgica1.metalurgica1.modelo.Registro;
 import com.metalurgica1.metalurgica1.modelo.Tarea;
+import com.metalurgica1.metalurgica1.modelo.enums.EEstadoActividad;
 import com.metalurgica1.metalurgica1.modelo.enums.EProceso;
 import com.metalurgica1.metalurgica1.repositorio.IClienteRepository;
 import com.metalurgica1.metalurgica1.repositorio.IRegistroRepository;
@@ -43,6 +44,7 @@ public class  RegistroService {
         return iRegistroRepository.
                 findAll()
                 .stream()
+                .filter(p-> p.getEEstadoActividad() == EEstadoActividad.ACTIVO)
                 .map(r -> new RegistroDTO(
                         r.getId(),
                         r.getTitulo(),
@@ -178,10 +180,9 @@ public class  RegistroService {
         return convertirADTO(registro);
     }
 
-    public void eliminarRegistro(Long id){
-        if(!iRegistroRepository.existsById(id)){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Registro no encontrado");
-        }
-        iRegistroRepository.deleteById(id);
+    public void eliminarRegistro(Long id) throws RegistroNoEncontradoException {
+       Registro r = iRegistroRepository.findById(id).orElseThrow(()-> new RegistroNoEncontradoException(id));
+       r.setEEstadoActividad(EEstadoActividad.CANCELADO);
+       iRegistroRepository.save(r);
     }
 }

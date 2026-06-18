@@ -4,6 +4,7 @@ import com.metalurgica1.metalurgica1.DTO.CrearTareaDTO;
 import com.metalurgica1.metalurgica1.DTO.TareaDTO;
 import com.metalurgica1.metalurgica1.modelo.Tarea;
 import com.metalurgica1.metalurgica1.modelo.enums.ECategorias;
+import com.metalurgica1.metalurgica1.modelo.enums.EEstadoActividad;
 import com.metalurgica1.metalurgica1.repositorio.ITareaRepository;
 import com.metalurgica1.metalurgica1.service.Excepciones.TareaNoEncontradaExeption;
 import org.springframework.http.HttpStatus;
@@ -33,6 +34,7 @@ public class TareaService {
         return iTareaRepository
                 .findAll()
                 .stream()
+                .filter(p-> p.getEEstadoActividad() == EEstadoActividad.ACTIVO)
                 .map(t -> new TareaDTO(t.getCategorias(),
                         t.getFechaDeEntrega(),
                         t.getFechaDeRegistro(),
@@ -111,12 +113,10 @@ public class TareaService {
                 nuevaTarea.getDescripcionGeneral());
     }
 
-    public void eliminarTarea(Long id){
-        if (!iTareaRepository.existsById(id)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tarea no encontrada");
-        }
-
-        iTareaRepository.deleteById(id);
+    public void eliminarTarea(Long id) throws TareaNoEncontradaExeption {
+        Tarea t = iTareaRepository.findById(id).orElseThrow(()-> new TareaNoEncontradaExeption(id));
+        t.setEEstadoActividad(EEstadoActividad.CANCELADO);
+        iTareaRepository.save(t);
     }
 
 }

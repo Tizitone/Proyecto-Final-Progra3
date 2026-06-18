@@ -2,6 +2,7 @@ package com.metalurgica1.metalurgica1.service;
 
 import com.metalurgica1.metalurgica1.DTO.*;
 import com.metalurgica1.metalurgica1.modelo.Empleado_Gerente;
+import com.metalurgica1.metalurgica1.modelo.enums.EEstadoActividad;
 import com.metalurgica1.metalurgica1.repositorio.*;
 import com.metalurgica1.metalurgica1.service.Excepciones.EmpleadoNoEncontradoException;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,7 @@ public class GerenteService extends MetodosGestion {
     public List<GerenteDTO> listarTodosGerentes() {
         return iGerenteRepository.findAll()
                 .stream()
+                .filter(p-> p.getEEstadoActividad() == EEstadoActividad.ACTIVO)
                 .map(this::convertirADTOResponse)
                 .toList();
     }
@@ -31,34 +33,55 @@ public class GerenteService extends MetodosGestion {
     public GerenteDTO listarGerente(Long id) throws EmpleadoNoEncontradoException {
         Empleado_Gerente gerente = iGerenteRepository.findById(id)
                 .orElseThrow(() -> new EmpleadoNoEncontradoException("Empleado no encontrado."));
+        if(gerente.getEEstadoActividad() == EEstadoActividad.CANCELADO)
+        {
+            throw new EmpleadoNoEncontradoException("Empleado no encontrado");
+        }
 
         return convertirADTOResponse(gerente);
     }
 
-    public GerenteDTO buscarGerentePorMail(String email){
+    public GerenteDTO buscarGerentePorMail(String email) throws EmpleadoNoEncontradoException {
         Empleado_Gerente gerente = iGerenteRepository.findByEmail(email);
+        if(gerente.getEEstadoActividad() == EEstadoActividad.CANCELADO)
+        {
+            throw new EmpleadoNoEncontradoException("Empleado no encontrado");
+        }
         return convertirADTOResponse(gerente);
     }
 
     public List<GerenteDTO> buscarGerentePorNombre(String nombre){
         return iGerenteRepository.findByNombre(nombre)
                 .stream()
+                .filter(p->p.getEEstadoActividad() == EEstadoActividad.ACTIVO)
                 .map(this::convertirADTOResponse)
                 .collect(Collectors.toList());
     }
 
-    public GerenteDTO buscarGerentePorTelefono(String telefono){
+    public GerenteDTO buscarGerentePorTelefono(String telefono) throws EmpleadoNoEncontradoException {
         Empleado_Gerente gerente = iGerenteRepository.findByTelefono(telefono);
+        if(gerente.getEEstadoActividad() == EEstadoActividad.CANCELADO)
+        {
+            throw new EmpleadoNoEncontradoException("Gerente no encontrado");
+        }
         return convertirADTOResponse(gerente);
     }
 
-    public GerenteDTO buscarGerentePorDni(Long dni){
+    public GerenteDTO buscarGerentePorDni(Long dni) throws EmpleadoNoEncontradoException {
         Empleado_Gerente gerente = iGerenteRepository.findByDni(dni);
+        if(gerente.getEEstadoActividad() == EEstadoActividad.CANCELADO)
+        {
+            throw new EmpleadoNoEncontradoException("Gerente no encontrado");
+        }
         return convertirADTOResponse(gerente);
     }
 
-    public GerenteDTO buscarGerentePorLegajo(Long legajo){
+    public GerenteDTO buscarGerentePorLegajo(Long legajo) throws EmpleadoNoEncontradoException {
         Empleado_Gerente gerente = iGerenteRepository.findByLegajo(legajo);
+        if(gerente.getEEstadoActividad() == EEstadoActividad.CANCELADO)
+        {
+            throw new EmpleadoNoEncontradoException("Gerente no encontrado");
+        }
         return convertirADTOResponse(gerente);
     }
 
@@ -69,6 +92,7 @@ public class GerenteService extends MetodosGestion {
         gerente.setNombre(dto.nombre());
         gerente.setTelefono(dto.telefono());
         gerente.setDni(dto.dni());
+        gerente.setEEstadoActividad(EEstadoActividad.ACTIVO);
 
         return convertirADTORequest(iGerenteRepository.save(gerente));
     }
@@ -86,11 +110,10 @@ public class GerenteService extends MetodosGestion {
         return convertirADTORequest(iGerenteRepository.save(gerente));
     }
 
-    public void eliminarEmpleado(Long id) throws EmpleadoNoEncontradoException {
-        if(!iGerenteRepository.existsById(id))
-            throw new EmpleadoNoEncontradoException("Gerente a eliminar no encontrado.");
-
-        iGerenteRepository.deleteById(id);
+    public void eliminarGerente(Long id) throws EmpleadoNoEncontradoException {
+        Empleado_Gerente e = iGerenteRepository.findById(id).orElseThrow(()-> new EmpleadoNoEncontradoException(id));
+        e.setEEstadoActividad(EEstadoActividad.CANCELADO);
+        iGerenteRepository.save(e);
     }
 
     private GerenteDTO convertirADTOResponse(Empleado_Gerente gerente) {

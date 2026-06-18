@@ -5,7 +5,7 @@ public class AdministradorNoEncontradoException extends Exception {
         super(message);
     }
 
-    public AdministradorNoEncontradoException() {
-        super("El administrador no se encontro");
+    public AdministradorNoEncontradoException(Long id) {
+        super("El administrador com id:"+ id+" no se encontro");
     }
 }

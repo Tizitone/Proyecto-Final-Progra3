@@ -88,7 +88,12 @@ public class ControladorRegistro {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminarRegistro(@PathVariable Long id){
-        registroService.eliminarRegistro(id);
-        return ResponseEntity.ok("Registro eliminado correctamente");
+        try {
+            registroService.eliminarRegistro(id);
+            return ResponseEntity.ok("Registro eliminado correctamente");
+        } catch (RegistroNoEncontradoException e) {
+            log.error("",e);
+        }
+        return ResponseEntity.notFound().build();
     }
 }

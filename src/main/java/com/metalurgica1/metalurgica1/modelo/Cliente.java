@@ -1,6 +1,8 @@
 package com.metalurgica1.metalurgica1.modelo;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.metalurgica1.metalurgica1.modelo.enums.EEstadoActividad;
 import com.metalurgica1.metalurgica1.modelo.enums.EEtiquetaDeAcceso;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -33,4 +35,8 @@ public class Cliente extends Persona{
     public EEtiquetaDeAcceso getEtiquetaDeAcceso() {
         return EEtiquetaDeAcceso.CLIENTE;
     }
+
+    @Enumerated(EnumType.STRING)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private EEstadoActividad eEstadoActividad;
 }

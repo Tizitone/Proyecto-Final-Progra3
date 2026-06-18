@@ -6,8 +6,6 @@ import com.metalurgica1.metalurgica1.service.Excepciones.EmpleadoNoEncontradoExc
 import com.metalurgica1.metalurgica1.service.GerenteService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +15,6 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/api/gerentes")
-@CrossOrigin(origins = "*")
     public class ControladorGerente {
     private final GerenteService gerenteService;
 
@@ -45,7 +42,13 @@ import java.util.List;
 
     @GetMapping("/buscar/email")
     public ResponseEntity<GerenteDTO> buscarPorEmail(@RequestParam String email){
-        return ResponseEntity.ok(gerenteService.buscarGerentePorMail(email));
+        try {
+            return ResponseEntity.ok(gerenteService.buscarGerentePorMail(email));
+        } catch (EmpleadoNoEncontradoException e) {
+            log.error("",e);
+            return ResponseEntity.notFound().build();
+        }
+
     }
 
     @GetMapping("/buscar/nombre")
@@ -55,17 +58,32 @@ import java.util.List;
 
     @GetMapping("/buscar/telefono")
     public ResponseEntity<GerenteDTO> buscarPorTelefono(@RequestParam String telefono){
-        return ResponseEntity.ok(gerenteService.buscarGerentePorTelefono(telefono));
+        try{
+            return ResponseEntity.ok(gerenteService.buscarGerentePorTelefono(telefono));
+        } catch (EmpleadoNoEncontradoException e) {
+            log.error("",e);
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/buscar/dni")
     public ResponseEntity<GerenteDTO> buscarPorDni(@RequestParam Long dni){
-        return ResponseEntity.ok(gerenteService.buscarGerentePorDni(dni));
+        try{
+            return ResponseEntity.ok(gerenteService.buscarGerentePorDni(dni));
+        } catch (EmpleadoNoEncontradoException e) {
+            log.error("",e);
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/buscar/legajo")
     public ResponseEntity<GerenteDTO> buscarPorLegajo(@RequestParam Long legajo){
-        return ResponseEntity.ok(gerenteService.buscarGerentePorLegajo(legajo));
+        try{
+            return ResponseEntity.ok(gerenteService.buscarGerentePorLegajo(legajo));
+        } catch (EmpleadoNoEncontradoException e) {
+            log.error("",e);
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping
@@ -89,7 +107,7 @@ import java.util.List;
     @DeleteMapping("/{id}")
     public ResponseEntity<GerenteDTO> eliminarEmpleado(@PathVariable Long id){
         try {
-            gerenteService.eliminarEmpleado(id);
+            gerenteService.eliminarGerente(id);
             return ResponseEntity.noContent().build();
         } catch (EmpleadoNoEncontradoException e) {
             log.error("",e);

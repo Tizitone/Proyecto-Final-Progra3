@@ -5,6 +5,7 @@ import com.metalurgica1.metalurgica1.modelo.Cliente;
 import com.metalurgica1.metalurgica1.modelo.Empleado;
 import com.metalurgica1.metalurgica1.modelo.Registro;
 import com.metalurgica1.metalurgica1.modelo.Tarea;
+import com.metalurgica1.metalurgica1.modelo.enums.EEstadoActividad;
 import com.metalurgica1.metalurgica1.modelo.enums.EEtiquetaDeAcceso;
 import com.metalurgica1.metalurgica1.modelo.interfaces.IGestion;
 import com.metalurgica1.metalurgica1.repositorio.IClienteRepository;
@@ -39,6 +40,7 @@ public abstract class MetodosGestion implements IGestion {
         return iClienteRepository
                 .findAll()
                 .stream()
+                .filter(p-> p.getEEstadoActividad() == EEstadoActividad.ACTIVO)
                 .map(p-> new ClienteDTO(p.getEmail(),p.getNombre(),p.getTelefono(),p.getDni(),p.getIdCliente()))
                 .toList();
     }
@@ -47,7 +49,7 @@ public abstract class MetodosGestion implements IGestion {
     public List<EmpleadoModeloDTO> visualizarEmpleados() {
         return iEmpleadoRepository.findAll().stream()
                 .filter(p-> p.getEtiquetaDeAcceso().equals(EEtiquetaDeAcceso.EMPLEADO))
-                .map(p-> new EmpleadoModeloDTO(p.getLegajo(),p.getEmail(),p.getNombre(),p.getTelefono(),p.getDni()))
+                .map(p-> new EmpleadoModeloDTO(p.getLegajo(),p.getEmail(),p.getNombre(),p.getTelefono(),p.getDni(),p.getEtiquetaDeAcceso()))
                 .toList();
     }
 
@@ -56,6 +58,7 @@ public abstract class MetodosGestion implements IGestion {
         return iTareaRepository
                 .findAll()
                 .stream()
+                .filter(p-> p.getEEstadoActividad() == EEstadoActividad.ACTIVO)
                 .map(p-> new TareaDTO(p.getCategorias(),p.getFechaDeEntrega(),p.getFechaDeRegistro(),p.getDescripcionMaterial(),p.getDescripcionGeneral()))
                 .toList();
     }
@@ -63,6 +66,7 @@ public abstract class MetodosGestion implements IGestion {
     @Override
     public List<RegistroDTO> visualizarRegistros() {
         return iRegistroRepository.findAll().stream()
+                .filter(p-> p.getEEstadoActividad() == EEstadoActividad.ACTIVO)
                 .map(p-> new RegistroDTO(p.getId(),p.getTitulo(),p.getTarea().getId(),p.getCliente().getIdCliente(),p.getEProceso(),p.getParticipantes(),p.getPublicado()))
                 .toList();
     }

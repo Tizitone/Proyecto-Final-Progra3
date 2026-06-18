@@ -3,6 +3,7 @@ package com.metalurgica1.metalurgica1.service;
 import com.metalurgica1.metalurgica1.DTO.ClienteDTO;
 import com.metalurgica1.metalurgica1.DTO.CrearClienteDTO;
 import com.metalurgica1.metalurgica1.modelo.Cliente;
+import com.metalurgica1.metalurgica1.modelo.enums.EEstadoActividad;
 import com.metalurgica1.metalurgica1.repositorio.IClienteRepository;
 import com.metalurgica1.metalurgica1.service.Excepciones.ClienteNoEncontradoException;
 import jakarta.transaction.Transactional;
@@ -25,6 +26,7 @@ public class ClienteService {
     public List<ClienteDTO> listarTodosClientes() {
         return iClienteRepository.findAll()
                 .stream()
+                .filter(p-> p.getEEstadoActividad() == EEstadoActividad.ACTIVO)
                 .map(this::convertirADTOResponse)
                 .toList();
     }
@@ -44,6 +46,7 @@ public class ClienteService {
     public List<ClienteDTO> buscarClientePorNombre(String nombre){
         return iClienteRepository.findByNombre(nombre)
                 .stream()
+                .filter(p->p.getEEstadoActividad() == EEstadoActividad.ACTIVO)
                 .map(this::convertirADTOResponse)
                 .collect(Collectors.toList());
     }
@@ -88,7 +91,8 @@ public class ClienteService {
 
     public void eliminarCliente(Long id) throws ClienteNoEncontradoException {
         Cliente c = iClienteRepository.findById(id).orElseThrow(()-> new ClienteNoEncontradoException("no se pudo eliminar cliente"));
-        iClienteRepository.delete(c);
+        c.setEEstadoActividad(EEstadoActividad.CANCELADO);
+        iClienteRepository.save(c);
     }
 
     private ClienteDTO convertirADTOResponse(Cliente cliente) {

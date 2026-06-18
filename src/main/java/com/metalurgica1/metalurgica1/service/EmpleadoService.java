@@ -2,6 +2,7 @@ package com.metalurgica1.metalurgica1.service;
 
 import com.metalurgica1.metalurgica1.DTO.EmpleadoDTO;
 import com.metalurgica1.metalurgica1.modelo.Empleado;
+import com.metalurgica1.metalurgica1.modelo.enums.EEstadoActividad;
 import com.metalurgica1.metalurgica1.repositorio.IEmpleadoRepository;
 import com.metalurgica1.metalurgica1.DTO.CrearEmpleadoDTO;
 import com.metalurgica1.metalurgica1.service.Excepciones.EmpleadoNoEncontradoException;
@@ -24,6 +25,7 @@ public class EmpleadoService {
     public List<EmpleadoDTO> listarTodosEmpleados() {
         return iEmpleadoRepository.findAll()
                 .stream()
+                .filter(p-> p.getEEstadoActividad() == EEstadoActividad.ACTIVO)
                 .map(this::convertirADTOResponse)
                 .toList();
     }
@@ -43,6 +45,7 @@ public class EmpleadoService {
     public List<EmpleadoDTO> buscarEmpleadoPorNombre(String nombre){
         return iEmpleadoRepository.findByNombre(nombre)
                 .stream()
+                .filter(p->p.getEEstadoActividad() == EEstadoActividad.ACTIVO)
                 .map(this::convertirADTOResponse)
                 .collect(Collectors.toList());
     }
@@ -65,10 +68,11 @@ public class EmpleadoService {
     public CrearEmpleadoDTO crearEmpleado(CrearEmpleadoDTO dto) {
         Empleado empleado = new Empleado();
         empleado.setEmail(dto.email());
-        empleado.setContrasenia(dto.contrasenia());
+        empleado.setContrasenia(dto.dni().toString());
         empleado.setNombre(dto.nombre());
         empleado.setTelefono(dto.telefono());
         empleado.setDni(dto.dni());
+        empleado.setEEstadoActividad(EEstadoActividad.ACTIVO);
         empleado = iEmpleadoRepository.save(empleado);
 
         return convertirADTORequest(empleado);
@@ -91,8 +95,8 @@ public class EmpleadoService {
 
     public void eliminarEmpleado(Long id) throws EmpleadoNoEncontradoException {
         Empleado e = iEmpleadoRepository.findById(id).orElseThrow(()-> new EmpleadoNoEncontradoException("Empleado no encontrado para eliminar"));
-
-        iEmpleadoRepository.delete(e);
+        e.setEEstadoActividad(EEstadoActividad.CANCELADO);
+        iEmpleadoRepository.save(e);
     }
 
     private EmpleadoDTO convertirADTOResponse(Empleado empleado) {

@@ -2,6 +2,7 @@ package com.metalurgica1.metalurgica1.modelo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.metalurgica1.metalurgica1.modelo.enums.ECategorias;
+import com.metalurgica1.metalurgica1.modelo.enums.EEstadoActividad;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -37,4 +38,7 @@ public class Tarea {
     @JsonProperty("descripcion_general")
     private String descripcionGeneral;
 
+    @Enumerated(EnumType.STRING)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private EEstadoActividad eEstadoActividad;
 }

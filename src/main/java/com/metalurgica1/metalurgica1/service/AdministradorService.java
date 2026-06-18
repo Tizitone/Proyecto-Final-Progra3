@@ -3,6 +3,7 @@ package com.metalurgica1.metalurgica1.service;
 import com.metalurgica1.metalurgica1.DTO.AdministradorDTO;
 import com.metalurgica1.metalurgica1.DTO.CrearAdministradorDTO;
 import com.metalurgica1.metalurgica1.modelo.Administrador;
+import com.metalurgica1.metalurgica1.modelo.enums.EEstadoActividad;
 import com.metalurgica1.metalurgica1.repositorio.IAdministradorRepository;
 import com.metalurgica1.metalurgica1.service.Excepciones.AdministradorNoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +23,11 @@ public class AdministradorService extends MetodosGestion{
     }
 
     public List<AdministradorDTO> listarAdministradores() {
-        return iAdministradorRepository.
-                findAll().
-                stream().
-                map(p-> new AdministradorDTO(p.getEmail(),p.getNombre(),p.getTelefono(),p.getDni())).collect(Collectors.toList());
+        return iAdministradorRepository
+                .findAll()
+                .stream()
+                .filter(p-> p.getEEstadoActividad() == EEstadoActividad.ACTIVO)
+                .map(p-> new AdministradorDTO(p.getEmail(),p.getNombre(),p.getTelefono(),p.getDni())).collect(Collectors.toList());
     }
 
     public AdministradorDTO buscarAdministrador(Long id) throws AdministradorNoEncontradoException {
@@ -37,7 +39,7 @@ public class AdministradorService extends MetodosGestion{
         Administrador a = new Administrador();
         a.setNombre(dto.nombre());
         a.setEmail(dto.email());
-        a.setContrasenia(dto.contrasenia());
+        a.setContrasenia(dto.dni().toString());
         a.setTelefono(dto.telefono());
         a.setDni(dto.dni());
 
@@ -66,6 +68,11 @@ public class AdministradorService extends MetodosGestion{
                 nuevoAdministrador.getNombre(),
                 nuevoAdministrador.getTelefono(),
                 nuevoAdministrador.getDni());
+    }
+    public void eliminarAdministrador(Long id) throws AdministradorNoEncontradoException {
+        Administrador a = iAdministradorRepository.findById(id).orElseThrow(()-> new AdministradorNoEncontradoException(id));
+        a.setEEstadoActividad(EEstadoActividad.CANCELADO);
+        iAdministradorRepository.save(a);
     }
 
 }

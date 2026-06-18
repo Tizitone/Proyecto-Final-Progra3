@@ -4,6 +4,7 @@ import com.metalurgica1.metalurgica1.DTO.EmpleadoModeloDTO;
 import com.metalurgica1.metalurgica1.modelo.Empleado;
 import com.metalurgica1.metalurgica1.modelo.Empleado_Gerente;
 import com.metalurgica1.metalurgica1.modelo.Empleado_modelo;
+import com.metalurgica1.metalurgica1.modelo.enums.EEstadoActividad;
 import com.metalurgica1.metalurgica1.repositorio.IEmpleadoRepository;
 import com.metalurgica1.metalurgica1.repositorio.IGerenteRepository;
 import com.metalurgica1.metalurgica1.service.Excepciones.EmpleadoNoEncontradoException;
@@ -34,10 +35,11 @@ public class EmpleadoModeloService {
             List<Empleado_modelo> nuevaLista =
                     Stream
                     .concat(empleados.stream(),gerentes.stream())
+                    .filter(p->p.getEEstadoActividad() == EEstadoActividad.ACTIVO)
                     .sorted(Comparator.comparing(Empleado_modelo::getLegajo))
                     .toList();
 
-            return nuevaLista.stream().map(p-> new EmpleadoModeloDTO(p.getLegajo(),p.getEmail(),p.getNombre(),p.getTelefono(),p.getDni())).toList();
+            return nuevaLista.stream().map(p-> new EmpleadoModeloDTO(p.getLegajo(),p.getEmail(),p.getNombre(),p.getTelefono(),p.getDni(),p.getEtiquetaDeAcceso())).toList();
         }
 
         public Optional<EmpleadoModeloDTO> buscarEmpleadoPorId(Long legajo) throws EmpleadoNoEncontradoException {
