@@ -87,6 +87,7 @@ public class TareaService {
         tarea.setFechaDeEntrega(dto.fechaDeEntrega());
         tarea.setDescripcionMaterial(dto.descripcionMaterial());
         tarea.setDescripcionGeneral(dto.descripcionGeneral());
+        tarea.setEEstadoActividad(EEstadoActividad.ACTIVO);
 
         Tarea nuevaTarea = iTareaRepository.save(tarea);
 

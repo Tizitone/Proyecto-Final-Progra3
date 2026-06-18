@@ -20,7 +20,6 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/api/tareas")
-@CrossOrigin(origins = "*")
 public class ControladorTareas {
 
     private final TareaService tareaService;

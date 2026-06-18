@@ -120,6 +120,8 @@ public class  RegistroService {
 
         registro.setCliente(c);
 
+        registro.setEEstadoActividad(EEstadoActividad.ACTIVO);
+
         if(dto.participantesId() != null && !dto.participantesId().isEmpty()) {
             List<Empleado> participantes = dto.participantesId();
 

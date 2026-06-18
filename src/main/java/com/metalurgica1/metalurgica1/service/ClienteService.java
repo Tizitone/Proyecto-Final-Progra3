@@ -68,6 +68,7 @@ public class ClienteService {
         cliente.setNombre(dto.nombre());
         cliente.setTelefono(dto.telefono());
         cliente.setDni(dto.dni());
+        cliente.setEEstadoActividad(EEstadoActividad.ACTIVO);
 
         cliente = iClienteRepository.save(cliente);
 

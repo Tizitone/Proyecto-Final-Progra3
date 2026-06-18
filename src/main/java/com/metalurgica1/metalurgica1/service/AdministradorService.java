@@ -42,6 +42,7 @@ public class AdministradorService extends MetodosGestion{
         a.setContrasenia(dto.dni().toString());
         a.setTelefono(dto.telefono());
         a.setDni(dto.dni());
+        a.setEEstadoActividad(EEstadoActividad.ACTIVO);
 
         Administrador nuevoAdministrador = iAdministradorRepository.save(a);
 

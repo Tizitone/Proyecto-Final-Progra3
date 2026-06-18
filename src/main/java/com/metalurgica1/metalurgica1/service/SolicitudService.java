@@ -55,17 +55,6 @@ public class SolicitudService {
         s.setDescripcion(dto.descripcion());
         s.setEEstadoActividad(EEstadoActividad.ACTIVO);
 
-        Set<ConstraintViolation<Solicitud>> violations = validator.validate(s);
-
-        for(ConstraintViolation<Solicitud> violation : violations)
-        {
-            log.error(violation.getMessage());
-        }
-        if(!violations.isEmpty())
-        {
-            throw new RuntimeException();
-        }
-
         Solicitud nuevaSolicitud = iSolicitudRepository.save(s);
 
         return convertirADTO(nuevaSolicitud);
