@@ -42,7 +42,7 @@ CREATE TABLE `administradores` (
 
 LOCK TABLES `administradores` WRITE;
 /*!40000 ALTER TABLE `administradores` DISABLE KEYS */;
-INSERT INTO `administradores` VALUES (1,'$2a$12$x8BpxtlXTB2qj7pTr3EdAeuhP682UXYAmg1HcIf/F/TCGgeTd5IOG',12345678,'admin@metalurgica.com','Carlos Rodríguez','1122334455',NULL);
+INSERT INTO `administradores` VALUES (1,'$2a$12$x8BpxtlXTB2qj7pTr3EdAeuhP682UXYAmg1HcIf/F/TCGgeTd5IOG',12345678,'admin@metalurgica.com','Carlos Rodríguez','1122334455','ACTIVO');
 /*!40000 ALTER TABLE `administradores` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -71,7 +71,7 @@ CREATE TABLE `clientes` (
 
 LOCK TABLES `clientes` WRITE;
 /*!40000 ALTER TABLE `clientes` DISABLE KEYS */;
-INSERT INTO `clientes` VALUES (1,'$2a$12$x8BpxtlXTB2qj7pTr3EdAeuhP682UXYAmg1HcIf/F/TCGgeTd5IOG',87654321,'cliente1@gmail.com','Laura Fernández','1155667788',NULL),(2,'$2a$12$x8BpxtlXTB2qj7pTr3EdAeuhP682UXYAmg1HcIf/F/TCGgeTd5IOG',44556677,'cliente2@gmail.com','Miguel Torres','1144778899',NULL);
+INSERT INTO `clientes` VALUES (1,'$2a$12$x8BpxtlXTB2qj7pTr3EdAeuhP682UXYAmg1HcIf/F/TCGgeTd5IOG',87654321,'cliente1@gmail.com','Laura Fernández','1155667788',NULL),(2,'$2a$12$x8BpxtlXTB2qj7pTr3EdAeuhP682UXYAmg1HcIf/F/TCGgeTd5IOG',44556677,'cliente2@gmail.com','Miguel Torres','1144778899','ACTIVO');
 /*!40000 ALTER TABLE `clientes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -127,7 +127,7 @@ CREATE TABLE `empleados` (
 
 LOCK TABLES `empleados` WRITE;
 /*!40000 ALTER TABLE `empleados` DISABLE KEYS */;
-INSERT INTO `empleados` VALUES ('EMPLEADO',1,'$2a$12$x8BpxtlXTB2qj7pTr3EdAeuhP682UXYAmg1HcIf/F/TCGgeTd5IOG',33445566,'empleado1@metalurgica.com','Juan Pérez','1166554433',NULL),('EMPLEADO',2,'$2a$12$x8BpxtlXTB2qj7pTr3EdAeuhP682UXYAmg1HcIf/F/TCGgeTd5IOG',22334455,'empleado2@metalurgica.com','Ana López','1177889900',NULL),('GERENTE',3,'$2a$12$x8BpxtlXTB2qj7pTr3EdAeuhP682UXYAmg1HcIf/F/TCGgeTd5IOG',11223344,'gerente@metalurgica.com','Roberto Sánchez','1199887766',NULL);
+INSERT INTO `empleados` VALUES ('EMPLEADO',1,'$2a$12$x8BpxtlXTB2qj7pTr3EdAeuhP682UXYAmg1HcIf/F/TCGgeTd5IOG',33445566,'empleado1@metalurgica.com','Juan Pérez','1166554433','ACTIVO'),('EMPLEADO',2,'$2a$12$x8BpxtlXTB2qj7pTr3EdAeuhP682UXYAmg1HcIf/F/TCGgeTd5IOG',22334455,'empleado2@metalurgica.com','Ana López','1177889900','ACTIVO'),('GERENTE',3,'$2a$12$x8BpxtlXTB2qj7pTr3EdAeuhP682UXYAmg1HcIf/F/TCGgeTd5IOG',11223344,'gerente@metalurgica.com','Roberto Sánchez','1199887766','ACTIVO');
 /*!40000 ALTER TABLE `empleados` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -186,7 +186,7 @@ CREATE TABLE `registros` (
 
 LOCK TABLES `registros` WRITE;
 /*!40000 ALTER TABLE `registros` DISABLE KEYS */;
-INSERT INTO `registros` VALUES (1,NULL,'ESPERA',_binary '','Construcción Tanques Químicos',1,1),(2,NULL,'ENPROCESO',_binary '','Galpón Industrial',2,2),(3,NULL,'TERMINADO',_binary '\0','Instalación de Ventanas',1,3);
+INSERT INTO `registros` VALUES (1,'ACTIVO','ESPERA',_binary '','Construcción Tanques Químicos',1,1),(2,NULL,'ENPROCESO',_binary '','Galpón Industrial',2,2),(3,NULL,'TERMINADO',_binary '\0','Instalación de Ventanas',1,3);
 /*!40000 ALTER TABLE `registros` ENABLE KEYS */;
 UNLOCK TABLES;
 
