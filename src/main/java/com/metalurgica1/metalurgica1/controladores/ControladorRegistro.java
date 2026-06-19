@@ -27,7 +27,7 @@ public class ControladorRegistro {
         this.registroService = registroService;
     }
 
-    @GetMapping
+    @GetMapping("/buscar/all")
     public List<RegistroDTO> listarRegistros()
     {
         return registroService.listarRegistros();

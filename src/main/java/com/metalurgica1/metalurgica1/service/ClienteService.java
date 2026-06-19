@@ -7,6 +7,8 @@ import com.metalurgica1.metalurgica1.modelo.enums.EEstadoActividad;
 import com.metalurgica1.metalurgica1.repositorio.IClienteRepository;
 import com.metalurgica1.metalurgica1.service.Excepciones.ClienteNoEncontradoException;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +18,9 @@ import java.util.stream.Collectors;
 @Transactional
 
 public class ClienteService {
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     private final IClienteRepository iClienteRepository;
 
@@ -64,7 +69,7 @@ public class ClienteService {
     public CrearClienteDTO crearCliente(CrearClienteDTO dto) {
         Cliente cliente = new Cliente();
         cliente.setEmail(dto.email());
-        cliente.setContrasenia(dto.contrasenia());
+        cliente.setContrasenia(passwordEncoder.encode(dto.contrasenia()));
         cliente.setNombre(dto.nombre());
         cliente.setTelefono(dto.telefono());
         cliente.setDni(dto.dni());
@@ -80,7 +85,7 @@ public class ClienteService {
                 .orElseThrow(() -> new ClienteNoEncontradoException("Cliente no encontrado."));
 
         cliente.setEmail(dto.email());
-        cliente.setContrasenia(dto.contrasenia());
+        cliente.setContrasenia(passwordEncoder.encode(dto.contrasenia()));
         cliente.setNombre(dto.nombre());
         cliente.setTelefono(dto.telefono());
         cliente.setDni(dto.dni());

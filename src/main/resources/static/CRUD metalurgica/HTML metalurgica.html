@@ -6,7 +6,8 @@
         <title>CRUD metalurgico</title>
 
         <link rel="stylesheet" href="style.css">
-
+        <script src="script.js" defer></script>
+        <script src="subfolders.js" defer></script>
     </head>
 
     <body>
@@ -16,7 +17,6 @@
         <p class="introduccion"><br>Nuestra mision es ayudar a nuestros clientes a organizar y publicitar sus productos de metalurgia.<br>por favor, notifique de cualquier error en el sistema.<br><br></p>
         
         <div class="inicio" id="inicio">
-            <label></label>
             <select name="Lista" id="opciones" size="2">
                 <option value="crear">Crear</option>
                 <option value="buscar">Buscar</option>
@@ -27,7 +27,7 @@
         </div>
 
         <div class="caja escondido" id="crear">
-            <h1>Formularios de creación</h1>
+            <h1 class="subtitulo">Formularios de creación</h1>
             
             <div class="titulo-selector">
                 <label for="listaBlock">Formularios:  </label>
@@ -39,7 +39,7 @@
                 </select>
             </div>
             
-            <div class="persona escondido" id="bloquePersona">
+            <div class="form escondido" id="bloquePersona">
                 <h2>Formulario: Personas</h2>           
                     
                 <label for="acceso">Acceso: </label>
@@ -51,7 +51,7 @@
                     <option value="cliente">Cliente</option>
                 </select>
 
-                <div class="empleado escondido" id="bloqueEmpleado">
+                <div class="form escondido" id="bloqueEmpleado">
                     <h4>usted esta por crear un empleado</h4>
                     <form id="formEmpleado">
                         <input type="hidden" id="idEmpleado">
@@ -88,7 +88,7 @@
                     <br> <br>
                 </div>
 
-                <div class="administrador escondido" id="bloqueAdministrador">
+                <div class="form escondido" id="bloqueAdministrador">
                     <h4>usted esta por crear un administrador</h4>
                         <form id="formAdmin">
                         <input type="hidden" id="idAdmin">
@@ -125,7 +125,7 @@
                     <br> <br>
                 </div>
 
-                <div class="gerente escondido" id="bloqueGerente">
+                <div class="form escondido" id="bloqueGerente">
                     <h4>usted esta por crear un gerente</h4>
                         <form id="formGerente">
                         <input type="hidden" id="idGerente">
@@ -162,7 +162,7 @@
                     <br> <br>
                 </div>
 
-                <div class="cliente escondido" id="bloqueCliente">
+                <div class="form escondido" id="bloqueCliente">
                     <h4>usted esta por crear un cliente</h4>
                         <form id="formCliente">
                         <input type="hidden" id="idCliente">
@@ -201,7 +201,7 @@
             </div>
 
 
-            <div class="tarea escondido" id="bloqueTarea">
+            <div class="form escondido" id="bloqueTarea">
                 <h2>Formulario: Tareas</h2>
 
                 <form id="formTarea">
@@ -209,9 +209,9 @@
                     
                     <label for="categoria">Categoria: </label>
                     <select id="categoria" required>
-                        <option value="ligero">Ligero</option>
-                        <option value="mediano">Mediano</option>
-                        <option value="pesado">Pesado</option>
+                        <option value="LIGERO">Ligero</option>
+                        <option value="MEDIANO">Mediano</option>
+                        <option value="PESADO">Pesado</option>
                     </select>
 
                     <br><br>
@@ -219,68 +219,170 @@
                     <input type="hidden" id="FechaRegistro">
                     
                     <label for="FechaEntrega">Ingrese la fecha de entrega</label>
-                    <input type="date" 
+                    <input type="date"
                         id="FechaEntrega" 
                         name="FechaEntrega" 
                         value="2026-05-12"
                         min="2026-01-01"
                         max="2035-12-31" 
-                    />
+                        required
+                        />
 
                     <br> <br>
-
-                    <label for="descripcionMaterial">Ingrese una descripcion del material.</label>
-                    <textarea name="descripcionMaterial" id="descripcionMaterial" rows="10" cols="50"></textarea>
+                
+                    <textarea name="descripcionMaterial" id="descripcionMaterial" placeholder="Ingrese una descripcion del material." rows="10" cols="50" required></textarea>
 
                     <br><br>
 
-                    <label for="descripcionTarea">Ingrese una descripcion de las tareas a realizar.</label>
-                    <textarea name="descripcionTarea" id="descripcionTarea" rows="10" cols="50"></textarea>
+                    <textarea name="descripcionGeneral" id="descripcionGeneral" placeholder="Ingrese una descripcion de las tareas a realizar." rows="10" cols="50" required></textarea>
 
                     <br><br>
 
                     <div class="botones-form">
-                        <button type="submit">Guardar</button>
-                        <button type="button" onclick="cancelarEdicion()">Cancelar edición</button>
+                        <button type="submit" form="formTarea">Guardar</button>
+                        <button type="button" onclick="cancelarEdicionTarea()">Cancelar edición</button>
                     </div>
                 </form>
+
+                <br> <br>
+                <p class="mensaje" id="tareaMensaje"></p>
+                <br> <br>
             </div> 
 
-            <div class="registro escondido" id="bloqueRegistro">
+            <div class="form escondido" id="bloqueRegistro">
                 <h2>Formulario: Registros</h2>
+                <form id="formRegistro">
+                    <input type="hidden" id="idRegistro">
 
-                <div class="botones-form">
-                    <button type="submit">Guardar</button>
-                    <button type="button" onclick="cancelarEdicion()">Cancelar edición</button>
-                </div>
+                    <label for="tituloRegistro">Titulo: </label>
+                    <input type="text" id="tituloRegistro" required />
+                    
+                    <br> <br>
+
+                    <label for="idTarea">Identificador Tarea: </label>
+                    <input type="number" id="idTareaRegistro" required />
+
+                    <br> <br>
+                    
+                    <label for="idCliente">Identificador Cliente: </label>
+                    <input type="number" id="idClienteRegistro" required />
+
+                    <br> <br>
+
+                    <label for="proceso">Proceso: </label>
+                    <select id="proceso" required>
+                        <option value="ESPERA">Espera</option>
+                        <option value="ENPROCESO">En proceso</option>
+                        <option value="TERMINADO">Terminado</option>
+                    </select>
+
+                    <br> <br>
+                    
+                    <label for="publicado">publicado: </label>
+                    <input type="checkbox" name="publicado" id="publicado">
+
+                    <br> <br>
+
+                    <textarea name="Participantes" id="Participantes" placeholder="Participantes, ingresar solo un Identificador por fila." rows="5" cols="30" required></textarea>
+
+                    <br> <br>
+
+                    <div class="botones-form">
+                        <button type="submit">Guardar</button>
+                        <button type="button" onclick="cancelarEdicionRegistro()">Cancelar edición</button>
+                    </div>
+                </form>
+
+                <br> <br>
+                <p class="mensaje" id="registroMensaje"></p>
+                <br> <br>
+                
             </div>
         </div>
 
         <div class="caja escondido" id="buscar">
-            <h1>Busqueda de registros</h1>
-        </div>
+            <h1 class="subtitulo"> Busqueda de registros </h1>
+            <br><br>
 
-        <div class="caja escondido" id="ver">
-            <h1>Vista de Tablas</h1>
-            <h2>Tabla empleados</h2>
-            <table>
+            <form class="form busqueda" id="formBusqueda">
+                <label for="tipoBusqueda">¿Qué esta buscando?</label>
+                <select name="tipoBusqueda" id="tipoBusqueda" size="2">
+                    <option value="empleado">Empleado</option>
+                    <option value="admin">Administrador</option>
+                    <option value="cliente">Cliente</option>
+                    <option value="tarea">Tarea</option>
+                    <option value="registro">Registro</option>
+                </select>
 
+                <br><br>
+                
+                <label for="idBuscado">Identificador</label>
+                <input type="number" required id="idBuscado" />
+
+                <div>
+                    <button type="submit">Buscar</button>
+                </div>
+            </form>
+
+            <div class="EmpleadoEncontrado escondido" id="tablaBusquedaEmpleado">
+                <h3>- Empleado Encontrado</h3>
+                <table id="tablaEmpleadoBusqueda">
+                    <thead>
+                        <tr>
+                            <th>Legajo</th>
+                            <th>Email</th>
+                            <th>Contraseña</th>
+                            <th>Nombre</th>
+                            <th>Telefono</th>
+                            <th>Acceso</th>
+                            <th>DNI</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="AdminEncontrado escondido" id="tablaBusquedaAdmin">
+                <h3>- Administrador Encontrado</h3>
+                <table id="tablaAdminBusqueda">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>ID Admin</th>
                         <th>Email</th>
+                        <th>Contraseña</th>
                         <th>Nombre</th>
                         <th>Telefono</th>
+                        <th>Acceso</th>
                         <th>DNI</th>
                     </tr>
                 </thead>
-                <tbody id="tablaPersonas"></tbody>
+                <tbody>
+                </tbody>
             </table>
+            </div>
 
-            <br><br>
+            <div class="clienteEncontrado escondido" id="clienteEncontrado">
+                <h3>- Cliente Encontrado</h3>
+                <table id="tablaClienteBusqueda">
+                <thead>
+                    <tr>
+                        <th>ID Cliente</th>
+                        <th>Email</th>
+                        <th>Contraseña</th>
+                        <th>Nombre</th>
+                        <th>Telefono</th>
+                        <th>Acceso</th>
+                        <th>DNI</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            </div>
 
-            <h2>Tabla tareas</h2>
-            <table>
+            <div class="tareaEncontrada escondido" id="tareaEncontrada">
+                <h3>- Tarea Encontrada -</h3>
+                <table id="tablaTareaBusqueda">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -291,13 +393,13 @@
                         <th>DescripcionTarea</th>
                     </tr>
                 </thead>
-                <tbody id="tablaTarea"></tbody>
+                <tbody></tbody>
             </table>
+            </div>
 
-            <br><br>
-
-            <h2>Tabla registros</h2>
-            <table>
+            <div class="registroEncontrado escondido" id="registroEncontrado">
+                <h3>- Registro Encontrado -</h3>
+                <table id="tablaRegistroBusqueda">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -306,12 +408,111 @@
                         <th>ClienteID</th>
                         <th>Contacto</th>
                         <th>Estado</th>
+                        <th>Monto</th>
                         <th>Participantes</th>
                     </tr>
                 </thead>
-                <tbody id="tablaRegistro"></tbody>
+                <tbody></tbody>
+            </table>
+            <br> <br>
+            <p class="mensaje busqueda" id="busquedaMensaje"></p>
+            <br> <br>
+            </div>            
+        </div>
+
+        <div class="caja escondido" id="ver">
+            <h1 class="subtitulo"> Vista de Tablas </h1>
+            
+            <button class="btn-refresh" onclick="eventosTablas()" id="refrescarTablas">Recargar Tablas</button>
+
+            <h2>- Tabla Personas</h2>
+            <table id="tablaPersonas">
+                <thead>
+                    <tr>
+                        <th>Legajo</th>
+                        <th>Email</th>
+                        <th>Contraseña</th>
+                        <th>Nombre</th>
+                        <th>Telefono</th>
+                        <th>Acceso</th>
+                        <th>DNI</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+
+            <br><br>
+
+            <h2>- Tabla Clientes</h2>
+            <table id="tablaClientes">
+                <thead>
+                    <tr>
+                        <th>ID Cliente</th>
+                        <th>Email</th>
+                        <th>Contraseña</th>
+                        <th>Nombre</th>
+                        <th>Telefono</th>
+                        <th>Acceso</th>
+                        <th>DNI</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+
+            <br><br>
+
+            <h2>- Tabla Administradores</h2>
+            <table id="tablaAdmins">
+                <thead>
+                    <tr>
+                        <th>ID Admin</th>
+                        <th>Email</th>
+                        <th>Contraseña</th>
+                        <th>Nombre</th>
+                        <th>Telefono</th>
+                        <th>Acceso</th>
+                        <th>DNI</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+
+            <br><br>
+
+            <h2>- Tabla Tareas</h2>
+            <table id="tablaTareas">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Categoria</th>
+                        <th>FechaRegistro</th>
+                        <th>FechaEntrega</th>
+                        <th>DescripcionMaterial</th>
+                        <th>DescripcionTarea</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+
+            <br><br>
+
+            <table id="tablaRegistro">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Titulo</th>
+                        <th>TareaID</th>
+                        <th>ClienteID</th>
+                        <th>Publicado</th>
+                        <th>Proceso</th>
+                        <th>Participantes</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
             </table>
         </div>
-        <script src="script.js" defer></script>
     </body>
 </html>
