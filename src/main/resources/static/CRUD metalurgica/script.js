@@ -3,7 +3,7 @@ if (!token) {
     window.location.replace('/IngresoUsuario/userSecurity.html');
 }
 
-const empleadoApiUrl = "http://localhost:8080/api/empleados";
+const empleadoApiUrl = "/api/empleados";
 
 const formEmpleado = document.getElementById("formEmpleado");
 const idEmpleadoInput = document.getElementById("idEmpleado");
@@ -50,7 +50,7 @@ function cancelarEdicionEmpleado() {
     empleadoMensaje.textContent = "Edición cancelada";
 }
 
-const gerenteApiUrl = "http://localhost:8080/api/gerentes";
+const gerenteApiUrl = "/api/gerentes";
 
 const formGerente = document.getElementById("formGerente");
 const idGerenteInput = document.getElementById("idGerente");
@@ -95,7 +95,7 @@ function cancelarEdicionGerente() {
     gerenteMensaje.textContent = "Edición cancelada";
 }
 
-const adminApiUrl = "http://localhost:8080/api/administradores";
+const adminApiUrl = "/api/administradores";
 
 const formAdmin = document.getElementById("formAdmin");
 const idAdminInput = document.getElementById("idAdmin");
@@ -142,7 +142,7 @@ function cancelarEdicionAdmin() {
     adminMensaje.textContent = "Edición cancelada";
 }
 
-const clienteApiUrl = "http://localhost:8080/api/clientes";
+const clienteApiUrl = "/api/clientes";
 
 const formCliente = document.getElementById("formCliente");
 const idClienteInput = document.getElementById("idCliente");
@@ -189,7 +189,7 @@ function cancelarEdicionCliente() {
     clienteMensaje.textContent = "Edición cancelada";
 }
 
-const tareaApiUrl = "http://localhost:8080/api/tareas";
+const tareaApiUrl = "/api/tareas";
 
 const formTarea = document.getElementById("formTarea");
 const idTareaInput = document.getElementById("idTarea");
@@ -236,7 +236,7 @@ function cancelarEdicionTarea() {
     tareaMensaje.textContent = "Edición cancelada";
 }
 
-const registroApiUrl = "http://localhost:8080/api/registros";
+const registroApiUrl = "/api/registros";
 
 const formRegistro = document.getElementById("formRegistro");
 const tituloRegistroInput = document.getElementById("tituloRegistro");
@@ -289,7 +289,7 @@ async function buscarEmpleado(idEmpleado){
     const tablaBusquedaEmpleado = document.querySelector('#tablaEmpleadoBusqueda tbody');
     const mensajeBusqueda = document.getElementById("busquedaMensaje");
     
-    await fetch(`http://localhost:8080/api/empleados/${idEmpleado.value}`)
+    await fetch(`/api/empleados/${idEmpleado.value}`)
         
         .then(respuesta => {
             if(respuesta.status === 404){
@@ -326,7 +326,7 @@ async function buscarAdmin(idAdmin){
     const tablaBusquedaAdmin = document.querySelector('#tablaAdminBusqueda tbody');
     const mensajeBusqueda = document.getElementById("busquedaMensaje");
     
-    await fetch(`http://localhost:8080/api/administradores/${idAdmin.value}`)
+    await fetch(`/api/administradores/${idAdmin.value}`)
         
         .then(respuesta => {
             if(respuesta.status === 404){
@@ -400,7 +400,7 @@ async function buscarTarea(idTarea){
     const tablaBusquedaTarea = document.querySelector('#tablaTareaBusqueda tbody');
     const mensajeBusqueda = document.getElementById("busquedaMensaje");
     
-    await fetch(`http://localhost:8080/api/tareas/${idTarea.value}`)
+    await fetch(`/api/tareas/${idTarea.value}`)
         
         .then(respuesta => {
             if(respuesta.status === 404){
@@ -436,7 +436,7 @@ async function buscarRegistro(idRegistro){
     const tablaBusquedaRegistro = document.querySelector('#tablaRegistroBusqueda tbody');
     const mensajeBusqueda = document.getElementById("busquedaMensaje");
     
-    await fetch(`http://localhost:8080/api/registros/${idRegistro.value}`)
+    await fetch(`/api/registros/${idRegistro.value}`)
         
         .then(respuesta => {
             if(respuesta.status === 404){
@@ -503,7 +503,7 @@ formBuscar.addEventListener("submit", async function (e) {
 async function cargarEmpleados() { 
     const tbodyPersonas = document.querySelector('#tablaPersonas tbody');
 
-    await fetch("http://localhost:8080/api/empleados/buscar/all",
+    await fetch("/api/empleados/buscar/all",
         {method: "GET",
 headers: {
         "Authorization": `Bearer ${token}`,
@@ -551,7 +551,12 @@ headers: {
             </tr>`;
     });
 
-    await fetch(gerenteApiUrl)
+    await fetch("/api/gerentes/buscar/all",
+        {method: "GET",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json"
+            }})
     .then(Response => {
         if(!Response.ok) {
             throw new Error('Error al obtener empleados.');
@@ -599,7 +604,12 @@ headers: {
 async function cargarAdmins() { 
     const tbodyAdmins = document.querySelector('#tablaAdmins tbody');
 
-    await fetch(adminApiUrl)
+    await fetch("/api/administradores",
+        {method: "GET",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json"
+            }})
     .then(Response => {
         if(!Response.ok) {
             throw new Error('Error al obtener administradores.');
@@ -648,7 +658,12 @@ async function cargarAdmins() {
 async function cargarClientes() { 
     const tbodyClientes = document.querySelector('#tablaClientes tbody');
 
-    await fetch(clienteApiUrl)
+    await fetch("/api/clientes/buscar/all",
+        {method: "GET",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json"
+            }})
     .then(Response => {
         if(!Response.ok) {
             throw new Error('Error al obtener clientes.');
@@ -697,7 +712,12 @@ async function cargarClientes() {
 async function cargarTareas() { 
     const tbodyTarea = document.querySelector('#tablaTareas tbody');
 
-    await fetch(tareaApiUrl)
+    await fetch("/api/tareas/buscar/all",
+        {method: "GET",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json"
+            }})
     .then(Response => {
         if(!Response.ok) {
             throw new Error('Error al obtener tareas.');
@@ -758,7 +778,12 @@ async function cargarTareas() {
 async function cargarRegistros() { 
     const tbodyRegistro = document.querySelector('#tablaRegistro tbody');
 
-    await fetch(registroApiUrl)
+    await fetch("/api/registros/buscar/all",
+        {method: "GET",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json"
+            }})
     .then(Response => {
         if(!Response.ok) {
             throw new Error('Error al obtener registros.');
