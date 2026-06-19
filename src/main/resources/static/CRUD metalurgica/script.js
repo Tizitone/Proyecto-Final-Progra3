@@ -1,6 +1,6 @@
 const token = localStorage.getItem('token');
 if (!token) {
-    window.location.replace('/login.html');
+    window.location.replace('/IngresoUsuario/userSecurity.html');
 }
 
 const empleadoApiUrl = "http://localhost:8080/api/empleados";
