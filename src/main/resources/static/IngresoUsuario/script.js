@@ -1,77 +1,70 @@
-const formLogin = document.getElementById('loginForm')
+const formLogin = document.getElementById('loginForm');
+const emailError = document.getElementById('emailError');
+const passwordError = document.getElementById('passwordError');
+const loginStatus = document.getElementById('loginStatus');
+const btnLogin = document.getElementById('btnLogin');
 
 formLogin.addEventListener('submit', async function(evento) {
     evento.preventDefault();
 
-    const emailInput = document.getElementById('email').value;
-    const contraseniaInput = document.getElementById('password').value;
+    const email = document.getElementById('email').value.trim();
+    const contrasenia = document.getElementById('password').value.trim();
+
+    // Reset errors
+    emailError.textContent = '';
+    passwordError.textContent = '';
+    loginStatus.textContent = '';
 
     let isValid = true;
 
-    if (!emailInput.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
-        document.getElementById('emailError').textContent = "El email debe contener al menos 5 carácteres alfanumericos."
+    if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+        emailError.textContent = "Ingrese un email válido.";
         isValid = false;
-    } else {
-        document.getElementById('emailError').textContent = '';
     }
 
-    if (!contraseniaInput.match(/^[a-zA-Z\d]{6,}$/)) {
-        document.getElementById('passwordError').textContent = 'La contraseña debe contener al menos 6 carácteres, solo letras y numeros estan permitidos.'
+    if (!contrasenia.match(/^[a-zA-Z\d]{6,}$/)) {
+        passwordError.textContent = 'La contraseña debe tener al menos 6 caracteres (solo letras y números).';
         isValid = false;
-    } else {
-        document.getElementById('passwordError').textContent = '';
     }
 
-    if (isValid) {
+    if (!isValid) return;
 
-        try{
-            const response = await fetch("http://localhost:8080/api/auth/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "x-www-form-urlencoded",
-                },
-                body: JSON.stringify({ emailInput, contraseniaInput}),
-                credentials: "include",
-            });
+    btnLogin.disabled = true;
+    btnLogin.textContent = "Iniciando sesión...";
 
-            if (!response.ok) {
-                throw new Error('http error! status: ${response.status}');
-            }
+    try {
+        const response = await fetch("http://localhost:8080/api/auth/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                email: email,
+                contrasenia: contrasenia
+            })
+        });
 
+        if (response.ok) {
             const data = await response.json();
-            console.log("login logrado: ", data);
-            alert("login logrado! Redirigiendo...");
-            
-            setTimeout(function() {
-                window.location.href = "http://localhost:8080/CRUD%20metalurgica/HTML%20metalurgica.html";
-            }, 3000);
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('rol', data.rol);
 
-        } catch {
+            loginStatus.textContent = "¡Login exitoso! Redirigiendo...";
+            loginStatus.style.color = "green";
 
+            setTimeout(() => {
+                window.location.href = "/CRUD%20metalurgica/HTML%20metalurgica.html";
+            }, 1500);
+
+        } else {
+            loginStatus.textContent = "Email o contraseña incorrectos";
+            loginStatus.style.color = "red";
         }
-        simularRequestAServer(emailInput, contraseniaInput);
+    } catch (error) {
+        loginStatus.textContent = "No se pudo conectar con el servidor.";
+        loginStatus.style.color = "red";
+    } finally {
+        btnLogin.disabled = false;
+        btnLogin.textContent = "Iniciar Sesión";
     }
 });
-
-function simularRequestAServer(emailInput, contraseniaInput) {
-    const statusElement = document.getElementById('loginStatus');
-
-    setTimeout(() => {
-        statusElement.textContent = 'Login Logrado! redirigiendo...'
-        statusElement.style.color = 'red';
-    }, 5000);
-}
-
-
-let loginAttempts = 0;
-const maxAttempts = 5;
-
-const lockoutTime = 15 * 60 * 1000;
-
-function handleLogin() {
-    if (loginAttempts >= maxAttempts) {
-        const remainingTime = calculateRemainingLockoutTime();
-        showError('Realizo demasiados intentos equivocados. Intente de nuevo en ${Math.ceil(remainingTime / 60000)} minutos.');
-        return false;
-    }
-}

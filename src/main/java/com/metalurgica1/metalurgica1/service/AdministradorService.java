@@ -43,7 +43,7 @@ public class AdministradorService extends MetodosGestion{
         Administrador a = new Administrador();
         a.setNombre(dto.nombre());
         a.setEmail(dto.email());
-        a.setContrasenia(dto.dni().toString());
+        a.setContrasenia(passwordEncoder.encode(dto.dni().toString()));
         a.setTelefono(dto.telefono());
         a.setDni(dto.dni());
         a.setEEstadoActividad(EEstadoActividad.ACTIVO);

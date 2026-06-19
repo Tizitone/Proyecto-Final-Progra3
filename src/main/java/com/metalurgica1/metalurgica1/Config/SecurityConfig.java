@@ -38,6 +38,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/IngresoUsuario/**").permitAll()
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        .requestMatchers("/CRUD metalurgica/**").permitAll()
                         .requestMatchers("/api/tareas/buscar/**").hasAnyRole("EMPLEADO", "GERENTE", "ADMIN")
                         .requestMatchers("/api/solicitudes/crear", "/api/registros/buscar/**").hasAnyRole("CLIENTE", "GERENTE", "ADMIN")
                         .requestMatchers(

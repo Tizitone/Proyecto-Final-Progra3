@@ -31,6 +31,7 @@ CREATE TABLE `administradores` (
   `email` varchar(255) DEFAULT NULL,
   `nombre` varchar(255) DEFAULT NULL,
   `telefono` varchar(255) DEFAULT NULL,
+  `e_estado_actividad` enum('ACTIVO','CANCELADO') DEFAULT NULL,
   PRIMARY KEY (`id_administrador`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -41,7 +42,7 @@ CREATE TABLE `administradores` (
 
 LOCK TABLES `administradores` WRITE;
 /*!40000 ALTER TABLE `administradores` DISABLE KEYS */;
-INSERT INTO `administradores` VALUES (1,'$2a$12$x8BpxtlXTB2qj7pTr3EdAeuhP682UXYAmg1HcIf/F/TCGgeTd5IOG',12345678,'admin@metalurgica.com','Carlos Rodríguez','1122334455');
+INSERT INTO `administradores` VALUES (1,'$2a$12$x8BpxtlXTB2qj7pTr3EdAeuhP682UXYAmg1HcIf/F/TCGgeTd5IOG',12345678,'admin@metalurgica.com','Carlos Rodríguez','1122334455',NULL);
 /*!40000 ALTER TABLE `administradores` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -59,6 +60,7 @@ CREATE TABLE `clientes` (
   `email` varchar(255) DEFAULT NULL,
   `nombre` varchar(255) DEFAULT NULL,
   `telefono` varchar(255) DEFAULT NULL,
+  `e_estado_actividad` enum('ACTIVO','CANCELADO') DEFAULT NULL,
   PRIMARY KEY (`id_cliente`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -69,7 +71,7 @@ CREATE TABLE `clientes` (
 
 LOCK TABLES `clientes` WRITE;
 /*!40000 ALTER TABLE `clientes` DISABLE KEYS */;
-INSERT INTO `clientes` VALUES (1,'$2a$12$x8BpxtlXTB2qj7pTr3EdAeuhP682UXYAmg1HcIf/F/TCGgeTd5IOG',87654321,'cliente1@ejemplo.com','Laura Gómez','1155667788'),(2,'$2a$12$x8BpxtlXTB2qj7pTr3EdAeuhP682UXYAmg1HcIf/F/TCGgeTd5IOG',44556677,'cliente2@ejemplo.com','Miguel Torres','1144778899');
+INSERT INTO `clientes` VALUES (1,'$2a$12$x8BpxtlXTB2qj7pTr3EdAeuhP682UXYAmg1HcIf/F/TCGgeTd5IOG',87654321,'cliente1@gmail.com','Laura Fernández','1155667788',NULL),(2,'$2a$12$x8BpxtlXTB2qj7pTr3EdAeuhP682UXYAmg1HcIf/F/TCGgeTd5IOG',44556677,'cliente2@gmail.com','Miguel Torres','1144778899',NULL);
 /*!40000 ALTER TABLE `clientes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -114,6 +116,7 @@ CREATE TABLE `empleados` (
   `email` varchar(255) DEFAULT NULL,
   `nombre` varchar(255) DEFAULT NULL,
   `telefono` varchar(255) DEFAULT NULL,
+  `e_estado_actividad` enum('ACTIVO','CANCELADO') DEFAULT NULL,
   PRIMARY KEY (`legajo`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -124,7 +127,7 @@ CREATE TABLE `empleados` (
 
 LOCK TABLES `empleados` WRITE;
 /*!40000 ALTER TABLE `empleados` DISABLE KEYS */;
-INSERT INTO `empleados` VALUES ('EMPLEADO',1,'$2a$12$x8BpxtlXTB2qj7pTr3EdAeuhP682UXYAmg1HcIf/F/TCGgeTd5IOG',33445566,'empleado1@metalurgica.com','Juan Pérez','1166554433'),('EMPLEADO',2,'$2a$12$x8BpxtlXTB2qj7pTr3EdAeuhP682UXYAmg1HcIf/F/TCGgeTd5IOG',22334455,'empleado2@metalurgica.com','Ana López','1177889900'),('GERENTE',3,'$2a$12$x8BpxtlXTB2qj7pTr3EdAeuhP682UXYAmg1HcIf/F/TCGgeTd5IOG',11223344,'gerente@metalurgica.com','Roberto Sánchez','1199887766');
+INSERT INTO `empleados` VALUES ('EMPLEADO',1,'$2a$12$x8BpxtlXTB2qj7pTr3EdAeuhP682UXYAmg1HcIf/F/TCGgeTd5IOG',33445566,'empleado1@metalurgica.com','Juan Pérez','1166554433',NULL),('EMPLEADO',2,'$2a$12$x8BpxtlXTB2qj7pTr3EdAeuhP682UXYAmg1HcIf/F/TCGgeTd5IOG',22334455,'empleado2@metalurgica.com','Ana López','1177889900',NULL),('GERENTE',3,'$2a$12$x8BpxtlXTB2qj7pTr3EdAeuhP682UXYAmg1HcIf/F/TCGgeTd5IOG',11223344,'gerente@metalurgica.com','Roberto Sánchez','1199887766',NULL);
 /*!40000 ALTER TABLE `empleados` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -163,6 +166,7 @@ DROP TABLE IF EXISTS `registros`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `registros` (
   `id` bigint NOT NULL AUTO_INCREMENT,
+  `e_estado_actividad` enum('ACTIVO','CANCELADO') DEFAULT NULL,
   `e_proceso` enum('ENPROCESO','ESPERA','TERMINADO') DEFAULT NULL,
   `publicado` bit(1) NOT NULL,
   `titulo` varchar(255) DEFAULT NULL,
@@ -182,7 +186,7 @@ CREATE TABLE `registros` (
 
 LOCK TABLES `registros` WRITE;
 /*!40000 ALTER TABLE `registros` DISABLE KEYS */;
-INSERT INTO `registros` VALUES (1,'ESPERA',_binary '','Tanques para Planta Química',1,1),(2,'ENPROCESO',_binary '','Estructura Galpón',2,2),(3,'TERMINADO',_binary '\0','Puertas Oficina',1,3);
+INSERT INTO `registros` VALUES (1,NULL,'ESPERA',_binary '','Construcción Tanques Químicos',1,1),(2,NULL,'ENPROCESO',_binary '','Galpón Industrial',2,2),(3,NULL,'TERMINADO',_binary '\0','Instalación de Ventanas',1,3);
 /*!40000 ALTER TABLE `registros` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -210,7 +214,7 @@ CREATE TABLE `solicitudes` (
 
 LOCK TABLES `solicitudes` WRITE;
 /*!40000 ALTER TABLE `solicitudes` DISABLE KEYS */;
-INSERT INTO `solicitudes` VALUES (1,'Necesito cotización para estructura metálica de 200m²','ACTIVO','pablo.ruiz@gmail.com','Pablo Ruiz','1133445566'),(2,'Fabricación de rejas de seguridad para local comercial','ACTIVO','maria.lopez@hotmail.com','María López','1155778899');
+INSERT INTO `solicitudes` VALUES (1,'Necesito cotización urgente para estructura de 300m²','ACTIVO','pablo.ruiz@gmail.com','Pablo Ruiz','1133445566'),(2,'Fabricación de rejas de seguridad para local comercial','ACTIVO','carla.mendoza@hotmail.com','Carla Mendoza','1155778899');
 /*!40000 ALTER TABLE `solicitudes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -226,6 +230,7 @@ CREATE TABLE `tareas` (
   `categorias` enum('LIGERO','MEDIANO','PESADO') DEFAULT NULL,
   `descripcion_general` text,
   `descripcion_material` text,
+  `e_estado_actividad` enum('ACTIVO','CANCELADO') DEFAULT NULL,
   `fecha_de_entrega` date DEFAULT NULL,
   `fecha_de_registro` datetime(6) DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -238,7 +243,7 @@ CREATE TABLE `tareas` (
 
 LOCK TABLES `tareas` WRITE;
 /*!40000 ALTER TABLE `tareas` DISABLE KEYS */;
-INSERT INTO `tareas` VALUES (1,'PESADO','Fabricación de tanques de 5000 litros','Acero inoxidable 304','2026-07-10',NULL),(2,'MEDIANO','Estructura para galpón industrial','Hierro galvanizado','2026-06-25',NULL),(3,'LIGERO','Puertas y ventanas para oficina','Aluminio','2026-07-05',NULL),(4,'PESADO','Base para maquinaria pesada','Acero al carbono','2026-08-01',NULL);
+INSERT INTO `tareas` VALUES (1,'PESADO','Fabricación de tanques de almacenamiento','Acero estructural',NULL,'2026-07-15','2026-06-18 23:45:12.000000'),(2,'MEDIANO','Estructura para galpón industrial','Hierro galvanizado',NULL,'2026-07-10','2026-06-18 23:45:12.000000'),(3,'LIGERO','Ventanas y puertas para oficina','Aluminio',NULL,'2026-07-20','2026-06-18 23:45:12.000000'),(4,'PESADO','Base para maquinaria pesada','Acero al carbono',NULL,'2026-08-05','2026-06-18 23:45:12.000000');
 /*!40000 ALTER TABLE `tareas` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -251,4 +256,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-06-15 17:18:59
+-- Dump completed on 2026-06-18 23:47:55

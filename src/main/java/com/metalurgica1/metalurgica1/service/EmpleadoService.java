@@ -73,7 +73,7 @@ public class EmpleadoService {
     public CrearEmpleadoDTO crearEmpleado(CrearEmpleadoDTO dto) {
         Empleado empleado = new Empleado();
         empleado.setEmail(dto.email());
-        empleado.setContrasenia(dto.dni().toString());
+        empleado.setContrasenia(passwordEncoder.encode(dto.dni().toString()));
         empleado.setNombre(dto.nombre());
         empleado.setTelefono(dto.telefono());
         empleado.setDni(dto.dni());

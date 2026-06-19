@@ -1,3 +1,8 @@
+const token = localStorage.getItem('token');
+if (!token) {
+    window.location.replace('/login.html');
+}
+
 const empleadoApiUrl = "http://localhost:8080/api/empleados";
 
 const formEmpleado = document.getElementById("formEmpleado");
@@ -498,7 +503,12 @@ formBuscar.addEventListener("submit", async function (e) {
 async function cargarEmpleados() { 
     const tbodyPersonas = document.querySelector('#tablaPersonas tbody');
 
-    await fetch(empleadoApiUrl)
+    await fetch("http://localhost:8080/api/empleados/buscar/all",
+        {method: "GET",
+headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json"
+    }})
     .then(Response => {
         if(!Response.ok) {
             throw new Error('Error al obtener empleados.');
