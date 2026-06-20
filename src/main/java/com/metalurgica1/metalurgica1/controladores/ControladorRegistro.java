@@ -19,7 +19,6 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/api/registros")
-@CrossOrigin(origins = "*")
 public class ControladorRegistro {
     private final RegistroService registroService;
 

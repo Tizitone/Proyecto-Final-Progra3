@@ -17,7 +17,6 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/api/solicitudes")
-@CrossOrigin(origins = "*")
 public class ControladorSolicitud {
 
     private final SolicitudService solicitudService;

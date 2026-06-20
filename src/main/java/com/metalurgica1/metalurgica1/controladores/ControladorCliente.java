@@ -17,7 +17,6 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/api/clientes")
-
 public class ControladorCliente {
 
     private final ClienteService clienteService;

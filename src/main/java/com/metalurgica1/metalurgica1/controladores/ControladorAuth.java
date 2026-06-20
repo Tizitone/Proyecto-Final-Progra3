@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
 public class ControladorAuth {
 
     private final AuthenticationManager authenticationManager;
@@ -30,6 +29,12 @@ public class ControladorAuth {
         UserDetails userDetails = userDetailsService.loadUserByUsername(request.email());
         String jwt = jwtUtil.generateToken(userDetails);
 
-        return ResponseEntity.ok(new AuthResponse(jwt));
+        String rol = userDetails.getAuthorities().stream()
+                .map(authority -> authority.getAuthority())
+                .findFirst()
+                .orElse("USER")
+                .replace("ROLE_", "");
+
+        return ResponseEntity.ok(new AuthResponse(jwt, rol));
     }
 }
