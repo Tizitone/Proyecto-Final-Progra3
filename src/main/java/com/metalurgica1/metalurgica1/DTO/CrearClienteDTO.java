@@ -18,7 +18,6 @@ public record CrearClienteDTO(
         @Pattern(regexp = "^\\d{7,11}$", message = "El telefono debe contener entre 7 y 11 digitos numericos")
         String telefono,
 
-        @NotBlank(message = "El DNI no puede estar en blanco")
         @Positive(message = "El DNI tiene que ser positivo")
         @Max(value = 99999999, message = "DNI fuera de rango")
         @Min(value = 1000000, message = "DNI fuera de rango")

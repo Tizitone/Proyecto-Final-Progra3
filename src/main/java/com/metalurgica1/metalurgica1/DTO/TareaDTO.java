@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 
 // no hace falta validar ya que este dto solo muestra informacion
 public record TareaDTO(
+     Long idTarea,
      ECategorias categorias,
      LocalDate fechaDeEntrega,
      LocalDateTime fechaDeRegistro,

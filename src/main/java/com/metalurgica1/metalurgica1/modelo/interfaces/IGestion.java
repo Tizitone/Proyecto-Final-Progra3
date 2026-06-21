@@ -21,7 +21,9 @@ public interface IGestion {
 
     ClienteDTO crearCliente(CrearClienteDTO dto);
     TareaDTO crearTarea(CrearTareaDTO dto);
-    RegistroDTO crearRegistro(RegistroDTO dto) throws ClienteNoEncontradoException, TareaNoEncontradaExeption;
+    CrearRegistroDTO crearRegistro(RegistroDTO dto) throws ClienteNoEncontradoException, TareaNoEncontradaExeption;
+
+    RegistroDTO crearRegistro(CrearRegistroDTO dto) throws ClienteNoEncontradoException, TareaNoEncontradaExeption;
 
     EmpleadoDTO modificarEmpleado(EmpleadoDTO dto, Long legajo);
     ClienteDTO modificarCliente(ClienteDTO dto, Long id) throws ClienteNoEncontradoException;

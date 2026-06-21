@@ -80,7 +80,20 @@ public class ClienteService {
         return convertirADTORequest(cliente);
     }
 
-    public CrearClienteDTO modificarCliente(Long id, CrearClienteDTO dto) throws ClienteNoEncontradoException {
+    public ClienteDTO modificarClienteSinContrasenia(Long id, ClienteDTO dto) throws ClienteNoEncontradoException {
+        Cliente cliente = iClienteRepository.findById(id)
+                .orElseThrow(() -> new ClienteNoEncontradoException("Cliente no encontrado."));
+
+        cliente.setEmail(dto.email());
+        cliente.setNombre(dto.nombre());
+        cliente.setTelefono(dto.telefono());
+        cliente.setDni(dto.dni());
+
+        Cliente clienteActualizado = iClienteRepository.save(cliente);
+
+        return convertirADTOResponse(clienteActualizado);
+    }
+    public CrearClienteDTO modificarClienteConContrasenia(Long id, CrearClienteDTO dto) throws ClienteNoEncontradoException {
         Cliente cliente = iClienteRepository.findById(id)
                 .orElseThrow(() -> new ClienteNoEncontradoException("Cliente no encontrado."));
 

@@ -11,6 +11,6 @@ public record RegistroDTO(
         Long tareaId,
         Long clienteId,
         EProceso proceso,
-        List<Empleado> participantesId,
+        List<Long> participantesId,
         Boolean publicado){
 }

@@ -82,8 +82,20 @@ public class EmpleadoService {
 
         return convertirADTORequest(empleado);
     }
+    public EmpleadoDTO modificarEmpleadoSinContrasenia(Long id, EmpleadoDTO dto) throws EmpleadoNoEncontradoException {
+        Empleado empleado = iEmpleadoRepository.findById(id)
+                .orElseThrow(() -> new EmpleadoNoEncontradoException("Empleado no encontrado."));
 
-    public CrearEmpleadoDTO modificarEmpleado(Long id, CrearEmpleadoDTO dto) throws EmpleadoNoEncontradoException {
+        empleado.setEmail(dto.email());
+        empleado.setNombre(dto.nombre());
+        empleado.setTelefono(dto.telefono());
+        empleado.setDni(dto.dni());
+
+        Empleado empleadoActualizado = iEmpleadoRepository.save(empleado);
+
+        return convertirADTOResponse(empleadoActualizado);
+    }
+    public CrearEmpleadoDTO modificarEmpleadoConContrasenia(Long id, CrearEmpleadoDTO dto) throws EmpleadoNoEncontradoException {
         Empleado empleado = iEmpleadoRepository.findById(id)
                 .orElseThrow(() -> new EmpleadoNoEncontradoException("Empleado no encontrado."));
 

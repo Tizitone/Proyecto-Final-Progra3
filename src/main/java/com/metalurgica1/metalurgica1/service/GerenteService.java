@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class GerenteService extends MetodosGestion {
+public class GerenteService{
 
     private final IGerenteRepository iGerenteRepository;
 
@@ -100,7 +100,18 @@ public class GerenteService extends MetodosGestion {
         return convertirADTORequest(iGerenteRepository.save(gerente));
     }
 
-    public CrearGerenteDTO modificarGerente(Long id, CrearGerenteDTO dto) throws EmpleadoNoEncontradoException {
+    public GerenteDTO modificarGerenteSinContrasenia(Long id, GerenteDTO dto) throws EmpleadoNoEncontradoException {
+        Empleado_Gerente gerente = iGerenteRepository.findById(id)
+                .orElseThrow(() -> new EmpleadoNoEncontradoException("Gerente no encontrado."));
+
+        gerente.setEmail(dto.email());
+        gerente.setNombre(dto.nombre());
+        gerente.setTelefono(dto.telefono());
+        gerente.setDni(dto.dni());
+
+        return convertirADTOResponse(iGerenteRepository.save(gerente));
+    }
+    public CrearGerenteDTO modificarGerenteConContrasenia(Long id, CrearGerenteDTO dto) throws EmpleadoNoEncontradoException {
         Empleado_Gerente gerente = iGerenteRepository.findById(id)
                 .orElseThrow(() -> new EmpleadoNoEncontradoException("Gerente no encontrado."));
 

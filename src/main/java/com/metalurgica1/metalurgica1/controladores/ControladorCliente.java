@@ -69,9 +69,19 @@ public class ControladorCliente {
     }
 
     @PutMapping("/{id}")
+    public ResponseEntity<ClienteDTO> modificarCliente(@Valid @PathVariable Long id, @RequestBody ClienteDTO cliente){
+        try {
+            ClienteDTO clienteActualizado = clienteService.modificarClienteSinContrasenia(id, cliente);
+            return ResponseEntity.ok(clienteActualizado);
+        } catch (ClienteNoEncontradoException e) {
+            log.error("",e);
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @PutMapping("/modificarPassword/{id}")
     public ResponseEntity<CrearClienteDTO> modificarCliente(@Valid @PathVariable Long id, @RequestBody CrearClienteDTO cliente){
         try {
-            CrearClienteDTO clienteActualizado = clienteService.modificarCliente(id, cliente);
+            CrearClienteDTO clienteActualizado = clienteService.modificarClienteConContrasenia(id, cliente);
             return ResponseEntity.ok(clienteActualizado);
         } catch (ClienteNoEncontradoException e) {
             log.error("",e);

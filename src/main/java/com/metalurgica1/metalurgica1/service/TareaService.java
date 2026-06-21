@@ -25,7 +25,7 @@ public class TareaService {
     }
 
     private TareaDTO convertirADTO(Tarea t){
-        return new TareaDTO(t.getCategorias(),t.getFechaDeEntrega(),
+        return new TareaDTO(t.getId(),t.getCategorias(),t.getFechaDeEntrega(),
                 t.getFechaDeRegistro(),t.getDescripcionMaterial(),
                 t.getDescripcionGeneral());
     }
@@ -35,7 +35,9 @@ public class TareaService {
                 .findAll()
                 .stream()
                 .filter(p-> p.getEEstadoActividad() == EEstadoActividad.ACTIVO)
-                .map(t -> new TareaDTO(t.getCategorias(),
+                .map(t -> new TareaDTO(
+                        t.getId(),
+                        t.getCategorias(),
                         t.getFechaDeEntrega(),
                         t.getFechaDeRegistro(),
                         t.getDescripcionMaterial(),
@@ -50,7 +52,9 @@ public class TareaService {
 
     public TareaDTO buscarPorId(Long id) throws TareaNoEncontradaExeption {
         Tarea t = buscarTarea(id);
-        return new TareaDTO(t.getCategorias(),
+        return new TareaDTO(
+                t.getId(),
+                t.getCategorias(),
                 t.getFechaDeEntrega(),
                 t.getFechaDeRegistro(),
                 t.getDescripcionMaterial(),

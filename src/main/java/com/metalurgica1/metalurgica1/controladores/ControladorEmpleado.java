@@ -75,9 +75,20 @@ public class ControladorEmpleado {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CrearEmpleadoDTO> modificarEmpleado(@Valid @PathVariable Long id, @RequestBody CrearEmpleadoDTO empleado) {
+    public ResponseEntity<EmpleadoDTO> modificarEmpleadoSinPassword(@Valid @PathVariable Long id, @RequestBody EmpleadoDTO empleado) {
         try {
-            CrearEmpleadoDTO empleadoActualizado = empleadoService.modificarEmpleado(id, empleado);
+            EmpleadoDTO empleadoActualizado = empleadoService.modificarEmpleadoSinContrasenia(id, empleado);
+            return ResponseEntity.ok(empleadoActualizado);
+        } catch (EmpleadoNoEncontradoException e) {
+            log.error("",e);
+            return ResponseEntity.notFound().build();
+        }
+
+    }
+    @PutMapping("/modificarPassword/{id}")
+    public ResponseEntity<CrearEmpleadoDTO> modificarEmpleadoConPassword(@Valid @PathVariable Long id, @RequestBody CrearEmpleadoDTO empleado) {
+        try {
+            CrearEmpleadoDTO empleadoActualizado = empleadoService.modificarEmpleadoConContrasenia(id, empleado);
             return ResponseEntity.ok(empleadoActualizado);
         } catch (EmpleadoNoEncontradoException e) {
             log.error("",e);

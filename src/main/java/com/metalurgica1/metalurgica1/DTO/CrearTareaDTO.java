@@ -4,6 +4,7 @@ import com.metalurgica1.metalurgica1.modelo.enums.ECategorias;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.data.annotation.ReadOnlyProperty;
 
 import java.time.LocalDate;
 

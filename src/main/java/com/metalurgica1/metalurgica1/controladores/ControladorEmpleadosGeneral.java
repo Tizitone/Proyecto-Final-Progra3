@@ -56,13 +56,7 @@ public class ControladorEmpleadosGeneral {
     }
 
     @GetMapping("/buscar/legajo")
-    public ResponseEntity<Optional<EmpleadoModeloDTO>> buscarPorLegajo(@RequestParam Long legajo){
-        try {
-            return ResponseEntity.ok(empleadoModeloService.buscarEmpleadoPorId(legajo));
-        } catch (EmpleadoNoEncontradoException e) {
-            log.error("",e);
-            return ResponseEntity.notFound().build();
-        }
-
+    public ResponseEntity<EmpleadoModeloDTO> buscarPorLegajo(@RequestParam Long legajo){
+        return ResponseEntity.ok(empleadoModeloService.buscarEmpleadoPorId(legajo));
     }
 }

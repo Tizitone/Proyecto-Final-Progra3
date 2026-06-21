@@ -42,8 +42,8 @@ public class EmpleadoModeloService {
             return nuevaLista.stream().map(p-> new EmpleadoModeloDTO(p.getLegajo(),p.getEmail(),p.getNombre(),p.getTelefono(),p.getDni(),p.getEtiquetaDeAcceso())).toList();
         }
 
-        public Optional<EmpleadoModeloDTO> buscarEmpleadoPorId(Long legajo) throws EmpleadoNoEncontradoException {
-            return listarTodosEmpleados().stream().filter(p->p.legajo().equals(legajo)).findFirst();
+        public EmpleadoModeloDTO buscarEmpleadoPorId(Long legajo){
+            return listarTodosEmpleados().stream().filter(p->p.legajo().equals(legajo)).findFirst().orElseThrow(()->new RuntimeException("Empleado con id"+ legajo+" no encontrado"));
         }
 
         public Optional<EmpleadoModeloDTO> buscarEmpleadoPorEmail(String email){

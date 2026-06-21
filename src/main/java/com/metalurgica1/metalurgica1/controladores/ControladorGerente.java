@@ -93,9 +93,20 @@ import java.util.List;
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CrearGerenteDTO> modificarGerente(@Valid @PathVariable Long id, @RequestBody CrearGerenteDTO gerente) {
+    public ResponseEntity<GerenteDTO> modificarGerenteSinPassword(@Valid @PathVariable Long id, @RequestBody GerenteDTO gerente) {
         try {
-            CrearGerenteDTO gerenteActualizado = gerenteService.modificarGerente(id, gerente);
+            GerenteDTO gerenteActualizado = gerenteService.modificarGerenteSinContrasenia(id, gerente);
+            return ResponseEntity.ok(gerenteActualizado);
+        } catch (EmpleadoNoEncontradoException e) {
+            log.error("",e);
+            return ResponseEntity.notFound().build();
+        }
+
+    }
+    @PutMapping("/modificarPassword/{id}")
+    public ResponseEntity<CrearGerenteDTO> modificarGerenteConPassword(@Valid @PathVariable Long id, @RequestBody CrearGerenteDTO gerente) {
+        try {
+            CrearGerenteDTO gerenteActualizado = gerenteService.modificarGerenteConContrasenia(id, gerente);
             return ResponseEntity.ok(gerenteActualizado);
         } catch (EmpleadoNoEncontradoException e) {
             log.error("",e);

@@ -24,7 +24,8 @@ public record CrearRegistroDTO(
         EProceso proceso,
 
         @NotEmpty(message = "La lista de empleados no puede estar vacia")
-        List<Empleado> participantesId,
+        List<Long> participantesId,
+
         Boolean publicado
 
 ) {
