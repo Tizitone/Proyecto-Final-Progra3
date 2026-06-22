@@ -74,18 +74,18 @@ public class  RegistroService {
     }
     public List<TareaDTO> listarTareasRegistro(Long id)
     {
-        return iTareaRepository
-                .findAll()
+        return iRegistroRepository.findById(id)
                 .stream()
-                .filter(p->(p.getEEstadoActividad() == EEstadoActividad.ACTIVO) && (p.getId().equals(id)))
-                .map(t-> new TareaDTO(
+                .filter(reg -> reg.getEEstadoActividad() == EEstadoActividad.ACTIVO)
+                .map(Registro::getTarea)
+                .filter(tarea -> tarea != null && tarea.getEEstadoActividad() == EEstadoActividad.ACTIVO)
+                .map(t -> new TareaDTO(
                         t.getId(),
                         t.getCategorias(),
                         t.getFechaDeEntrega(),
                         t.getFechaDeRegistro(),
                         t.getDescripcionMaterial(),
                         t.getDescripcionGeneral()
-
                 ))
                 .toList();
     }
