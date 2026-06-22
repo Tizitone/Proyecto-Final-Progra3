@@ -46,18 +46,21 @@ public class SecurityConfig {
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .requestMatchers("/CRUD metalurgica/**").permitAll()
                         .requestMatchers("/api/tareas/buscar/**").hasAnyRole("EMPLEADO", "GERENTE", "ADMIN")
-                        .requestMatchers("/api/registros/buscar/**").hasAnyRole("CLIENTE", "GERENTE", "ADMIN")
+                        .requestMatchers("/api/registros/buscar/**").hasAnyRole("EMPLEADO", "CLIENTE", "GERENTE", "ADMIN")
                         .requestMatchers("/api/solicitudes/buscar/**").hasAnyRole("CLIENTE", "GERENTE", "ADMIN")
                         .requestMatchers("/api/empleados/historial").hasRole("EMPLEADO")
                         .requestMatchers("/api/solicitudes/crear").permitAll()
+                        .requestMatchers("/api/empleados/**")
+                        .hasAnyRole("EMPLEADO", "GERENTE", "ADMIN")
                         .requestMatchers(
                                 "/api/administradores/**",
                                 "/api/clientes/**",
-                                "/api/empleados/**",
-                                "/api/tareas/**",
-                                "/api/registros/**",
                                 "/api/empleadosGeneral/**"
                         ).hasAnyRole("GERENTE","ADMIN")
+                        .requestMatchers("/api/tareas/**")
+                        .hasAnyRole("EMPLEADO","GERENTE","ADMIN")
+                        .requestMatchers("/api/registros/**")
+                        .hasAnyRole("EMPLEADO","GERENTE","ADMIN")
                         .requestMatchers("/api/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
