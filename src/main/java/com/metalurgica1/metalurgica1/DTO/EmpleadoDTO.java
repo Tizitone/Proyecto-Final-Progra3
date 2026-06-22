@@ -1,6 +1,9 @@
 package com.metalurgica1.metalurgica1.DTO;
 
+import com.metalurgica1.metalurgica1.modelo.Tarea;
 import jakarta.validation.constraints.*;
+
+import java.util.List;
 
 public record EmpleadoDTO(
 
@@ -20,6 +23,8 @@ public record EmpleadoDTO(
         @Min(value = 1000000, message = "DNI fuera de rango")
         Long dni,
 
-        Long legajo
+        Long legajo,
+
+        List<Tarea> historial
 ) {
 }

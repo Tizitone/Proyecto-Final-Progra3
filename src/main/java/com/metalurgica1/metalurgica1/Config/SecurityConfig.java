@@ -48,6 +48,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/tareas/buscar/**").hasAnyRole("EMPLEADO", "GERENTE", "ADMIN")
                         .requestMatchers("/api/registros/buscar/**").hasAnyRole("CLIENTE", "GERENTE", "ADMIN")
                         .requestMatchers("/api/solicitudes/buscar/**").hasAnyRole("CLIENTE", "GERENTE", "ADMIN")
+                        .requestMatchers("/api/empleados/historial").hasRole("EMPLEADO")
                         .requestMatchers("/api/solicitudes/crear").permitAll()
                         .requestMatchers(
                                 "/api/administradores/**",
