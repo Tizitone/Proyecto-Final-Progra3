@@ -1,6 +1,7 @@
 package com.metalurgica1.metalurgica1.service;
 
 import com.metalurgica1.metalurgica1.DTO.EmpleadoDTO;
+import com.metalurgica1.metalurgica1.DTO.TareaDTO;
 import com.metalurgica1.metalurgica1.modelo.Empleado;
 import com.metalurgica1.metalurgica1.modelo.enums.EEstadoActividad;
 import com.metalurgica1.metalurgica1.repositorio.IEmpleadoRepository;
@@ -8,6 +9,7 @@ import com.metalurgica1.metalurgica1.DTO.CrearEmpleadoDTO;
 import com.metalurgica1.metalurgica1.service.Excepciones.EmpleadoNoEncontradoException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -116,13 +118,30 @@ public class EmpleadoService {
         iEmpleadoRepository.save(e);
     }
 
+    public List<TareaDTO>historialTareasEmpleado(){
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        EmpleadoDTO empleado = buscarEmpleadoPorEmail(email);
+
+        return empleado.historial().stream()
+                .map(tarea -> new TareaDTO(
+                        tarea.getId(),
+                        tarea.getCategorias(),
+                        tarea.getFechaDeEntrega(),
+                        tarea.getFechaDeRegistro(),
+                        tarea.getDescripcionMaterial(),
+                        tarea.getDescripcionGeneral()
+                ))
+                .collect(Collectors.toList());
+    }
+
     private EmpleadoDTO convertirADTOResponse(Empleado empleado) {
         return new EmpleadoDTO(
                 empleado.getEmail(),
                 empleado.getNombre(),
                 empleado.getTelefono(),
                 empleado.getDni(),
-                empleado.getLegajo()
+                empleado.getLegajo(),
+                empleado.getHistorial()
         );
     }
 

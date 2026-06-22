@@ -1,12 +1,11 @@
 package com.metalurgica1.metalurgica1.controladores;
 
 import com.metalurgica1.metalurgica1.DTO.EmpleadoDTO;
+import com.metalurgica1.metalurgica1.DTO.TareaDTO;
 import com.metalurgica1.metalurgica1.service.EmpleadoService;
 import com.metalurgica1.metalurgica1.service.Excepciones.EmpleadoNoEncontradoException;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -108,5 +107,11 @@ public class ControladorEmpleado {
         }
 
 
+    }
+
+    @GetMapping("/historial")
+    public ResponseEntity<List<TareaDTO>> historialTareasEmpleado(){
+        List<TareaDTO> historialTareas = empleadoService.historialTareasEmpleado();
+        return ResponseEntity.ok(historialTareas);
     }
 }
