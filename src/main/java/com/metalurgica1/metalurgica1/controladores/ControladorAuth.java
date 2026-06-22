@@ -9,6 +9,8 @@ import com.metalurgica1.metalurgica1.modelo.Empleado_modelo;
 import com.metalurgica1.metalurgica1.repositorio.IAdministradorRepository;
 import com.metalurgica1.metalurgica1.repositorio.IClienteRepository;
 import com.metalurgica1.metalurgica1.repositorio.IEmpleadoRepository;
+import com.metalurgica1.metalurgica1.service.AdministradorService;
+import com.metalurgica1.metalurgica1.service.ClienteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,7 +30,7 @@ public class ControladorAuth {
     private final IAdministradorRepository administradorRepository;
     private final IClienteRepository clienteRepository;
     private final IEmpleadoRepository empleadoRepository;
-
+    private final ClienteService clienteService;
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request) {
