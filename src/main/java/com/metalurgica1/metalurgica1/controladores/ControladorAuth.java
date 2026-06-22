@@ -56,6 +56,6 @@ public class ControladorAuth {
                 .orElse("USER")
                 .replace("ROLE_", "");
 
-        return ResponseEntity.ok(new AuthResponse(jwt, rol,idUsuario));
+        return ResponseEntity.ok(new AuthResponse(jwt, rol, idUsuario));
     }
 }
