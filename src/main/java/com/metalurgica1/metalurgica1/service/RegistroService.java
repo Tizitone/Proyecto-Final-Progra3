@@ -3,6 +3,7 @@ package com.metalurgica1.metalurgica1.service;
 import com.metalurgica1.metalurgica1.DTO.CrearRegistroDTO;
 import com.metalurgica1.metalurgica1.DTO.EmpleadoModeloDTO;
 import com.metalurgica1.metalurgica1.DTO.RegistroDTO;
+import com.metalurgica1.metalurgica1.DTO.TareaDTO;
 import com.metalurgica1.metalurgica1.modelo.*;
 import com.metalurgica1.metalurgica1.modelo.enums.EEstadoActividad;
 import com.metalurgica1.metalurgica1.modelo.enums.EEtiquetaDeAcceso;
@@ -54,6 +55,39 @@ public class  RegistroService {
                         listarIdEmpleados(r),
                         r.getPublicado()))
                 .collect(Collectors.toList());
+    }
+    public List<RegistroDTO> listarRegistrosClientes(Long id)
+    {
+        return iRegistroRepository
+                .findAll()
+                .stream()
+                .filter(p->(p.getEEstadoActividad() == EEstadoActividad.ACTIVO) && (p.getId().equals(id)))
+                .map(r -> new RegistroDTO(
+                        r.getId(),
+                        r.getTitulo(),
+                        r.getTarea().getId(),
+                        r.getCliente().getIdCliente(),
+                        r.getEProceso(),
+                        listarIdEmpleados(r),
+                        r.getPublicado()))
+                .toList();
+    }
+    public List<TareaDTO> listarTareasRegistro(Long id)
+    {
+        return iTareaRepository
+                .findAll()
+                .stream()
+                .filter(p->(p.getEEstadoActividad() == EEstadoActividad.ACTIVO) && (p.getId().equals(id)))
+                .map(t-> new TareaDTO(
+                        t.getId(),
+                        t.getCategorias(),
+                        t.getFechaDeEntrega(),
+                        t.getFechaDeRegistro(),
+                        t.getDescripcionMaterial(),
+                        t.getDescripcionGeneral()
+
+                ))
+                .toList();
     }
 
     public RegistroDTO buscarRegistroPorId(Long id) throws RegistroNoEncontradoException {
