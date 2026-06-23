@@ -126,8 +126,8 @@ public class  RegistroService {
     }
     private List<Empleado_modelo> listarEmpleados(CrearRegistroDTO dto) {
         return dto.participantesId().stream()
-                .map(id -> empleadoModeloService.buscarEmpleadoPorId(id)) // Devuelve DTO
-                .map(this::convertirDtoAEntidad) // Convierte DTO a Entidad
+                .map(id -> empleadoModeloService.buscarEmpleadoPorId(id))
+                .map(this::convertirDtoAEntidad)
                 .toList();
     }
     private List<Long> listarIdEmpleados(Registro r)

@@ -66,6 +66,11 @@ public class ControladorEmpleado {
     public ResponseEntity<EmpleadoDTO> buscarPorLegajo(@RequestParam Long legajo){
         return ResponseEntity.ok(empleadoService.buscarEmpleadoPorLegajo(legajo));
     }
+    @GetMapping("/historial")
+    public ResponseEntity<List<TareaDTO>> historialTareasEmpleado(){
+        List<TareaDTO> historialTareas = empleadoService.historialTareasEmpleado();
+        return ResponseEntity.ok(historialTareas);
+    }
 
     @PostMapping
     public ResponseEntity<CrearEmpleadoDTO> crearEmpleado(@Valid @RequestBody CrearEmpleadoDTO empleado) {
@@ -109,9 +114,4 @@ public class ControladorEmpleado {
 
     }
 
-    @GetMapping("/historial")
-    public ResponseEntity<List<TareaDTO>> historialTareasEmpleado(){
-        List<TareaDTO> historialTareas = empleadoService.historialTareasEmpleado();
-        return ResponseEntity.ok(historialTareas);
-    }
 }
