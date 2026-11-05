@@ -49,17 +49,4 @@ public class EmpleadoModeloService {
         public Optional<EmpleadoModeloDTO> buscarEmpleadoPorEmail(String email){
             return listarTodosEmpleados().stream().filter(p->p.email().equals(email)).findFirst();
         }
-
-        public Optional<EmpleadoModeloDTO> buscarEmpleadoPorNombre(String nombre){
-            return listarTodosEmpleados().stream().filter(p->p.nombre().equals(nombre)).findFirst();
-        }
-
-        public Optional<EmpleadoModeloDTO> buscarEmpleadoPorTelefono(String telefono){
-            return listarTodosEmpleados().stream().filter(p->p.telefono().equals(telefono)).findFirst();
-        }
-
-        public Optional<EmpleadoModeloDTO> buscarEmpleadoPorDni(Long dni){
-            return listarTodosEmpleados().stream().filter(p->p.dni().equals(dni)).findFirst();
-        }
-
 }

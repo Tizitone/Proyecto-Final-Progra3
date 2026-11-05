@@ -103,14 +103,6 @@ public class  RegistroService {
                 listarIdEmpleados(r),
                 r.getPublicado());
     }
-
-    public List<RegistroDTO> buscarRegistroPorTitulo(String titulo){
-        return iRegistroRepository.findByTitulo(titulo)
-                .stream()
-                .map(this::convertirADTO)
-                .collect(Collectors.toList());
-    }
-
     public List<RegistroDTO> buscarPublicados(){
         return iRegistroRepository.findByPublicadoTrue()
                 .stream()

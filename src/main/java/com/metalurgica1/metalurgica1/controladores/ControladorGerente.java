@@ -39,43 +39,6 @@ import java.util.List;
         }
     }
 
-
-    @GetMapping("/buscar/email")
-    public ResponseEntity<GerenteDTO> buscarPorEmail(@RequestParam String email){
-        try {
-            return ResponseEntity.ok(gerenteService.buscarGerentePorMail(email));
-        } catch (EmpleadoNoEncontradoException e) {
-            log.error("",e);
-            return ResponseEntity.notFound().build();
-        }
-
-    }
-
-    @GetMapping("/buscar/nombre")
-    public ResponseEntity<List<GerenteDTO>> buscarPorNombre(@RequestParam String nombre){
-        return ResponseEntity.ok(gerenteService.buscarGerentePorNombre(nombre));
-    }
-
-    @GetMapping("/buscar/telefono")
-    public ResponseEntity<GerenteDTO> buscarPorTelefono(@RequestParam String telefono){
-        try{
-            return ResponseEntity.ok(gerenteService.buscarGerentePorTelefono(telefono));
-        } catch (EmpleadoNoEncontradoException e) {
-            log.error("",e);
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-    @GetMapping("/buscar/dni")
-    public ResponseEntity<GerenteDTO> buscarPorDni(@RequestParam Long dni){
-        try{
-            return ResponseEntity.ok(gerenteService.buscarGerentePorDni(dni));
-        } catch (EmpleadoNoEncontradoException e) {
-            log.error("",e);
-            return ResponseEntity.notFound().build();
-        }
-    }
-
     @GetMapping("/buscar/legajo")
     public ResponseEntity<GerenteDTO> buscarPorLegajo(@RequestParam Long legajo){
         try{

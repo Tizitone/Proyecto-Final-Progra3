@@ -46,22 +46,6 @@ public class ControladorTareas {
         }
     }
 
-    @GetMapping("/buscar")
-    public ResponseEntity<List<TareaDTO>> buscarTareas(@RequestParam String texto){
-        return ResponseEntity.ok(tareaService.buscarPorTexto(texto));
-    }
-
-    @GetMapping("/buscar/categoria")
-    public ResponseEntity<List<TareaDTO>> buscarPorCategoria(@RequestParam ECategorias categoria){
-        return ResponseEntity.ok(tareaService.buscarPorCategoria(categoria));
-    }
-
-    @GetMapping("/buscar/fecha")
-    public ResponseEntity<List<TareaDTO>> buscarPorFecha(@RequestParam @DateTimeFormat
-            (iso = DateTimeFormat.ISO.DATE) LocalDate fecha){
-        return ResponseEntity.ok(tareaService.buscarPorFecha(fecha));
-    }
-
     @PostMapping
     public ResponseEntity<CrearTareaDTO> crearTarea(@Valid @RequestBody CrearTareaDTO dto) {
         CrearTareaDTO c = tareaService.crearTarea(dto);
@@ -89,7 +73,5 @@ public class ControladorTareas {
             log.error("",e);
             return ResponseEntity.notFound().build();
         }
-
-
     }
 }

@@ -44,41 +44,6 @@ public class GerenteService{
         return convertirADTOResponse(gerente);
     }
 
-    public GerenteDTO buscarGerentePorMail(String email) throws EmpleadoNoEncontradoException {
-        Empleado_Gerente gerente = iGerenteRepository.findByEmail(email);
-        if(gerente.getEEstadoActividad() == EEstadoActividad.CANCELADO)
-        {
-            throw new EmpleadoNoEncontradoException("Empleado no encontrado");
-        }
-        return convertirADTOResponse(gerente);
-    }
-
-    public List<GerenteDTO> buscarGerentePorNombre(String nombre){
-        return iGerenteRepository.findByNombre(nombre)
-                .stream()
-                .filter(p->p.getEEstadoActividad() == EEstadoActividad.ACTIVO)
-                .map(this::convertirADTOResponse)
-                .collect(Collectors.toList());
-    }
-
-    public GerenteDTO buscarGerentePorTelefono(String telefono) throws EmpleadoNoEncontradoException {
-        Empleado_Gerente gerente = iGerenteRepository.findByTelefono(telefono);
-        if(gerente.getEEstadoActividad() == EEstadoActividad.CANCELADO)
-        {
-            throw new EmpleadoNoEncontradoException("Gerente no encontrado");
-        }
-        return convertirADTOResponse(gerente);
-    }
-
-    public GerenteDTO buscarGerentePorDni(Long dni) throws EmpleadoNoEncontradoException {
-        Empleado_Gerente gerente = iGerenteRepository.findByDni(dni);
-        if(gerente.getEEstadoActividad() == EEstadoActividad.CANCELADO)
-        {
-            throw new EmpleadoNoEncontradoException("Gerente no encontrado");
-        }
-        return convertirADTOResponse(gerente);
-    }
-
     public GerenteDTO buscarGerentePorLegajo(Long legajo) throws EmpleadoNoEncontradoException {
         Empleado_Gerente gerente = iGerenteRepository.findByLegajo(legajo);
         if(gerente.getEEstadoActividad() == EEstadoActividad.CANCELADO)
@@ -149,9 +114,5 @@ public class GerenteService{
                 gerente.getDni()
         );
     }
-
-
-
-
 }
 

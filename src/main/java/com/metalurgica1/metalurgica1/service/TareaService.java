@@ -58,30 +58,6 @@ public class TareaService {
                 t.getDescripcionMaterial(),
                 t.getDescripcionGeneral());
     }
-
-    public List<TareaDTO> buscarPorTexto(String texto){
-        return iTareaRepository.findByDescripcionGeneralContainingIgnoreCaseOrDescripcionMaterialContainingIgnoreCase(
-                texto,
-                texto)
-                .stream()
-                .map(this::convertirADTO)
-                .collect(Collectors.toList());
-    }
-
-    public List<TareaDTO> buscarPorCategoria(ECategorias categorias){
-        return iTareaRepository.findByCategorias(categorias)
-                .stream()
-                .map(this::convertirADTO)
-                .collect(Collectors.toList());
-    }
-
-    public List<TareaDTO> buscarPorFecha(LocalDate fecha){
-        return iTareaRepository.findByFechaDeEntrega(fecha)
-                .stream()
-                .map(this::convertirADTO)
-                .collect(Collectors.toList());
-    }
-
     public CrearTareaDTO crearTarea(CrearTareaDTO dto){
         Tarea tarea = new Tarea();
         tarea.setCategorias(dto.categorias());

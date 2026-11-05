@@ -55,11 +55,6 @@ public class ControladorRegistro {
         }
     }
 
-    @GetMapping("/buscar/titulo")
-    public ResponseEntity<List<RegistroDTO>> buscarPorTitulo(@RequestParam String titulo){
-        return ResponseEntity.ok(registroService.buscarRegistroPorTitulo(titulo));
-    }
-
     @GetMapping("/buscar/publicados")
     public ResponseEntity<List<RegistroDTO>> buscarPublicados(){
         return ResponseEntity.ok(registroService.buscarPublicados());

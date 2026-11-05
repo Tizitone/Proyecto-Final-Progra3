@@ -40,21 +40,6 @@ public class ControladorEmpleadosGeneral {
         return ResponseEntity.ok(empleadoModeloService.buscarEmpleadoPorEmail(email));
     }
 
-    @GetMapping("/buscar/nombre")
-    public ResponseEntity<Optional<EmpleadoModeloDTO>> buscarPorNombre(@RequestParam String nombre){
-        return ResponseEntity.ok(empleadoModeloService.buscarEmpleadoPorNombre(nombre));
-    }
-
-    @GetMapping("/buscar/telefono")
-    public ResponseEntity<Optional<EmpleadoModeloDTO>> buscarPorTelefono(@RequestParam String telefono){
-        return ResponseEntity.ok(empleadoModeloService.buscarEmpleadoPorTelefono(telefono));
-    }
-
-    @GetMapping("/buscar/dni")
-    public ResponseEntity<Optional<EmpleadoModeloDTO>> buscarPorDni(@RequestParam Long dni){
-        return ResponseEntity.ok(empleadoModeloService.buscarEmpleadoPorDni(dni));
-    }
-
     @GetMapping("/buscar/legajo")
     public ResponseEntity<EmpleadoModeloDTO> buscarPorLegajo(@RequestParam Long legajo){
         return ResponseEntity.ok(empleadoModeloService.buscarEmpleadoPorId(legajo));

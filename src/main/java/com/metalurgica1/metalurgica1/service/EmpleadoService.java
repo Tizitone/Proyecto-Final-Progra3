@@ -49,24 +49,6 @@ public class EmpleadoService {
         return convertirADTOResponse(empleado);
     }
 
-    public List<EmpleadoDTO> buscarEmpleadoPorNombre(String nombre){
-        return iEmpleadoRepository.findByNombre(nombre)
-                .stream()
-                .filter(p->p.getEEstadoActividad() == EEstadoActividad.ACTIVO)
-                .map(this::convertirADTOResponse)
-                .collect(Collectors.toList());
-    }
-
-    public EmpleadoDTO buscarEmpleadoPorTelefono(String telefono){
-        Empleado empleado = iEmpleadoRepository.findByTelefono(telefono);
-        return convertirADTOResponse(empleado);
-    }
-
-    public EmpleadoDTO buscarEmpleadoPorDni(Long dni){
-        Empleado empleado = iEmpleadoRepository.findByDni(dni);
-        return convertirADTOResponse(empleado);
-    }
-
     public EmpleadoDTO buscarEmpleadoPorLegajo(Long legajo){
         Empleado empleado = iEmpleadoRepository.findByLegajo(legajo);
         return convertirADTOResponse(empleado);

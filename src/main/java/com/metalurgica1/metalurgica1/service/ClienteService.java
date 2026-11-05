@@ -42,30 +42,7 @@ public class ClienteService {
 
         return convertirADTOResponse(cliente);
     }
-
-    public ClienteDTO buscarClientePorEmail(String email){
-        Cliente cliente = iClienteRepository.findByEmail(email);
-        return convertirADTOResponse(cliente);
-    }
-
-    public List<ClienteDTO> buscarClientePorNombre(String nombre){
-        return iClienteRepository.findByNombre(nombre)
-                .stream()
-                .filter(p->p.getEEstadoActividad() == EEstadoActividad.ACTIVO)
-                .map(this::convertirADTOResponse)
-                .collect(Collectors.toList());
-    }
-
-    public ClienteDTO buscarClientePorTelefono(String telefono){
-        Cliente cliente = iClienteRepository.findByTelefono(telefono);
-        return convertirADTOResponse(cliente);
-    }
-
-    public ClienteDTO buscarClientePorDni(Long dni){
-        Cliente cliente = iClienteRepository.findByDni(dni);
-        return convertirADTOResponse(cliente);
-    }
-
+    
     public CrearClienteDTO crearCliente(CrearClienteDTO dto) {
         Cliente cliente = new Cliente();
         cliente.setEmail(dto.email());
