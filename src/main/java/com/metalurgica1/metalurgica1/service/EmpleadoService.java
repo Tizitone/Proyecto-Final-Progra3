@@ -108,10 +108,12 @@ public class EmpleadoService {
                 .map(tarea -> new TareaDTO(
                         tarea.getId(),
                         tarea.getCategorias(),
+                        tarea.getTitulo(),
                         tarea.getFechaDeEntrega(),
                         tarea.getFechaDeRegistro(),
                         tarea.getDescripcionMaterial(),
-                        tarea.getDescripcionGeneral()
+                        tarea.getDescripcionGeneral(),
+                        tarea.getCantidad()
                 ))
                 .collect(Collectors.toList());
     }
