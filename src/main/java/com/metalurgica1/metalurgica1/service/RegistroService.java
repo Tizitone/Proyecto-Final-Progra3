@@ -61,7 +61,7 @@ public class  RegistroService {
         return iRegistroRepository
                 .findAll()
                 .stream()
-                .filter(p->(p.getEEstadoActividad() == EEstadoActividad.ACTIVO) && (p.getId().equals(id)))
+                .filter(p->(p.getEEstadoActividad() == EEstadoActividad.ACTIVO) && (p.getCliente().getIdCliente().equals(id)))
                 .map(r -> new RegistroDTO(
                         r.getId(),
                         r.getTitulo(),
