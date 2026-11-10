@@ -2,6 +2,7 @@ package com.metalurgica1.metalurgica1.controladores;
 
 import com.metalurgica1.metalurgica1.DTO.CrearClienteDTO;
 import com.metalurgica1.metalurgica1.service.ClienteService;
+import com.metalurgica1.metalurgica1.service.Excepciones.AccesoDenegadoException;
 import com.metalurgica1.metalurgica1.service.Excepciones.ClienteNoEncontradoException;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +37,7 @@ public class ControladorCliente {
         try {
             ClienteDTO cliente = clienteService.buscarCliente(id);
             return ResponseEntity.ok(cliente);
-        } catch (ClienteNoEncontradoException e) {
+        } catch (ClienteNoEncontradoException | AccesoDenegadoException e) {
             log.error("",e);
             return ResponseEntity.notFound().build();
         }

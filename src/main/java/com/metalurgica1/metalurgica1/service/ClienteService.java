@@ -5,9 +5,13 @@ import com.metalurgica1.metalurgica1.DTO.CrearClienteDTO;
 import com.metalurgica1.metalurgica1.modelo.Cliente;
 import com.metalurgica1.metalurgica1.modelo.enums.EEstadoActividad;
 import com.metalurgica1.metalurgica1.repositorio.IClienteRepository;
+import com.metalurgica1.metalurgica1.service.Excepciones.AccesoDenegadoException;
 import com.metalurgica1.metalurgica1.service.Excepciones.ClienteNoEncontradoException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -36,10 +40,17 @@ public class ClienteService {
                 .toList();
     }
 
-    public ClienteDTO buscarCliente(Long id) throws ClienteNoEncontradoException {
+    public ClienteDTO buscarCliente(Long id) throws ClienteNoEncontradoException, AccesoDenegadoException {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Cliente cliente = iClienteRepository.findById(id)
                 .orElseThrow(() -> new ClienteNoEncontradoException("Cliente no encontrado."));
 
+        boolean esAdmin = authentication.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+
+        if (!esAdmin && !cliente.getEmail().equalsIgnoreCase(ObtenerCorreoLogeado())) {
+            throw new AccesoDenegadoException("No tienes permisos para acceder a este perfil.");
+        }
         return convertirADTOResponse(cliente);
     }
     
@@ -110,5 +121,14 @@ public class ClienteService {
                 cliente.getDni()
         );
     }
+    private String ObtenerCorreoLogeado()
+    {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
+        if (principal instanceof UserDetails) {
+            return ((UserDetails) principal).getUsername();
+        } else {
+            return principal.toString();
+        }
+    }
 }
