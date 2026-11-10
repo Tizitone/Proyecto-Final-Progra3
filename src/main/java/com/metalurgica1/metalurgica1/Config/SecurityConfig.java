@@ -2,6 +2,7 @@ package com.metalurgica1.metalurgica1.Config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -59,6 +60,8 @@ public class SecurityConfig {
                                 "/api/clientes/**",
                                 "/api/empleadosGeneral/**"
                         ).hasAnyRole("GERENTE","ADMIN")
+                        .requestMatchers(HttpMethod.GET,"/api/clientes/{id}")
+                        .hasRole("CLIENTE")
                         .requestMatchers("/api/tareas/**")
                         .hasAnyRole("EMPLEADO","GERENTE","ADMIN")
                         .requestMatchers("/api/registros/**")

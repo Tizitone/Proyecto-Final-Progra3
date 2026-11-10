@@ -82,10 +82,12 @@ public class  RegistroService {
                 .map(t -> new TareaDTO(
                         t.getId(),
                         t.getCategorias(),
+                        t.getTitulo(),
                         t.getFechaDeEntrega(),
                         t.getFechaDeRegistro(),
                         t.getDescripcionMaterial(),
-                        t.getDescripcionGeneral()
+                        t.getDescripcionGeneral(),
+                        t.getCantidad()
                 ))
                 .toList();
     }
