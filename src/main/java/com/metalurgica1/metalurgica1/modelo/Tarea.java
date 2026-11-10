@@ -30,6 +30,8 @@ public class Tarea {
     @JsonProperty("fecha_de_entrega")
     private LocalDate fechaDeEntrega ;
 
+    private String titulo;
+
     @Column(columnDefinition = "TEXT")
     @JsonProperty("descripcion_material")
     private String descripcionMaterial;
@@ -41,4 +43,6 @@ public class Tarea {
     @Enumerated(EnumType.STRING)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private EEstadoActividad eEstadoActividad;
+
+    private int cantidad;
 }

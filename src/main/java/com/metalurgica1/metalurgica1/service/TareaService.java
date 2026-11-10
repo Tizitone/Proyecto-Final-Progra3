@@ -23,9 +23,16 @@ public class TareaService {
     }
 
     private TareaDTO convertirADTO(Tarea t){
-        return new TareaDTO(t.getId(),t.getCategorias(),t.getFechaDeEntrega(),
-                t.getFechaDeRegistro(),t.getDescripcionMaterial(),
-                t.getDescripcionGeneral());
+        return new TareaDTO(
+                t.getId(),
+                t.getCategorias(),
+                t.getTitulo(),
+                t.getFechaDeEntrega(),
+                t.getFechaDeRegistro(),
+                t.getDescripcionMaterial(),
+                t.getDescripcionGeneral(),
+                t.getCantidad()
+        );
     }
 
     public List<TareaDTO> listarTareas(){
@@ -36,10 +43,14 @@ public class TareaService {
                 .map(t -> new TareaDTO(
                         t.getId(),
                         t.getCategorias(),
+                        t.getTitulo(),
                         t.getFechaDeEntrega(),
                         t.getFechaDeRegistro(),
                         t.getDescripcionMaterial(),
-                        t.getDescripcionGeneral()))
+                        t.getDescripcionGeneral(),
+                        t.getCantidad()
+                        )
+                )
                 .collect(Collectors.toList());
     }
 
@@ -53,43 +64,58 @@ public class TareaService {
         return new TareaDTO(
                 t.getId(),
                 t.getCategorias(),
+                t.getTitulo(),
                 t.getFechaDeEntrega(),
                 t.getFechaDeRegistro(),
                 t.getDescripcionMaterial(),
-                t.getDescripcionGeneral());
+                t.getDescripcionGeneral(),
+                t.getCantidad()
+                );
+
     }
     public CrearTareaDTO crearTarea(CrearTareaDTO dto){
         Tarea tarea = new Tarea();
+
+        tarea.setTitulo(dto.titulo());
         tarea.setCategorias(dto.categorias());
         tarea.setFechaDeRegistro(LocalDateTime.now());
         tarea.setFechaDeEntrega(dto.fechaDeEntrega());
         tarea.setDescripcionMaterial(dto.descripcionMaterial());
         tarea.setDescripcionGeneral(dto.descripcionGeneral());
+        tarea.setCantidad(dto.cant());
         tarea.setEEstadoActividad(EEstadoActividad.ACTIVO);
 
         Tarea nuevaTarea = iTareaRepository.save(tarea);
 
         return new CrearTareaDTO(
+                nuevaTarea.getTitulo(),
                 nuevaTarea.getCategorias(),
                 nuevaTarea.getFechaDeEntrega(),
                 nuevaTarea.getDescripcionMaterial(),
-                nuevaTarea.getDescripcionGeneral());
+                nuevaTarea.getDescripcionGeneral(),
+                nuevaTarea.getCantidad()
+        );
     }
 
     public CrearTareaDTO modificarTarea(Long id, CrearTareaDTO dto) throws TareaNoEncontradaExeption {
         Tarea tarea = buscarTarea(id);
+        tarea.setTitulo(dto.titulo());
         tarea.setCategorias(dto.categorias());
         tarea.setFechaDeEntrega(dto.fechaDeEntrega());
         tarea.setDescripcionMaterial(dto.descripcionMaterial());
         tarea.setDescripcionGeneral(dto.descripcionGeneral());
+        tarea.setCantidad(dto.cant());
 
         Tarea nuevaTarea = iTareaRepository.save(tarea);
 
         return new CrearTareaDTO(
+                nuevaTarea.getTitulo(),
                 nuevaTarea.getCategorias(),
                 nuevaTarea.getFechaDeEntrega(),
                 nuevaTarea.getDescripcionMaterial(),
-                nuevaTarea.getDescripcionGeneral());
+                nuevaTarea.getDescripcionGeneral(),
+                nuevaTarea.getCantidad()
+        );
     }
 
     public void eliminarTarea(Long id) throws TareaNoEncontradaExeption {

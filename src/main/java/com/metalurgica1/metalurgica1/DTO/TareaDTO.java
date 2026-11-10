@@ -8,9 +8,11 @@ import java.time.LocalDateTime;
 public record TareaDTO(
      Long idTarea,
      ECategorias categorias,
+     String titulo,
      LocalDate fechaDeEntrega,
      LocalDateTime fechaDeRegistro,
      String descripcionMaterial,
-     String descripcionGeneral
+     String descripcionGeneral,
+     int cantidad
 ) {
 }
