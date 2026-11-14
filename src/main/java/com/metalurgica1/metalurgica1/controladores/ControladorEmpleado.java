@@ -47,8 +47,8 @@ public class ControladorEmpleado {
         return ResponseEntity.ok(empleadoService.buscarEmpleadoPorEmail(email));
     }
 
-    @GetMapping("/buscar/legajo")
-    public ResponseEntity<EmpleadoDTO> buscarPorLegajo(@RequestParam Long legajo){
+    @GetMapping("/buscar/legajo/{id}")
+    public ResponseEntity<EmpleadoDTO> buscarPorLegajo(@PathVariable Long legajo){
         return ResponseEntity.ok(empleadoService.buscarEmpleadoPorLegajo(legajo));
     }
     @GetMapping("/historial")

@@ -57,6 +57,7 @@ public class SecurityConfig {
                         .requestMatchers("/CRUD metalurgica/**").permitAll()
                         .requestMatchers("/api/solicitudes/crear").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/clientes/{id}").hasRole("CLIENTE")
+                        .requestMatchers(HttpMethod.GET, "/api/empleados/buscar/legajo/{id}").hasRole("CLIENTE")
                         .requestMatchers("/api/tareas/buscar/**").hasAnyRole("EMPLEADO", "GERENTE", "ADMIN")
                         .requestMatchers("/api/registros/buscar/**").hasAnyRole("EMPLEADO", "CLIENTE", "GERENTE", "ADMIN")
                         .requestMatchers("/api/solicitudes/buscar/**").hasAnyRole("CLIENTE", "GERENTE", "ADMIN")
