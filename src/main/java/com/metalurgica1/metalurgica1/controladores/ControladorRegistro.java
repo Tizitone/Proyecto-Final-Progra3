@@ -1,8 +1,10 @@
 package com.metalurgica1.metalurgica1.controladores;
 
 import com.metalurgica1.metalurgica1.DTO.CrearRegistroDTO;
+import com.metalurgica1.metalurgica1.DTO.EmpleadoDTO;
 import com.metalurgica1.metalurgica1.DTO.RegistroDTO;
 import com.metalurgica1.metalurgica1.DTO.TareaDTO;
+import com.metalurgica1.metalurgica1.modelo.Empleado_modelo;
 import com.metalurgica1.metalurgica1.modelo.enums.EProceso;
 import com.metalurgica1.metalurgica1.service.Excepciones.ClienteNoEncontradoException;
 import com.metalurgica1.metalurgica1.service.Excepciones.RegistroNoEncontradoException;
@@ -31,6 +33,11 @@ public class ControladorRegistro {
     public List<RegistroDTO> listarRegistros()
     {
         return registroService.listarRegistros();
+    }
+
+    @GetMapping("/buscar/participantes")
+    public List<Empleado_modelo> listarEmpleados(){
+        return registroService.listarEmpleados();
     }
 
     @GetMapping("/buscar/cliente/{id}")

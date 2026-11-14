@@ -1,9 +1,6 @@
 package com.metalurgica1.metalurgica1.service;
 
-import com.metalurgica1.metalurgica1.DTO.CrearRegistroDTO;
-import com.metalurgica1.metalurgica1.DTO.EmpleadoModeloDTO;
-import com.metalurgica1.metalurgica1.DTO.RegistroDTO;
-import com.metalurgica1.metalurgica1.DTO.TareaDTO;
+import com.metalurgica1.metalurgica1.DTO.*;
 import com.metalurgica1.metalurgica1.modelo.*;
 import com.metalurgica1.metalurgica1.modelo.enums.EEstadoActividad;
 import com.metalurgica1.metalurgica1.modelo.enums.EEtiquetaDeAcceso;
@@ -71,6 +68,10 @@ public class  RegistroService {
                         listarIdEmpleados(r),
                         r.getPublicado()))
                 .toList();
+    }
+    public List<Empleado_modelo> listarEmpleados(){
+        return iRegistroRepository.findAll().stream().flatMap(registro -> registro.getParticipantes().stream()).toList();
+
     }
     public List<TareaDTO> listarTareasRegistro(Long id)
     {
