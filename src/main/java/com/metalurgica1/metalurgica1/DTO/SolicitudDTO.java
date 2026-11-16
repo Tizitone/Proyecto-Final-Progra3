@@ -16,6 +16,8 @@ public record SolicitudDTO(
         String telefono,
         @NotNull(message = "La descripcion no puede ser nula")
         @NotBlank(message = "La descripcion no puede estar en blanco")
-        String descripcion
+        String descripcion,
+
+        boolean atendido
 ) {
 }

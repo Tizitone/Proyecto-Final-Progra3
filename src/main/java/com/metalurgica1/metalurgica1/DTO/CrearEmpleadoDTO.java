@@ -1,5 +1,6 @@
 package com.metalurgica1.metalurgica1.DTO;
 
+import com.metalurgica1.metalurgica1.modelo.enums.ECategoriaEmpleado;
 import jakarta.validation.constraints.*;
 
 public record CrearEmpleadoDTO(
@@ -21,6 +22,8 @@ public record CrearEmpleadoDTO(
         @Positive(message = "El DNI tiene que ser positivo")
         @Max(value = 99999999, message = "DNI fuera de rango")
         @Min(value = 1000000, message = "DNI fuera de rango")
-        Long dni
+        Long dni,
+
+        ECategoriaEmpleado categoriaEmpleado
 ) {
 }

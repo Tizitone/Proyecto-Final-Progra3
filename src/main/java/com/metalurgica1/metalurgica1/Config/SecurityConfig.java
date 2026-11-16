@@ -56,6 +56,7 @@ public class SecurityConfig {
                         ).permitAll()
                         .requestMatchers("/CRUD metalurgica/**").permitAll()
                         .requestMatchers("/api/solicitudes/crear").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/api/clientes").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/clientes/{id}").hasRole("CLIENTE")
                         .requestMatchers(HttpMethod.GET, "/api/registros/buscar/participantes")
                         .hasAnyRole("CLIENTE", "EMPLEADO", "GERENTE", "ADMIN")

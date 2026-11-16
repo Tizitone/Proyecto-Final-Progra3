@@ -1,5 +1,6 @@
 package com.metalurgica1.metalurgica1.modelo;
 
+import com.metalurgica1.metalurgica1.modelo.enums.ECategoriaEmpleado;
 import com.metalurgica1.metalurgica1.modelo.enums.EEtiquetaDeAcceso;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -29,6 +30,10 @@ public class Empleado extends Empleado_modelo {
     @Enumerated(EnumType.STRING)
     @Column(name = "etiqueta_de_acceso", insertable = false, updatable = false)
     private EEtiquetaDeAcceso etiquetaDeAcceso = EEtiquetaDeAcceso.EMPLEADO;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "categoria_empleado")
+    private ECategoriaEmpleado eCategoriaEmpleado;
 
     @Override
     public EEtiquetaDeAcceso getEtiquetaDeAcceso() {

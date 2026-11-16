@@ -1,6 +1,7 @@
 package com.metalurgica1.metalurgica1.DTO;
 
 import com.metalurgica1.metalurgica1.modelo.Tarea;
+import com.metalurgica1.metalurgica1.modelo.enums.ECategoriaEmpleado;
 import jakarta.validation.constraints.*;
 
 import java.util.List;
@@ -24,6 +25,8 @@ public record EmpleadoDTO(
         Long dni,
 
         Long legajo,
+
+        ECategoriaEmpleado categoriaEmpleado,
 
         List<Tarea> historial
 ) {

@@ -61,6 +61,7 @@ public class EmpleadoService {
         empleado.setNombre(dto.nombre());
         empleado.setTelefono(dto.telefono());
         empleado.setDni(dto.dni());
+        empleado.setECategoriaEmpleado(dto.categoriaEmpleado());
         empleado.setEEstadoActividad(EEstadoActividad.ACTIVO);
         empleado = iEmpleadoRepository.save(empleado);
 
@@ -74,6 +75,7 @@ public class EmpleadoService {
         empleado.setNombre(dto.nombre());
         empleado.setTelefono(dto.telefono());
         empleado.setDni(dto.dni());
+        empleado.setECategoriaEmpleado(dto.categoriaEmpleado());
 
         Empleado empleadoActualizado = iEmpleadoRepository.save(empleado);
 
@@ -125,6 +127,7 @@ public class EmpleadoService {
                 empleado.getTelefono(),
                 empleado.getDni(),
                 empleado.getLegajo(),
+                empleado.getECategoriaEmpleado(),
                 empleado.getHistorial()
         );
     }
@@ -135,7 +138,8 @@ public class EmpleadoService {
                 empleado.getContrasenia(),
                 empleado.getNombre(),
                 empleado.getTelefono(),
-                empleado.getDni()
+                empleado.getDni(),
+                empleado.getECategoriaEmpleado()
         );
     }
 }

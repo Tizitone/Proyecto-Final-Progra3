@@ -24,6 +24,8 @@ public class Solicitud {
     private String email;
     private String telefono;
 
+    private boolean atendido;
+
     @Column(columnDefinition = "TEXT")
     private String descripcion;
 

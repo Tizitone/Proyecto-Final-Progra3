@@ -44,12 +44,13 @@ public class SolicitudService {
             return new ArrayList<>();
         }
         List<Solicitud> s = iSolicitudRepository.findByDescripcionContainingIgnoreCase(descripcion);
-        return s.stream().filter(p-> p.getEEstadoActividad()== EEstadoActividad.ACTIVO).map(p-> new SolicitudDTO(p.getId(), p.getNombre(),p.getEmail(),p.getTelefono(),p.getDescripcion())).collect(Collectors.toList());
+        return s.stream().filter(p-> p.getEEstadoActividad()== EEstadoActividad.ACTIVO).map(p-> new SolicitudDTO(p.getId(), p.getNombre(),p.getEmail(),p.getTelefono(),p.getDescripcion(),p.isAtendido())).collect(Collectors.toList());
     }
 
     public SolicitudDTO crearSolicitud(SolicitudDTO dto) {
         Solicitud s = new Solicitud();
         s.setNombre(dto.nombre());
+        s.setAtendido(false);
         s.setEmail(dto.email());
         s.setTelefono(dto.telefono());
         s.setDescripcion(dto.descripcion());
@@ -64,6 +65,7 @@ public class SolicitudService {
         Solicitud s = iSolicitudRepository.findById(id).orElseThrow(()->new SolicitudNoEncontradaException("modificar solicitud"));
         s.setNombre(dto.nombre());
         s.setEmail(dto.email());
+        s.setAtendido(dto.atendido());
         s.setTelefono(dto.telefono());
         s.setDescripcion(dto.descripcion());
 
@@ -87,7 +89,8 @@ public class SolicitudService {
                 solicitud.getNombre(),
                 solicitud.getEmail(),
                 solicitud.getTelefono(),
-                solicitud.getDescripcion());
+                solicitud.getDescripcion(),
+                solicitud.isAtendido());
     }
 
 }
