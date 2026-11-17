@@ -3,7 +3,6 @@ package com.metalurgica1.metalurgica1.service;
 import com.metalurgica1.metalurgica1.DTO.*;
 import com.metalurgica1.metalurgica1.modelo.*;
 import com.metalurgica1.metalurgica1.modelo.enums.EEstadoActividad;
-import com.metalurgica1.metalurgica1.modelo.enums.EEtiquetaDeAcceso;
 import com.metalurgica1.metalurgica1.modelo.enums.EProceso;
 import com.metalurgica1.metalurgica1.repositorio.IClienteRepository;
 import com.metalurgica1.metalurgica1.repositorio.IEmpleadoRepository;
@@ -12,10 +11,14 @@ import com.metalurgica1.metalurgica1.repositorio.ITareaRepository;
 import com.metalurgica1.metalurgica1.service.Excepciones.ClienteNoEncontradoException;
 import com.metalurgica1.metalurgica1.service.Excepciones.RegistroNoEncontradoException;
 import com.metalurgica1.metalurgica1.service.Excepciones.TareaNoEncontradaExeption;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,6 +28,9 @@ public class  RegistroService {
     private final IClienteRepository iClienteRepository;
     private final ITareaRepository iTareaRepository;
     private EmpleadoModeloService empleadoModeloService;
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     public RegistroService(IRegistroRepository iRegistroRepository,EmpleadoModeloService empleadoModeloService, IClienteRepository iClienteRepository, ITareaRepository iTareaRepository, IEmpleadoRepository iEmpleadoRepository) {
         this.iRegistroRepository = iRegistroRepository;
@@ -119,12 +125,27 @@ public class  RegistroService {
                 .map(this::convertirADTO)
                 .collect(Collectors.toList());
     }
+    /**
+     * Resuelve los legajos como entidades administradas por Hibernate. Antes se
+     * construían objetos nuevos solo con el ID, lo que dejaba el historial y el
+     * resto de los datos del empleado fuera del contexto de persistencia.
+     */
     private List<Empleado_modelo> listarEmpleados(CrearRegistroDTO dto) {
         return dto.participantesId().stream()
-                .map(id -> empleadoModeloService.buscarEmpleadoPorId(id))
-                .map(this::convertirDtoAEntidad)
-                .toList();
+                .map(this::buscarEmpleadoGestionado)
+                .collect(Collectors.toCollection(ArrayList::new));
     }
+
+    private Empleado_modelo buscarEmpleadoGestionado(Long legajo) {
+        Empleado_modelo empleado = entityManager.find(Empleado_modelo.class, legajo);
+
+        if (empleado == null) {
+            throw new RuntimeException("Empleado con legajo " + legajo + " no encontrado");
+        }
+
+        return empleado;
+    }
+
     private List<Long> listarIdEmpleados(Registro r)
     {
         return r.getParticipantes().stream()
@@ -132,25 +153,34 @@ public class  RegistroService {
                 .toList();
     }
 
-    private Empleado_modelo convertirDtoAEntidad(EmpleadoModeloDTO dto) {
-        Empleado_modelo empleado;
+    /**
+     * El historial de tareas del empleado vive en otra tabla (empleado_historial)
+     * y no se actualiza sola cuando cambian los participantes de un registro.
+     * Al asignar un registro se agrega su tarea al historial de cada empleado
+     * participante. La operación es idempotente para no duplicar tareas.
+     */
+    private void sincronizarHistorial(List<Empleado_modelo> participantes, Tarea tarea) {
+        for (Empleado_modelo participante : participantes) {
+            if (!(participante instanceof Empleado empleado)) {
+                continue; // Los gerentes no tienen historial de tareas.
+            }
 
-        if (dto.eEtiquetaDeAcceso() == EEtiquetaDeAcceso.GERENTE) {
-            empleado = new Empleado_Gerente();
-        } else {
-            empleado = new Empleado();
+            List<Tarea> historial = empleado.getHistorial();
+            if (historial == null) {
+                historial = new ArrayList<>();
+                empleado.setHistorial(historial);
+            }
+
+            boolean yaAsignada = historial.stream()
+                    .anyMatch(t -> t != null && t.getId() != null && t.getId().equals(tarea.getId()));
+
+            if (!yaAsignada) {
+                historial.add(tarea);
+            }
         }
-        empleado.setLegajo(dto.legajo());
-        empleado.setNombre(dto.nombre());
-        empleado.setEmail(dto.email());
-        empleado.setTelefono(dto.telefono());
-        empleado.setDni(dto.dni());
-        empleado.setEEstadoActividad(EEstadoActividad.ACTIVO);
-
-        return empleado;
     }
 
-
+    @Transactional
     public CrearRegistroDTO crearRegistro(CrearRegistroDTO dto) throws TareaNoEncontradaExeption, ClienteNoEncontradoException {
         Registro registro = new Registro();
 
@@ -171,6 +201,7 @@ public class  RegistroService {
         registro.setEEstadoActividad(EEstadoActividad.ACTIVO);
 
         registro.setParticipantes(listarEmpleados(dto));
+        sincronizarHistorial(registro.getParticipantes(), t);
 
         Registro nuevoRegistro = iRegistroRepository.save(registro);
 
@@ -183,6 +214,7 @@ public class  RegistroService {
                 nuevoRegistro.getPublicado());
     }
 
+    @Transactional
     public CrearRegistroDTO modificarRegistro(Long id, CrearRegistroDTO dto) throws RegistroNoEncontradoException, TareaNoEncontradaExeption, ClienteNoEncontradoException {
         Registro registro = iRegistroRepository.findById(id)
                 .orElseThrow(()-> new RegistroNoEncontradoException(id));
@@ -206,6 +238,11 @@ public class  RegistroService {
             List<Empleado_modelo> participantes = listarEmpleados(dto);
 
             registro.setParticipantes(participantes);
+            sincronizarHistorial(participantes, t);
+        } else {
+            // Los perfiles envían la lista vacía cuando solo cambia el estado:
+            // se conservan los participantes y se asegura el historial de la tarea.
+            sincronizarHistorial(new ArrayList<>(registro.getParticipantes()), t);
         }
 
         Registro nuevoRegistro = iRegistroRepository.save(registro);
